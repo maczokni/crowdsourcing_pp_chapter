@@ -1,0 +1,429 @@
+---
+title: "Paper"
+author: "Reka Solymosi & Kate Bowers"
+date: "25/02/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+options(digits = 5, scipen = 999)
+
+library(sf)
+library(dplyr)
+library(tidyr)
+library(tmap)
+library(janitor)
+library(spdep)
+library(lubridate)
+library(readr)
+library(ggplot2)
+library(fmsb)
+library(ineq)
+library(psych)
+library(sandwich)
+library(gridExtra)
+```
+
+# Results
+
+```{r readdata, results="hide"}
+
+london_fms_robs_pop <- st_read("london_fms_robs_pop_at_lsoa.shp")
+london_fms_points <- st_read("london_fms_points.shp")
+willintQs <- read_csv("willintQs.csv")
+
+```
+
+## Insight into people's reporting to FixMyStreet
+
+In total there were `r nrow(london_fms_points)` reports made in London that we collected, between `r min(london_fms_points$dmy)` and `r max(london_fms_points$dmy)`.  
+
+```{r categorytable}
+
+london_fms_points$category <- recode(london_fms_points$categry, `<NA>` = 'NA', 
+`Pavements/footpaths` = 'Pavements/footpaths', 
+`Flytipping` = 'Flytipping', 
+`Abandoned vehicles` = 'Abandoned vehicles', 
+`Potholes` = 'Potholes', 
+`Graffiti` = 'Graffiti', 
+`Bin Repair` = 'Bin Repair', 
+`Trees` = 'Trees', 
+`Faulty street light` = 'Faulty street light', 
+`Overflowing litter bin` = 'Overflowing litter bin', 
+`Dead animals` = 'Dead animals', 
+`Litter Bin Overflowing` = 'Overflowing litter bin', 
+`Bus stops` = 'Bus stops', 
+`Street Cleaning` = 'Street Cleaning', 
+`Overhanging vegetation from` = 'Overhanging vegetation from', 
+`Hazardous spillage on road` = 'Hazardous spillage on road', 
+`Road Sign` = 'Road Sign', 
+`Missed Collection` = 'Missed Collection', 
+`Street nameplates` = 'Street nameplates', 
+`Zebra crossing` = 'Zebra crossing', 
+`Parks & Green Spaces` = 'Parks & Green Spaces', 
+`Lewisham Homes` = 'Other', 
+`Street weeds` = 'Street weeds', 
+`Public toilets` = 'Public toilets', 
+`Gritting` = 'Gritting', 
+`Floral displays` = 'Floral displays', 
+`Street furniture` = 'Street furniture', 
+`Fly Posting` = 'Fly Posting', 
+`Trade Waste` = 'Trade Waste', 
+`Missed Food Waste Collectio` = 'Missed Collection', 
+`Accumulated Litter` = 'Litter', 
+`Leafing` = 'Other', 
+`Dumped rubbish` = 'Flytipping', 
+`Street cleaning` = 'Street Cleaning', 
+`Car Parking` = 'Car Parking', 
+`Abandoned vehicle` = 'Abandoned vehicles', 
+`Faulty street sign` = 'Street nameplates', 
+`Public tree requires pruning` = 'Trees', 
+`Obstructions (skips, A boards)` = 'Obstructions (skips, A boards)', 
+`Traffic lights` = 'Traffic lights', 
+`Car parking` = 'Car Parking', 
+`Pavement Damaged/Cracked` = 'Pavement Damaged/Cracked', 
+`Roads/Highways` = 'Roads/Highways', 
+`Dog fouling` = 'Dog Fouling', 
+`private land Parks/landscapes` = 'Parks & Green Spaces', 
+`Grass needs cutting` = 'Parks & Green Spaces', 
+`Missed Collection (Green Waste)` = 'Missed Collection', 
+`Pothole` = 'Potholes', 
+`Dog Fouling` = 'Dog Fouling', 
+`Tree` = 'Trees', 
+`Drain or Gully` = 'Drain or Gully', 
+`Road Traffic Signs` = 'Road Sign', 
+`Flyposting` = 'Fly Posting', 
+`Bollards` = 'Obstructions (skips, A boards)', 
+`Street Nameplates` = 'Street nameplates', 
+`Manholes` = 'Manholes', 
+`Parks/Landscapes` = 'Parks & Green Spaces', 
+`Gullies` = 'Drain or Gully', 
+`Phoenix HA` = 'Other', 
+`Road traffic signs` = 'Road Sign', 
+`Fly Tipping` = 'Flytipping', 
+`Fly-Tipping` = 'Flytipping', 
+`Graffiti and flyposting` = 'Graffiti', 
+`Roads/highways` = 'Roads/Highways', 
+`Rubbish (refuse and recycling)` = 'Litter', 
+`Street lighting` = 'Faulty street light', 
+`Road defect` = 'Roads/Highways', 
+`Blocked drains` = 'Drain or Gully', 
+`Pavement defect` = 'Pavement Damaged/Cracked', 
+`Overhanging Foliage` = 'Trees', 
+`Parks repairs` = 'Parks & Green Spaces', 
+`Highways` = 'Roads/Highways', 
+`Street Lighting` = 'Faulty street light', 
+`Dead animal` = 'Dead animals', 
+`Admin` = 'Other', 
+`Garden Waste` = 'Litter', 
+`Blocked drains and gullies` = 'Drain or Gully', 
+`Shopping Trolley` = 'Flytipping', 
+`Graffiti (Offensive)` = 'Graffiti', 
+`Fly-Posting` = 'Fly Posting', 
+`Dog Bin` = 'Dog Fouling', 
+`Manhole Cover` = 'Manholes', 
+`Dog Mess` = 'Dog Fouling', 
+`Roadworks` = 'Roads/Highways', 
+`Weeds` = 'Pavement Damaged/Cracked', 
+`Utility cabinets` = 'Other', 
+`Demo` = 'Other', 
+`Public Toilets` = 'Public toilets')
+```
+
+These reports were made in `r length(unique(london_fms_points$category))` unique categories, with the most popular 10 listed in Table 1.  
+
+```{r table1}
+cat_tbl <- london_fms_points %>% group_by(category) %>% summarise(`Number of reports` = n()) %>% rename(Category = category) %>% arrange(-`Number of reports`) %>% head(n = 10) 
+st_geometry(cat_tbl) <- NULL
+knitr::kable(cat_tbl)
+
+```
+
+
+Reports are made at all hours of the day, but generally reflect people's activity patterns.
+
+```{r hourchart}
+
+data <- as.data.frame(t(london_fms_points %>%  
+  st_set_geometry(NULL) %>% 
+    filter(!is.na(hour)) %>% 
+  group_by(hour) %>% 
+  summarise(n = n()) %>% 
+  mutate( low = 0, high = max(n)) %>% 
+    arrange(-hour) %>% 
+  select(hour, high, low, n))) 
+
+names(data) <- data %>% slice(1) %>% unlist()
+data <- data %>% slice(-1)
+
+radarchart(data, axistype = 1, title = "FMS reports by hour of day") #from fmsb package
+
+
+```
+
+```{r whoreps}
+whoreps <- london_fms_points %>% st_set_geometry(NULL) %>% group_by(who) %>% summarise(n = n())
+```
+
+The majority of reports were made anonymously (`r nrow(london_fms_points %>% filter(who == "anon"))` reports, `r round(nrow(london_fms_points %>% filter(who == "anon"))/nrow(london_fms_points)*100,1)`%), but of those who left their name, the majority reported only once (`r nrow(whoreps %>% filter(n < 2))` reports, `r round(nrow(whoreps %>% filter(n < 2))/nrow(whoreps)*100,1)`% of those who left names). This is in line with previous work lookin at such crowdsourced data, which finds that the majority of contributors only make one or two reports, while a small minority contribute a lot of content. 
+
+```{r whorepshist}
+
+whoreps <- whoreps %>% filter(who != "anon")
+
+plot(Lc(whoreps$n),col="darkred",lwd=2)
+
+```
+
+The Lorenz curve above shows how the top few percent of reporters contribute the majority of the reports, in fact a Gini coefficient of `r ineq(whoreps$n, type = "Gini")` shows that we have an unequal distribution of reporting amongst named FMS participants (percet equality would be a value of 0, while perfect inequality (only one person making all the reports, and no one else making any) would be a value of 1). 
+
+However we consider as our unit of analysis not the individual person, but the group of people who make up the day and night time populations of London's neighbourhoods. Looking at the neighbourhoods shows a similar picture of inequality, with a Gini coefficient of `r ineq(london_fms_robs_pop %>% filter(all_fms > 0) %>% pull(all_fms), type = "Gini")`.
+
+This is quite high, in comparison the distribution of robberies across LSOAs has a Gini coefficient of `r ineq(london_fms_robs_pop %>% filter(all_rbb > 0) %>% pull(all_rbb), type = "Gini")`. Clearly there are some areas of London where FixMyStreet is very popular and reporting is a commonplace activity, but the majority of neighbourhoods have only fewer reports. 
+
+## Willingness to intervene and use of FMS
+
+We hypothesise that FixMyStreet participation is a proxy measure for people actively reporting, and carrying out a form of indirect bystander intervention relating to the environmental incivilities in their neighbourhood. We therefore would expect that neighbourhoods which have high scores on willingness to intervene will also have high numbers of FMS reports.
+
+### Willingness to intervene scores
+
+
+First we create a composite score for willingness to intervene using factor analysis. 
+
+```{r}
+
+#create factor 1 by the minres approach of minimizing the squared residuals: 
+fa_thing <- fa(willintQs %>% select(n_Q3K, n_Q3J, n_Q3I),1)
+# plot(fa_thing)
+fa.diagram(fa_thing)
+
+# #iclust(willintQs %>% select(n_Q3K, n_Q3J, n_Q3I))
+# omega(willintQs %>% select(n_Q3K, n_Q3J, n_Q3I))
+# 
+# #alpha(willintQs %>% select(n_Q3K, n_Q3J, n_Q3I)) #score all of the items as part of one scale.
+
+willintQs$wti_score <- fa_thing$scores
+
+```
+
+We then take this score and can explore its distribution across London's neighbourhoods: 
+```{r willintdesc}
+
+by_lsoa <- willintQs %>% 
+  group_by(lsoa11cd) %>% 
+  summarise(mean_wti = mean(wti_score),
+            median_wti = median(wti_score),
+            sd_wti = sd(wti_score), 
+            lowqt_wti = quantile(wti_score)[2],
+            upqt_wti = quantile(wti_score)[4])
+
+ggplot(by_lsoa, aes(x = mean_wti)) + geom_density() + theme_minimal() + xlab("mean willingness to intervene score")
+
+```
+
+We can see that the means of the willingness to intervene scores of inividuals within the neighbouroods follow a normal distribution with a long tail to the right; the lowest score for a neighbourhood was `r min(by_lsoa$mean_wti)`, the highest `r max(by_lsoa$mean_wti)` and the mean (`r mean(by_lsoa$mean_wti)`) and median (`r median(by_lsoa$mean_wti)`) close together.
+
+### Correlation with FixMyStreet reports
+
+We want to see if there is an association between where people self-report higher willingness to intervene, and where there are lots of FMS reports being made. We can explore this with a scatterplot
+
+
+```{r}
+
+london_all <- left_join(london_fms_robs_pop, by_lsoa, by = c("lso11cd" = "lsoa11cd"))
+
+ggplot(london_all, aes(x = all_fms, y = mean_wti)) + 
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  theme_minimal() + 
+  xlab("Number of FMS reports") + 
+  ylab("Willingness to Intervene score")
+
+```
+
+
+And we can also explore with correlation, which shows a pearson correlation of  `r cor.test(london_all$all_fms, london_all$mean_wti)$estimate`, with confidence intervals `r cor.test(london_all$all_fms, london_all$mean_wti)$conf.int`, statistically significant with p = `r cor.test(london_all$all_fms, london_all$mean_wti)$p.value`.
+
+Finally, FMS reports are not normally distributed so we should look at models which accommodate for this. 
+```{r}
+options(digits = 3)
+mod1 <- glm(all_fms ~ mean_wti, data = london_all, family = "poisson")
+cov.mod1 <- vcovHC(mod1, type="HC0")
+std.err <- sqrt(diag(cov.mod1))
+```
+
+A poisson regression model also shows a positive significant association between higher self-reported willingness to intervene scores in a neighbourhood and more FMS reports (coefficient = `r mod1$coefficients[2]`, confidence intervals = `r (coef(mod1) - 1.96 * std.err)[2]` - `r (coef(mod1) + 1.96 * std.err)[2]`, p-value = `r coef(summary(mod1))[,4][2]`, standard error = `r std.err[2]`). Poisson regression models the log of the expected FMS count as a function of the willingness to intervene score, so to understand we can exponentiate the coefficient and say for a one unit change in the mean willingness to intervene score in a neighbourhood, we can expect a `r exp((coef(mod1) - 1.96 * std.err)[2])` - `r exp((coef(mod1) + 1.96 * std.err)[2])` increase in incidence rate of FMS report in that neighbourhood. While this change is small, it is positive and so we can more confidetly claim that participation in this sort of indirect intervention through reporting to the council on FMS is associated with traditional, survey-based measures of willingness to intervene. 
+
+## Robbery
+
+Having found a positive association between FMS reporting and willingness to intervene we can consider the effect of the presence and absence of these possible guardians on crime. Specifically we consider robbery as this is a predominantly outdoors crime, so the FMS reporting guardians out and about on the streets may be able to act as guardians for this crime type. 
+
+First, we have robberies that occurred by whether they took place during work time (Monday to Friday between 9am and 5pm) or rest time (Monday to Friday between 5pm and 9am, and all day Saturday and Sunday). This is because of the different activity patterns in these time periods. In some places, there will be more people coming into the area during work hours, which includes both the offenders and victims, but also guardians. Other places have people leaving, which again includes offenders and victims but also guardians. When we measure just the change in the population, we capture all these actors, but with the FMS data, we hope to capture the movement of only the guardians. 
+
+Consider first daytime robbery vs daytime guardianship. 
+
+```{r}
+
+ggplot(london_all, aes(x = work, y = day_fms)) + 
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  theme_minimal() + 
+  xlab("Number of robberies") + 
+  ylab("Number of FMS reports")
+
+```
+
+Actually don't see much of a correlation (pearson correlation of  `r cor.test(london_all$work, london_all$day_fms)$estimate`, with confidence intervals `r cor.test(london_all$work, london_all$day_fms)$conf.int`, not statistically significant with p = `r cor.test(london_all$work, london_all$day_fms)$p.value`. This means there is no association between the number of people reporting on FMS present and the number of robberies. 
+
+```{r regs}
+mod2 <- glm(work ~ day_fms, data = london_all, family = "poisson")
+cov.mod2 <- vcovHC(mod2, type="HC0")
+std.err <- sqrt(diag(cov.mod2))
+```
+
+We see this also in a poisson model (coefficient = `r mod2$coefficients[2]`, confidence intervals = `r (coef(mod2) - 1.96 * std.err)[2]` - `r (coef(mod2) + 1.96 * std.err)[2]`, p-value = `r coef(summary(mod2))[,4][2]`, standard error = `r std.err[2]`).
+
+
+```{r regs2}
+mod3 <- glm(work ~ a______, data = london_all)
+cov.mod3 <- vcovHC(mod3, type="HC0")
+std.err <- sqrt(diag(cov.mod3))
+```
+
+On the other hand, looking at the workplace population there is a statistically significant relationship but the effect size is essentially one ((coefficient = `r mod3$coefficients[2]`, confidence intervals = `r (coef(mod3) - 1.96 * std.err)[2]` - `r (coef(mod3) + 1.96 * std.err)[2]`, p-value = `r coef(summary(mod3))[,4][2]`, standard error = `r std.err[2]`).), meaning that the increase in robbery with the increase in population is negligable, persumably because this measure contains both offenders and targets and guardians all together. 
+
+
+What if we include both measures?
+
+```{r regs3}
+
+
+mod4 <- glm(work ~ day_fms + a______, data = london_all)
+cov.mod4 <- vcovHC(mod4, type="HC0")
+std.err <- sqrt(diag(cov.mod4))
+
+```
+
+The number of FMS reports still remains non-significant, however the effect size of the population slightly increases. 
+
+
+### Change
+
+
+So with this measure of population we're none the wiser, but what we wanted to look at is the change in guardianship in an area. We imagine that an area that has active guardians in the evening, but where these people leave in the daytime, will see an increase in robberies of those times. Conversely, areas where these active guardians move into during the daytime should then be protected, and see fewer robberies at this time. 
+
+For our outcome variable we consider daytime robberies. For our independent variable we consider fms reporting change by subtracting the niht time population from the daytime. If this is a positive number, then there are more people there in the daytime than the night time, if it is negative, then there are more people there in the night time than in the day time. We repeat this for the population measures (residential population - workday population). 
+
+```{r calcchange}
+
+london_all$fms_change <-london_all$day_fms - london_all$nght_fm
+london_all$pop_change <- london_all$a______ - london_all$usualrs
+
+```
+
+So for example, the biggest income of FMS reporters in the daytime compared to the nighttime is a neighbourhood in `r strsplit(as.character(head(london_all %>% arrange(-fms_change), n = 1) %>% pull(lso11nm)), " ")[[1]][1] ` Bromley, where our change score is `r head(london_all %>% arrange(-fms_change), n = 1) %>% pull(fms_change)`, as there are a total of `r head(london_all %>% arrange(-fms_change), n = 1) %>% pull(day_fms)` day time reports and `r head(london_all %>% arrange(-fms_change), n = 1) %>% pull(nght_fm)` night time reports. The biggest exodus of daytime FMS reporters is also in `r strsplit(as.character(tail(london_all %>% arrange(-fms_change), n = 1) %>% pull(lso11nm)), " ")[[1]][1] ` Bromley, where our change score is `r tail(london_all %>% arrange(-fms_change), n = 1) %>% pull(fms_change)`, as there are a total of `r tail(london_all %>% arrange(-fms_change), n = 1) %>% pull(day_fms)` day time reports and `r tail(london_all %>% arrange(-fms_change), n = 1) %>% pull(nght_fm)` night time reports.
+
+
+On the other hand, for population change, our biggest income is in `r head(london_all %>% arrange(-pop_change), n = 1) %>% pull(lso11nm) `, where our change score is `r head(london_all %>% arrange(-pop_change), n = 1) %>% pull(pop_change)`. This means that workplace population is  `r head(london_all %>% arrange(-pop_change), n = 1) %>% pull(a______)`, while the residential population is only `r head(london_all %>% arrange(-pop_change), n = 1) %>% pull(usualrs)`. This is in fact the case across all City of London, where we have low residential population but high workplace population. On the other hand, there are those neighbourhoods which are mostly resisidential, for example the one where most people leave in the daytime is `r tail(london_all %>% arrange(-pop_change), n = 1) %>% pull(lso11nm) ` Bromley, where our change score is `r tail(london_all %>% arrange(-pop_change), n = 1) %>% pull(pop_change)`, as there are a total of `r tail(london_all %>% arrange(-pop_change), n = 1) %>% pull(usualrs)` day time reports and `r tail(london_all %>% arrange(-pop_change), n = 1) %>% pull(a______)` night time reports.
+
+
+Looking at the difference between FMS change and population change scores already indicates that these two variables capture distinct spatial patterns. While population change reflects the daily flow of the population as a whole (city centre, office spaces have large positive values, while residential suburban areas have negative values), the changes in FMS actually reflect the movement of a subgroup of people. We can see there is an active population in certain local authorities (Bromley for example) where FMS is well adopted, but we see also that patterns are different to simple population flow.
+
+```{r changesmap}
+
+london_fms_robs_pop$fms_change <-london_fms_robs_pop$day_fms - london_fms_robs_pop$nght_fm
+london_fms_robs_pop$pop_change <- london_fms_robs_pop$a______ - london_fms_robs_pop$usualrs
+london_fms_robs_pop$pop_change2 <- as.numeric(london_fms_robs_pop$pop_change)
+
+p1 <- tm_shape(london_fms_robs_pop) + 
+  tm_fill("fms_change", style = "quantile", title = "Change in FMS reports", border.alpha = 0, palette = "-RdBu", midpoint = 0)
+
+p2 <- tm_shape(london_fms_robs_pop) + 
+  tm_fill("pop_change", title = "Change in population",  style = "quantile", border.alpha = 0, palette = "-RdBu", midpoint = 0)
+
+tmap_arrange(p1, p2)
+
+```
+
+
+Keeping this in mind, we can now see how this change in general population, and change in guardians measured using FMS affects the number of daytime robberies committed in each neighbourhood. 
+
+Looking at the correlations shows that change in FMS reporting (who we think are active guardians) shows a negative correlation with daytime robberies, which means that are more guardians stay (or move into) the area, there are actually fewer robberies (pearson correlation coefficient = `r cor.test(london_all$work, london_all$fms_change)$estimate`, with confidence intervals `r cor.test(london_all$work, london_all$fms_change)$conf.int`, p = `r cor.test(london_all$work, london_all$fms_change)$p.value`.). On the other hand, population change shows a positive relationship; as more people (including possible offenders and targets) move into the area in day time, there are more daytime robberies (pearson correlation coefficient = `r cor.test(london_all$work, london_all$pop_change)$estimate`, with confidence intervals `r cor.test(london_all$work, london_all$pop_change)$conf.int`, p = `r cor.test(london_all$work, london_all$pop_change)$p.value`.). 
+
+
+```{r corrplots}
+
+p1 <- ggplot(london_all, aes(x = work, y = fms_change)) + 
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  theme_minimal() + 
+  xlab("Number of robberies") + 
+  ylab("Change in FMS reports")
+
+p2 <- ggplot(london_all, aes(x = work, y = pop_change)) + 
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  theme_minimal() + 
+  xlab("Number of robberies") + 
+  ylab("Change in population")
+
+grid.arrange(p1, p2, nrow = 1, top = "Correlation between changes in population and FMS and daytime robbery incidents")
+
+
+```
+
+
+Of course we want to account for the count nature of robberies, so we turn to poisson regression models, which tell a similar story, both models with FMS change and population change show that change in FMS reports are negatively associated with daytime robberies, while change in population is positively associated with daytime robberies (Table 2). 
+
+
+```{r mods}
+options(digits=5)
+
+mod8 <- glm(work  ~ fms_change, data = london_all, family = "poisson")
+cov.mod8 <- vcovHC(mod8, type="HC0")
+std.err.mod8 <- sqrt(diag(cov.mod8))
+
+mod9 <- glm(work  ~ pop_change, data = london_all, family = "poisson")
+cov.mod9 <- vcovHC(mod9, type="HC0")
+std.err.mod9 <- sqrt(diag(cov.mod9))
+
+
+
+table_df <- data.frame(Model = c("Robberies ~ FMS change", "Robberies ~ population change"), 
+                       `Incident Rate Ratios` = c(exp(mod8$coefficients[2]), exp(mod9$coefficients[2])),
+                       `Confidence Intervals` = c(paste0(round(exp((coef(mod8) - 1.96 * std.err.mod8[2])[2]),5)," - ",round(exp((coef(mod8) + 1.96 * std.err.mod8[2])[2]),5)), paste0(round(exp((coef(mod9) - 1.96 * std.err.mod9[2])[2]),5)," - ",round(exp((coef(mod9) + 1.96 * std.err.mod9[2])[2])),5)),
+                       `Standard Error` = c(std.err.mod8[2], std.err.mod9[2]),
+                       `P-value` = c(coef(summary(mod8))[,4][2], coef(summary(mod9))[,4][2]),
+                       AIC = c(mod8$aic, mod9$aic)
+                       )
+rownames(table_df) <- c()
+
+knitr::kable(table_df)
+
+
+```
+
+
+Finally we also see that this relationship persists when we include both variables as independent variables together in one model with robberies as the outcome variable (Table 3). 
+
+```{r altogethermods}
+
+mod10 <- glm(work  ~ fms_change + pop_change, data = london_all, family = "poisson")
+cov.mod10 <- vcovHC(mod10, type="HC0")
+std.err.mod10 <- sqrt(diag(cov.mod10))
+
+
+table3_df <- data.frame(`Independent variable` = c("FMS change", "Population change"), 
+                       `Incident Rate Ratios` = c(exp(mod10$coefficients[2]), exp(mod10$coefficients[3])),
+                       `Confidence Intervals` = c(paste0(round(exp((coef(mod10) - 1.96 * std.err.mod10)[2]),5)," - ",round(exp((coef(mod10) + 1.96 * std.err.mod10)[2]),5)), paste0(round(exp((coef(mod10) - 1.96 * std.err.mod10)[3]),5)," - ",round(exp((coef(mod10) + 1.96 * std.err.mod10)[3])),5)),
+                       `Standard Error` = c(std.err.mod10[2], std.err.mod10[3]),
+                       `P-value` = c(coef(summary(mod10))[,4][2], coef(summary(mod10))[,4][3]),
+                       AIC = c(mod10$aic, mod10$aic)
+                       )
+rownames(table3_df) <- c()
+
+knitr::kable(table3_df)
+
+```
+

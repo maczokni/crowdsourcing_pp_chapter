@@ -1,0 +1,292 @@
+library(sf)
+library(dplyr)
+library(tidyr)
+library(tmap)
+library(janitor)
+library(spdep)
+library(lubridate)
+library(readr)
+library(ggplot2)
+
+
+# #at work
+# setwd("C:/Users/mllxjrs3/Dropbox (The University of Manchester)/FMS/2019/fms")
+#  
+# read data
+robs <- read_csv("data/robb/RobberyByLSOA-CommittedFrom-WorkTime.csv")
+all_fms <- read_csv("clean_2019_fms.csv")
+london_lsoa <- st_read("data/london_lsoa/LSOA_2011_London_gen_MHW.shp")
+workday_pop <- read_csv("data/workday_pop/bulk.csv") %>% clean_names()
+
+#make FMS sf object
+fms_sf <- st_as_sf(x = all_fms, 
+                   coords = c("lng", "lat"),
+                   crs = "+proj=longlat +datum=WGS84")
+#filter only London reports
+london_fms <- st_intersection(st_transform(london_lsoa, crs = "+proj=longlat +datum=WGS84"), fms_sf) %>% 
+  filter(!is.na(LSOA11CD)) 
+
+london_fms <- london_fms %>% mutate(day_fms = if_else(dayofweek == "Sun" |
+                                        dayofweek == "Sat"  |
+                                        hour > 17|
+                                        hour < 9, "night", "day")) 
+
+#join robberies to spatial data
+robs_spatial <- left_join(london_lsoa, robs %>% filter(FYear == 2016 & 
+                                                          `NEW MinorText` == "Robbery of Personal Property"), 
+                           by = c("LSOA11CD" = "LSOA11CD"))  
+
+london_fms_nogeo <- london_fms
+st_geometry(london_fms_nogeo) <- NULL
+#join FMS to robberies
+fms_and_robs <- left_join(robs_spatial, london_fms_nogeo %>%  
+                            mutate(numnum = 1) %>% 
+                            group_by(LSOA11CD) %>% summarise(all_fms = sum(numnum),
+                                                             night_fms = sum(numnum[day_fms=="day"]),
+                                                             day_fms = sum(numnum[day_fms=="night"])), by = c("LSOA11CD" = "LSOA11CD"))
+
+#join workday population data
+london_fms_robs_pop <- left_join(fms_and_robs, workday_pop %>% select(geography, geography_code, age_all_categories_age_sex_all_persons_measures_value),
+                                  by = c("LSOA11CD" = "geography_code"))
+
+#replace missings for robbery, and fms (day night and all) with 0, because here missing means that there were zero reported there
+london_fms_robs_pop <- london_fms_robs_pop %>% replace_na(list(all_fms = 0,
+                                                                 day_fms = 0,
+                                                                 night_fms = 0,
+                                                                 Rest = 0,
+                                                                 Work = 0)) %>% 
+  clean_names() 
+
+sum(london_fms_robs_pop$all_fms)
+
+
+
+
+#describe
+#number of LSOAs in London
+nrow(london_lsoa)
+#total number of robberies
+london_fms_robs_pop$all_robberies <- london_fms_robs_pop$work + london_fms_robs_pop$rest
+sum(london_fms_robs_pop$all_robberies)
+#total number of FMS reports
+sum(london_fms_robs_pop$all_fms)
+#dates of data collection
+london_fms$dmy <- paste(london_fms$day, london_fms$month, london_fms$year, sep = "-")
+london_fms$dmy <- dmy(london_fms$dmy) %>% 
+  filter(dmy > dmy("01-01-2016") & !is.na(dmy))
+min(london_fms$dmy, na.rm = T)
+max(london_fms$dmy, na.rm = T)
+
+
+ggplot(london_fms_robs_pop, aes(x = all_fms)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = work)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = rest)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = usualres)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = age_all_categories_age_sex_all_persons_measures_value)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+
+
+#have a look at some descriptive maps
+
+qtm(london_fms_robs_pop, fill = "all_fms")
+qtm(london_fms_robs_pop, fill = "day_fms")
+qtm(london_fms_robs_pop, fill = "night_fms")
+qtm(london_fms_robs_pop, fill = "work")
+qtm(london_fms_robs_pop, fill = "rest")
+qtm(london_fms_robs_pop, fill = "usualres")
+qtm(london_fms_robs_pop, fill = "age_all_categories_age_sex_all_persons_measures_value")
+
+#okay so let's scale everything
+
+london_fms_robs_pop$all_fms_scaled <- as.numeric(scale(london_fms_robs_pop$all_fms))
+london_fms_robs_pop$day_fms_scaled <- as.numeric(scale(london_fms_robs_pop$day_fms))
+london_fms_robs_pop$night_fms_scaled <- as.numeric(scale(london_fms_robs_pop$night_fms))
+london_fms_robs_pop$work_rob_scaled <- as.numeric(scale(london_fms_robs_pop$work))
+london_fms_robs_pop$rest_rob_scaled <- as.numeric(scale(london_fms_robs_pop$rest))
+london_fms_robs_pop$respop_scaled <- as.numeric(scale(london_fms_robs_pop$usualres))
+london_fms_robs_pop$workpop_scaled <- as.numeric(scale(london_fms_robs_pop$age_all_categories_age_sex_all_persons_measures_value))
+
+
+#look at scaled distributions
+
+ggplot(london_fms_robs_pop, aes(x = all_fms_scaled)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = work_rob_scaled)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = rest_rob_scaled)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = respop_scaled)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+ggplot(london_fms_robs_pop, aes(x = workpop_scaled)) + 
+  geom_histogram(bins = nrow(london_fms_robs_pop)/100) 
+
+
+#make maps and plot next to e/o
+
+m1 <- tm_shape(london_fms_robs_pop) + tm_fill("all_fms_scaled")+ tm_legend(legend.stack = "vertical", legend.just = "bottom")
+m2 <- tm_shape(london_fms_robs_pop) + tm_fill("day_fms_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+m3 <- tm_shape(london_fms_robs_pop) + tm_fill("night_fms_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+m4 <- tm_shape(london_fms_robs_pop) + tm_fill("work_rob_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+m5 <- tm_shape(london_fms_robs_pop) + tm_fill("rest_rob_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+m6 <- tm_shape(london_fms_robs_pop) + tm_fill("respop_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+m7 <- tm_shape(london_fms_robs_pop) + tm_fill("workpop_scaled")+ tm_layout(legend.stack = "horizontal", legend.just = "bottom")
+
+
+tmap_arrange(m1, m2, m3, ncol = 2)
+tmap_arrange(m4, m5, ncol = 2)
+tmap_arrange(m6, m7, ncol = 2)
+
+
+sum(london_fms_robs_pop$all_fms)
+
+
+st_write(london_fms_robs_pop, "london_fms_robs_pop_at_lsoa.shp")
+st_write(london_fms, "london_fms_points.shp")
+
+
+
+
+fms <- london_fms_robs_pop
+
+mod <- glm(work_rob_scaled ~ day_fms_scaled + workpop_scaled, data = fms)
+summary(mod)
+
+mod <- glm(work_rob_scaled ~ workpop_scaled, data = fms)
+summary(mod)
+
+mod <- glm(rest_rob_scaled ~ night_fms_scaled + respop_scaled, data = fms)
+summary(mod)
+
+mod <- glm(rest_rob_scaled ~ respop_scaled, data = fms)
+summary(mod)
+
+fms$all_rob <- fms$rest + fms$work
+fms$all_rob_scaled <- as.numeric(scale(fms$all_rob))
+
+mod <- glm(all_rob_scaled ~ all_fms_scaled + respop_scaled, data = fms)
+summary(mod)
+
+mod <- glm(all_rob_scaled ~ respop_scaled, data = fms)
+summary(mod)
+
+#make into sp
+fms_sp <- as(fms, "Spatial")
+# 
+# #create a list of neighbours using the Queen criteria (default, if you want rook chage to queen = FALSE)
+# w <- poly2nb(fms_sp)
+# summary(w)
+
+
+w <- fms %>% mutate(INTERSECT = st_intersects(.)) %>% pull(INTERSECT)
+
+as.nb.sgbp <- function(x, ...) {
+  attrs <- attributes(x)
+  x <- lapply(x, function(i) { if(length(i) == 0L) 0L else i } )
+  attributes(x) <- attrs
+  class(x) <- "nb"
+  x
+}
+w <- as.nb.sgbp(w)
+
+plot(fms_sp, border = "grey60")
+plot(w, coordinates(fms_sp), pch = 19, cex = 0.6, add = TRUE)
+
+summary(w)
+
+wm <- nb2mat(w, style='B')
+rwm <- mat2listw(wm, style='W')
+
+#moran test for residuals of model
+lm.morantest(mod, rwm, alternative="two.sided")
+
+#the test is statistically significant so we need to consider spatial autocorrelation
+#lets use lagrange to see what regression to use
+
+lm.LMtests(mod, rwm, test = c("LMerr","LMlag","RLMerr","RLMlag","SARMA"))
+#both are significant, looking at robust tests RLMerr = 4.8966, df = 1, p-value = 0.02691 and RLMlag = 18.311, df = 1, p-value = 1.876e-05 so we use spatial lag model
+
+sink(file = "robbery_spatial_results_v2.txt")
+
+mod_lag <- lagsarlm(work_rob_scaled ~ day_fms_scaled + workpop_scaled, data = fms_sp, rwm)
+summary(mod_lag)
+
+mod_lag <- lagsarlm(work_rob_scaled ~ workpop_scaled, data = fms, rwm)
+summary(mod_lag)
+
+mod_lag <- lagsarlm(rest_rob_scaled ~ night_fms_scaled + respop_scaled, data = fms, rwm)
+summary(mod_lag)
+
+mod_lag <- lagsarlm(rest_rob_scaled ~ respop_scaled, data = fms, rwm)
+summary(mod_lag)
+
+mod_lag <- lagsarlm(all_rob_scaled ~ all_fms_scaled + respop_scaled, data = fms, rwm)
+summary(mod_lag)
+
+mod_lag <- lagsarlm(all_rob_scaled ~ respop_scaled, data = fms, rwm)
+summary(mod_lag)
+
+
+mod_lag <- lagsarlm(work ~ day_fms + wrkpp_s, data = fms, rwm)
+summary(mod_lag)
+
+W <- as(rwm, "CsparseMatrix")
+trMC <- trW(W, type="MC")
+im<-impacts(mod_lag, tr=trMC, R=100)
+sums<-summary(im,  zstats=T)
+#To print the coefficients
+data.frame(sums$res)
+data.frame(sums$pzmat)
+
+pop_mod_lag <- lagsarlm(work ~ wrkpp_s, data = fms, rwm)
+summary(pop_mod_lag)
+
+im<-impacts(pop_mod_lag, tr=trMC, R=100)
+sums<-summary(im,  zstats=T)
+#To print the coefficients
+data.frame(sums$res)
+data.frame(sums$pzmat)
+
+
+
+fms$fms_change <- fms$day_fms - fms$night_fms
+fms$pop_change <- fms$age_all_categories_age_sex_all_persons_measures_value - fms$usualres
+fms$fms_change_scaled <- as.numeric(scale(fms$fms_change))
+fms$pop_change_scaled <- as.numeric(scale(fms$pop_change))
+
+
+pop_mod_lag <- lagsarlm(work_rob_scaled ~ fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+pop_mod_lag <- lagsarlm(work_rob_scaled ~ pop_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+pop_mod_lag <- lagsarlm(work_rob_scaled ~ pop_change_scaled + fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+
+
+pop_mod_lag <- lagsarlm(rest_rob_scaled ~ fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+pop_mod_lag <- lagsarlm(rest_rob_scaled ~ pop_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+pop_mod_lag <- lagsarlm(rest_rob_scaled ~ pop_change_scaled + fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+
+sink(file = NULL)
+
+
+fms$rob_change <- fms$work - fms$rest
+fms$rob_change_scaled <- as.numeric(scale(fms$rob_change))
+
+sink(file = "robbery_spatial_results_changes.txt")
+pop_mod_lag <- lagsarlm(rob_change_scaled ~ pop_change_scaled + fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+
+pop_mod_lag <- lagsarlm(rob_change_scaled ~ fms_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+
+pop_mod_lag <- lagsarlm(rob_change_scaled ~ pop_change_scaled, data = fms, rwm)
+summary(pop_mod_lag)
+
+st_write(fms, "fms_all.geojson")

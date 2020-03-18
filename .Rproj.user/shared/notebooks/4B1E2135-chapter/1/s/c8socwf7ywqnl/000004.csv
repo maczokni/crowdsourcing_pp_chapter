@@ -1,0 +1,5 @@
+"0","atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c(""NAME"" == ""NAME""))
+"
+"2","Error: `by` must be a (named) character vector, list, or NULL for natural joins (not recommended in production code), not a logical vector
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

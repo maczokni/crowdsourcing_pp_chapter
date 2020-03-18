@@ -1,0 +1,7 @@
+"0","ggplot(data = atl) + 
+  geom_sf() + 
+  theme_void() + 
+  geom_sf(data = points_atl_s) #visualise points on the map
+"
+"2","
+"

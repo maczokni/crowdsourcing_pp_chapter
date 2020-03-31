@@ -1,7 +1,9 @@
 ---
 title: "Crowdsourcing public perceptions of space and safety"
-author: "David Buil-Gil and Reka Solymosi"
-date: "18/03/2020"
+author: |
+  | David Buil-Gil and Reka Solymosi
+  | Department of Criminology, University of Manchester
+date: "31/03/2020"
 output: pdf_document
 ---
 
@@ -362,3 +364,7 @@ Note: large peak beginning on October 15th 2014: publication of Harvey's (2014) 
 ## Further applications to crime and place research
 
 # References
+
+Harvey, C. (2014). Measuring streetscape design for livability using spatial data and methods. MSc thesis, The University of Vermont.
+
+Salesses, P., Schechtner, K., & Hidalgo, C. A. (2013). The collaborative image of the city: Mapping the inequality of urban perception. PLOS ONE, 10(3), e0119352.

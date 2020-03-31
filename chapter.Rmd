@@ -1,6 +1,6 @@
 ---
 title: "Crowdsourcing public perceptions of space and safety"
-author: " David Buil-Gil and Reka Solymosi"
+author: "David Buil-Gil and Reka Solymosi"
 date: "18/03/2020"
 output: pdf_document
 ---
@@ -15,23 +15,21 @@ library(lubridate)
 library(tidyr)
 ```
 
-# Introduction/background: 
+# 1. Introduction/background: 
 
-## What is crowdsourcing?
+What is crowdsourcing?
 
-## What types of data are commonly crowdsourced?
+What types of data are commonly crowdsourced?
 
-## What are the strengths of crowdsourced data?
+# 2. Strengths and weaknesses of crowdsourced data
 
-## What are some weaknesses of crowdsourced data?
+What are some strengths and weaknesses of crowdsourced data?
 
-# Step-by-step example in R:
+# 3. Crowdsourcing perceptions of safety: Step-by-step example in R
 
-## Crowdsourcing public perceptions of safety
+## 3.1 The Place Pulse project
 
-## The Place Pulse project
-
-## Download and explore Place Pulse data
+## 3.2 Download and explore Place Pulse data
 
 We have saved some Place Pulse data in a data repository on FigShare. You can download this directly into R by using the `read.csv()` function. It is a large file so it may take some time to read in, be patient!
 
@@ -43,7 +41,7 @@ This data set includes **DESCRIPTION OF DATA SET HERE**
 
 Some descriptive exploration of PP data. 
 
-## Cleaning Place Pulse data
+## 3.3 Cleaning Place Pulse data
 
 When it comes to crowdsourced data, you will have to be an expert data wrangler to make sure you can get the data to behave like you want it to - in other words to make the data available in a format that allows you to answer your research questions. For example, in this case, we want to map the perceives safety of areas in Atlanta. To do this, first we have to select the area of Atlanta, and the votes about safety: 
 
@@ -107,7 +105,7 @@ prop.table(table(pp_atl_s$win))*100 #count % of 'safer' votes in Atlanta against
 
 ```
 
-## Map Place Pulse data
+## 3.4 Map Place Pulse data
 
 It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER PEOPLE) to map the crowdsourced data. 
 
@@ -237,7 +235,7 @@ Note: Buil-Gil et al. (2020) propose a new method to compute estimates for areas
 
 You can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data!
 
-## Exploring the known issues of crowdsourced data within Place Pulse
+## 3.5 Exploring the known issues of crowdsourced data within Place Pulse
 
 We mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind. Here we explore whether they are present in Place Pulse, and what that might mean for any conclusions we draw from our analyses. 
 
@@ -253,7 +251,7 @@ voter <- pp_data %>%
 
 If you want, you can have a look at this new dataframe using the `View()` function. If you do this, you might see, we have some very active participants! The top voter there has made `r voter %>% arrange(-num_votes) %>% head(1) %>% pull(num_votes)` votes on places! That is some very prolific participation! On the other hand, you can also see that `r nrow(voter %>% filter(num_votes == 1))` of the participants made only one vote! We are definitely seeing signs of participation inequality in these data. 
 
-### Participation inequality (supercontributors)
+### 3.5.1 Participation inequality (supercontributors)
 
 In fact, let's see, how much of the votes do the "supercontributors" account for? Let's say we want to consider the top 1% of voters. We can do this using the `subset()` and `quantile()` functions:
 
@@ -294,7 +292,7 @@ sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes b
 
 ```
 
-### Quantifying participation inequality
+### 3.5.2 Quantifying participation inequality
 
 One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualising using a Lorenz curve. 
 
@@ -329,7 +327,7 @@ The Lorenz curve (red line) above shows how the top few percent of reporters con
 With this information we can now quantify how severe the participation inequality in our data, and compare with other crowdsourced data for context and understanding. 
 
 
-### Study participation descrease in Place Pulse
+### 3.5.3 Study participation descrease in Place Pulse
 
 !!!This should also be broken up and motivated/exaplained!!!
 
@@ -362,3 +360,5 @@ Note: large peak beginning on October 15th 2014: publication of Harvey's (2014) 
 ## Open topics in crowdsourced data
 
 ## Further applications to crime and place research
+
+# References

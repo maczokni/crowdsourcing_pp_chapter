@@ -31,6 +31,8 @@ What are some strengths and weaknesses of crowdsourced data?
 
 ## 3.1 The Place Pulse project
 
+add figure here
+
 ## 3.2 Download and explore Place Pulse data
 
 We have saved some Place Pulse data in a data repository on FigShare. You can download this directly into R by using the `read.csv()` function. It is a large file so it may take some time to read in, be patient!

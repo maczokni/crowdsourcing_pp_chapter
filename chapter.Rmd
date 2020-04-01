@@ -29,9 +29,13 @@ What are some strengths and weaknesses of crowdsourced data?
 
 # 3. Crowdsourcing perceptions of safety: Step-by-step example in R
 
+In order to illustrate the use of crowdsourced data in criminological research, we present below an exemplar study using data recorded by the Place Pulse 2.0 platform. This section will introduce the Place Pulse project and provide codes to download, explore and clean this source of crowdsourced data. Then, we will analyse the crowdsourced perceptions of space and safety in Atlanta, Georgia, as well as some known issues of crowdsourced data (i.e., participantion inequality and participation decrease).
+
 ## 3.1 The Place Pulse project
 
-add figure here
+Place Pulse 2.0 was a crowdsourced platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained from Google Street View are shown to participants, who are then asked ‘Which place looks safer / wealthier / more beautiful / more boring / livelier / more depressing?’ (see Figure 1). Images were selected randomly across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. Responders do not provide any further information about themselves, besides from the vote about which image looks safer, which means that we do not know the social and demographic characteristics of participants. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it. Although the platform was closed in summer 2019, we have been granted access to all the data recorded between the XX of XXXX of XXXXX and the XX of XXXX of XXXXXX, which has been uploaded onto an open repository and will be used in this chapter.
+
+![Figure 1: Place Pulse website](https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/figures/Place_Pulse.jpg?raw=true)
 
 ## 3.2 Download and explore Place Pulse data
 
@@ -41,9 +45,37 @@ We have saved some Place Pulse data in a data repository on FigShare. You can do
 pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137') 
 ```
 
-This data set includes **DESCRIPTION OF DATA SET HERE**
+This data set includes 17 variables, but we will only use some of them. A unique identification code has been given to each participant (i.e., 'voter_uniqueid') and image, which can in the left (i.e., 'place_id_left') or right (i.e., 'place_id_right') part of each pairwise comparison. The columns 'place_name_left' and 'place_name_right' locate each image in its city. The column 'choice' shows if the user voted the image in the left, right, or equal, and the column 'study_question' allows us to study perceptions about different variables. 'day' and 'time' detail the moment when each vote toke place, and the columns 'long_right', 'lat_right', 'long_left' and 'lat_left' show the longitude and latitude of both images.
 
-Some descriptive exploration of PP data. 
+For instance, we can see which cities had a largest number of votes amongst images in the left part of the pairwise comparison:
+
+```{r}
+top_n(count(pp_data$place_name_left), 5)
+
+```
+
+Atlanta was the city with a largest number of votes. We can check if that was also the case among pictures shown in the right part of the comparison:
+
+```{r}
+top_n(count(pp_data$place_name_right), 5)
+
+```
+
+Atlanta was indeed the city with the largest number of votes. We can also check which variables were more frequently assessed by participants:
+
+```{r}
+count(pp_data$study_question)
+
+```
+
+Safety was the most commonly assessed variable, with 509,961 votes in total. Before start analysing the data, we can also examine if participants were more inclined to vote for images in the left or right part of the platform.
+
+```{r}
+top_n(count(pp_data$choice), 3)
+
+```
+
+The frequency of votes for left and right options is very similar, which shows that the position of the image in the comparison does not have a direct affect on participants' decision.
 
 ## 3.3 Cleaning Place Pulse data
 
@@ -67,14 +99,21 @@ pp_atl_s <- pp_atl[ which(pp_atl$study_question == "safer"), ]
 
 ```
 
-You can see now we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta. But we need not only one, but both of the locations to be in Atlanta (EXPLAIN)
+You can see now we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
 
 
-
-BREAK THIS DOWN AND EXPLAIN CLEARLY AND MOTIVATE
+First, we want to know the number of comparisons in which both images are from Atlanta.
 ```{r}
 
 table(pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$place_name_left == "Atlanta") #count votes in which both images are from Atlanta
+
+```
+
+In total, 678 pairwise-comparisons included in our dataset are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from another city. In order to make maximal usage of crowdsourced data, we will 
+
+We will duplicate these comparisons in a new dataset, which will be later merged with the original 
+
+```{r}
 
 pp_atl_s <- pp_atl_s[order(pp_atl_s$X), ] #order file by vote number
 

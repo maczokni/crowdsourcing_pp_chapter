@@ -166,7 +166,7 @@ pp_atl_s$lat_Atl[pp_atl_s$place_name_right == "Atlanta"] <- pp_atl_s$lat_right[p
 
 ```
 
-Remember that we had previously created two new datasets with those votes in which both images are from Atlanta. The first dataset (`pp_atl_s_dup`) will be used to assess the images in the left, while the second dataset (`pp_atl_s_dup2`) will refer to the images in the right. We can then allocate the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
+Remember that we had previously created two new datasets with those votes in which both images are from Atlanta. The first dataset ('pp_atl_s_dup') will be used to assess the images in the left, while the second dataset ('pp_atl_s_dup2') will refer to the images in the right. We can then allocate the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
 
 ```{r coordslefttwoatlanta}
 
@@ -177,18 +177,17 @@ pp_atl_s_dup$lat_Atl <- pp_atl_s_dup$lat_left
 
 And then allocate the coordinates of the right image to the second dataset of pairwise comparisons between Atlanta pictures:
 
-```{r coordslefttwoatlanta}
+```{r coordsrighttwoatlanta}
 
 pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
 pp_atl_s_dup2$lat_Atl <- pp_atl_s_dup2$lat_right
 
 ```
 
+Before merging all the data into a single dataset, we will create a new column that distinguished those images of Atlanta that were assessed as 'safer' from those reported as "less safe' or 'equal'. We can do this first in the main dataset (which only includes pairwise comparisons with one picture from Atlanta), by checking if the option of each user (i.e., 'left', 'right', or 'equal') correspond to the city of the image of Atlanta. We assign a 1 when the users' vote corresponds to the position of the image of Atlanta, whereas a 0 is assigned when the image of a different city was chosen to be 'safer' and when users voted 'equal'.
 
+```{r assign1or0}
 
-#code 'safer' votes as 1 and 'less safe' and 'equal' as 0
-
-```{r}
 pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "left"] <- 1
 pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "right"] <- 0
 pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
@@ -197,6 +196,12 @@ pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "right"
 pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"] <- 0
 pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
 
+```
+
+Similarly, we can assign a 1 to the 'pp_atl_s_dup' when the users voted that the left image looked 'safer' and a 0 otherwise, given that this dataset has been previously created to assess the images of the left of pairwise comparisons in which both images were from Atlanta. And we can do the same with the second dataset that compares two images from Atlanta, which in this case refers to the image in the right.
+
+```{r assign1or0twoatlanta}
+
 pp_atl_s_dup$win[pp_atl_s_dup$choice == "left"] <- 1
 pp_atl_s_dup$win[pp_atl_s_dup$choice == "right"] <- 0
 pp_atl_s_dup$win[pp_atl_s_dup$choice == "equal"] <- 0
@@ -204,12 +209,15 @@ pp_atl_s_dup$win[pp_atl_s_dup$choice == "equal"] <- 0
 pp_atl_s_dup2$win[pp_atl_s_dup$choice == "right"] <- 1
 pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"] <- 0
 pp_atl_s_dup2$win[pp_atl_s_dup$choice == "equal"] <- 0
+
 ```
 
-#merge duplicated cases where both images are from Atlanta
+Now that our dataset has been cleaned and is ready to be analysed, we can merge all the data together.
 
-```{r}
+```{r merge}
+
 pp_atl_s <- rbind(pp_atl_s, pp_atl_s_dup, pp_atl_s_dup2) 
+
 ```
 
 
@@ -230,6 +238,9 @@ First, acquire a shapefile for Atlanta. Let's use the neighbourhoods shapefile f
 ```{r}
 
 atl <- st_read("https://opendata.arcgis.com/datasets/297d3d69d8ab4c6ba5f9264ad5e75c0a_3.geojson")
+
+atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
+
 
 ```
 
@@ -257,9 +268,10 @@ Now to be able to plot both these spatial layers on the same map, their coordina
 
 ```{r checkcrs}
 st_crs(points_atl_s) == st_crs(atl) #check if coordinate reference system is the same of both layers
+
 ```
 
-We see they do not! We can fix this by setting the CRS of our point data to that of the atl shapefile using the `st_crs()` function: 
+
 
 ```{r changecrs}
 st_crs(points_atl_s) <- st_crs(atl)
@@ -276,10 +288,10 @@ Indeed! Now we can map our data!
 
 ```{r plotpoints}
 
-ggplot(data = atl) + 
-  geom_sf() + 
-  theme_void() + 
-  geom_sf(data = points_atl_s) #visualise points on the map
+map <- ggplot(data = atl) + geom_sf() + theme_void() +
+  coord_sf(xlim = c(-84, -84.7), ylim = c(33.6, 34), expand = FALSE) #create map
+  
+map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl), size = .1) #plot map with points
 
 ```
 
@@ -293,35 +305,40 @@ Get win score for each nhood
 ```{r calcwinscore}
 
 points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% 
-  group_by(NAME) %>% 
+  group_by(TRACT) %>% 
   summarise(winscore = mean(win, na.rm = TRUE), 
             num_votes = n())
 
 ```
 
- Join to shapefile
+ Join to shapefile and delete areas with zero votes
  
 ```{r joinwin}
 
 st_geometry(points_atl_s_nhood) <- NULL
 
-atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("NAME" = "NAME"))
+atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT"))
+
+atl_pp_wins <- atl_pp_wins[!is.na(atl_pp_wins$winscore), ]
 
 ```
 
 
-```{r mapwins}
-ggplot(data = atl_pp_wins) + 
-  geom_sf(aes(fill = winscore)) + 
-  theme_void() 
 
+
+```{r mapwins}
+
+ggplot(data = atl_pp_wins) + 
+  geom_sf(aes(fill = winscore)) +
+  coord_sf(xlim = c(-84, -84.7), ylim = c(33.5, 34), expand = FALSE) +
+  theme_void() 
 
 
 ```
 
 
 About this: 
-Note: Salesses et al. (2013) suggest computing a Q-score corrected by the "win" and "loss" ratio of imagines with which each vote is compared for the purpose of this chapter we will compute a simple proportion - should we include this for an activity? 
+Note: @salesses2013 suggest computing a Q-score corrected by the "win" and "loss" ratio of imagines with which each vote is compared for the purpose of this chapter we will compute a simple proportion - should we include this for an activity? 
 
 
 There are many more things you can do with these data. for example you could look at the descriptive statistics: 
@@ -401,8 +418,6 @@ top_25percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 25/100
 
 sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 25% participants
 
-# what is this line?:
-# N_votes <- as.data.frame(table(Voter$Freq)) #create dataframe of number of participants that voted X times
 
 ```
 

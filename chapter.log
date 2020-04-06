@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.31)  6 APR 2020 18:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.4.6)  6 APR 2020 21:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -532,39 +532,40 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 109
 (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+30.
+(c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 150.
+(Font)              <10> on input line 151.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 150.
+(Font)              <7> on input line 151.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 150.
+(Font)              <5> on input line 151.
 <figures/Place_Pulse.jpg, id=5, 743.77875pt x 338.76563pt>
 File: figures/Place_Pulse.jpg Graphic file (type jpg)
 <use figures/Place_Pulse.jpg>
-Package pdftex.def Info: figures/Place_Pulse.jpg  used on input line 158.
+Package pdftex.def Info: figures/Place_Pulse.jpg  used on input line 159.
 (pdftex.def)             Requested size: 469.7634pt x 213.96106pt.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-67.
-(c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [1
+[1
 
 {c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 173.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 174.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-173.
+174.
 (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [2 <./figures/Place_Pulse.jpg>] [3] [4]
 ! You can't use `macro parameter character #' in math mode.
-l.462 table(pp\_atl\_s\(win) #
+l.463 table(pp\_atl\_s\(win) #
                               count frequency of 'safer' votes in Atlanta ag...
  
 Here is how much of TeX's memory you used:
  10953 strings out of 482913
- 158131 string characters out of 5957672
+ 158121 string characters out of 5957673
  404134 words of memory out of 5000000
  26027 multiletter control sequences out of 15000+600000
  575889 words of font info for 65 fonts, out of 8000000 for 9000

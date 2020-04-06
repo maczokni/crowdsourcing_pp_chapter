@@ -4,7 +4,9 @@ author: |
   | David Buil-Gil and Reka Solymosi
   | Department of Criminology, University of Manchester
 date: "31/03/2020"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,9 +14,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(ggplot2)
 library(sf)
 library(ineq)
-library(dplyr)
 library(lubridate)
 library(tidyr)
+library(dplyr)
 ```
 
 # 1. Introduction/background: 
@@ -35,42 +37,46 @@ In order to illustrate the use of crowdsourced data in criminological research, 
 
 Place Pulse 2.0 was a crowdsourced platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained from Google Street View are shown to participants, who are then asked ‘Which place looks safer / wealthier / more beautiful / more boring / livelier / more depressing?’ (see Figure 1). Images were selected randomly across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. Responders do not provide any further information about themselves, besides from the vote about which image looks safer, which means that we do not know the social and demographic characteristics of participants. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it. Although the platform was closed in summer 2019, we have been granted access to all the data recorded between the XX of XXXX of XXXXX and the XX of XXXX of XXXXXX, which has been uploaded onto an open repository and will be used in this chapter.
 
-![Figure 1: Place Pulse website](https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/figures/Place_Pulse.jpg?raw=true)
+![Figure 1: Place Pulse website](figures/Place_Pulse.jpg)
 
 ## 3.2 Download and explore Place Pulse data
 
 We have saved some Place Pulse data in a data repository on FigShare. You can download this directly into R by using the `read.csv()` function. It is a large file so it may take some time to read in, be patient!
 
-```{r readpp}
+```{r readpp, eval=FALSE}
 pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137') 
+```
+
+```{r readppreal, echo=FALSE}
+pp_data <- read.csv('datasets/data.csv') 
 ```
 
 This data set includes 17 variables, but we will only use some of them. A unique identification code has been given to each participant (i.e., 'voter_uniqueid') and image, which can in the left (i.e., 'place_id_left') or right (i.e., 'place_id_right') part of each pairwise comparison. The columns 'place_name_left' and 'place_name_right' locate each image in its city. The column 'choice' shows if the user voted the image in the left, right, or equal, and the column 'study_question' allows us to study perceptions about different variables. 'day' and 'time' detail the moment when each vote toke place, and the columns 'long_right', 'lat_right', 'long_left' and 'lat_left' show the longitude and latitude of both images.
 
 For instance, we can see which cities had a largest number of votes amongst images in the left part of the pairwise comparison:
 
-```{r}
+```{r, eval = FALSE}
 top_n(count(pp_data$place_name_left), 5)
 
 ```
 
 Atlanta was the city with a largest number of votes. We can check if that was also the case among pictures shown in the right part of the comparison:
 
-```{r}
+```{r, eval = FALSE}
 top_n(count(pp_data$place_name_right), 5)
 
 ```
 
 Atlanta was indeed the city with the largest number of votes. We can also check which variables were more frequently assessed by participants:
 
-```{r}
+```{r, eval = FALSE}
 count(pp_data$study_question)
 
 ```
 
 Safety was the most commonly assessed variable, with 509,961 votes in total. Before start analysing the data, we can also examine if participants were more inclined to vote for images in the left or right part of the platform.
 
-```{r}
+```{r, eval = FALSE}
 top_n(count(pp_data$choice), 3)
 
 ```

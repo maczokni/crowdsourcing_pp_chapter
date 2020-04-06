@@ -43,12 +43,8 @@ Place Pulse 2.0 was a crowdsourced platform designed to record data about citize
 
 We have saved some Place Pulse data in a data repository on FigShare. You can download this directly into R by using the `read.csv()` function. It is a large file so it may take some time to read in, be patient!
 
-```{r readpp, eval=FALSE}
+```{r readpp}
 pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137') 
-```
-
-```{r readppreal, echo=FALSE}
-pp_data <- read.csv('datasets/data.csv') 
 ```
 
 This data set includes 17 variables, but we will only use some of them. A unique identification code has been given to each participant (i.e., 'voter_uniqueid') and image, which can in the left (i.e., 'place_id_left') or right (i.e., 'place_id_right') part of each pairwise comparison. The columns 'place_name_left' and 'place_name_right' locate each image in its city. The column 'choice' shows if the user voted the image in the left, right, or equal, and the column 'study_question' allows us to study perceptions about different variables. 'day' and 'time' detail the moment when each vote toke place, and the columns 'long_right', 'lat_right', 'long_left' and 'lat_left' show the longitude and latitude of both images.
@@ -58,32 +54,48 @@ For instance, we can see which cities have a largest number of votes amongst ima
 CHANGE THIS TO TIDYVERSE -> group_by %% summarise
 
 
-```{r}
-top_n(as.data.frame(table(pp_data$place_name_left)), 5)
+```{r top5placeleft}
+
+pp_data %>%
+  group_by(place_name_left) %>%
+  summarize(Count = n()) %>%
+  top_n(5)
 
 ```
 
 Atlanta was the city with a largest number of votes. We can check if that was also the case among pictures shown in the right part of the comparison:
 
-```{r}
-top_n(as.data.frame(table(pp_data$place_name_right)), 5)
+```{r top5placeright}
+
+pp_data %>%
+  group_by(place_name_right) %>%
+  summarize(Count = n()) %>%
+  top_n(5)
+
 
 ```
 
 Atlanta was indeed the city with the largest number of votes. We can also check which variables were more frequently assessed by participants:
 
 
-```{r}
+```{r topstudyquestions}
 
-table(pp_data$study_question)
+pp_data %>%
+  group_by(study_question) %>%
+  summarize(Count = n())
 
 ```
 
 Safety was the most commonly assessed variable, with 509,961 votes in total. Before analysing the data, we can also examine if participants were more inclined to vote for images in the left or right part of the platform.
 
 
-```{r}
-top_n(as.data.frame(table(pp_data$choice)), 3)
+```{r topchoice}
+
+pp_data %>%
+  group_by(choice) %>%
+  summarize(Count = n()) %>%
+  top_n(3)
+
 
 ```
 
@@ -113,52 +125,63 @@ pp_atl_s <- pp_atl[ which(pp_atl$study_question == "safer"), ]
 
 You can see now we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
 
-We are interested in analysing the proportion of 'safer' votes in each neighbourhood of Atlanta. We will create two new variables to specify the longitude and latitude of the image of Atlanta being assessed and one new variables that details whether the user voted 'safer' or other. Some pairwise comparisons, nevetheless, assessed two images from Atlanta, which means that we will need to duplicate these votes to account for both the 'safer' and the 'less safe' picture. First, we want to know the number of comparisons in which both images are from Atlanta.
+We are interested in analysing the proportion of 'safer' votes in each neighbourhood of Atlanta. We will create two new columns that specify the longitude and latitude of the image of Atlanta being assessed by participant, and we will also create one new column that details whether the user votes that the image of Atlanta was 'safer' or not safer than another picture. Some pairwise comparisons, nevetheless, assessed two images from Atlanta, which means that we will need to duplicate these votes to account for both the image assessed as 'safer' and the picture reported as 'not safer'. First, we want to know the number of comparisons in which both images are from Atlanta.
 
-```{r}
+```{r counttwoatlanta}
 
 table(pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$place_name_left == "Atlanta") #count votes in which both images are from Atlanta
 
 ```
 
-In total, 678 pairwise-comparisons included in our dataset are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from another city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets. For now, we also delete these cases from the main dataset, but we will merge them again once all the data has been cleaned.
+In total, 678 pairwise comparisons included in our dataset are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from another city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to report the images on the left). For now, we delete these cases from the main dataframe, but we will merge them once all the data has been cleaned.
 
-```{r}
+```{r duplicatedatatwoatlanta}
+
 pp_atl_s <- pp_atl_s[order(pp_atl_s$X), ] #order file by vote number
 
 pp_atl_s_dup <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$place_name_left == "Atlanta"), ] #new dataset: both images are from Atlanta
 pp_atl_s_dup2 <- pp_atl_s_dup #duplicate new dataset
 
-pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X),] #delete cases in which both votes are from Atlanta from main dataset
+pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X), ] #delete duplicated votes from main dataset
+
 
 ```
 
-In the main dataset, that includes all votes with one image from Atlanta, we create new variables to detail the coordinates of the picture from Atlanta. First, we allocate the coordinates to those votes in which the left image is from Atlanta:
+Now, the main dataset only includes those pairwise comparison in which only one image was from Atlanta. We create two new columns that specify  the coordinates of the picture from Atlanta in which we are interested. First, we allocate the coordinates to those votes in which the image of the left is from Atlanta:
 
-```{r}
+```{r coordsleftpic}
+
 pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
 pp_atl_s$lat_Atl[pp_atl_s$place_name_left == "Atlanta"] <- pp_atl_s$lat_left[pp_atl_s$place_name_left == "Atlanta"]
+
 ```
 
-Then, we allocate the coordinates to those votes in which the right image is from Atlanta:
+We then reproduce the same step with those votes in which the right image is from Atlanta:
 
-```{r}
+```{r coordsrightpic}
+
 pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
 pp_atl_s$lat_Atl[pp_atl_s$place_name_right == "Atlanta"] <- pp_atl_s$lat_right[pp_atl_s$place_name_right == "Atlanta"]
+
+
 ```
 
-Given that we have create two new datasets which those votes in which both images are from Atlanta, we will use the first one (`pp_atl_s_dup`) to assess the image in the left, and the second dataset (`pp_atl_s_dup2`) to examine the images in the right. We start by allocating the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
+Remember that we had previously created two new datasets with those votes in which both images are from Atlanta. The first dataset (`pp_atl_s_dup`) will be used to assess the images in the left, while the second dataset (`pp_atl_s_dup2`) will refer to the images in the right. We can then allocate the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
 
-```{r}
+```{r coordslefttwoatlanta}
+
 pp_atl_s_dup$long_Atl <- pp_atl_s_dup$long_left
 pp_atl_s_dup$lat_Atl <- pp_atl_s_dup$lat_left
+
 ```
 
-And the allocate the coordinates of the right image to the second dataset of pairwise comparisons between Atlanta pictures:
+And then allocate the coordinates of the right image to the second dataset of pairwise comparisons between Atlanta pictures:
 
-```{r}
+```{r coordslefttwoatlanta}
+
 pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
 pp_atl_s_dup2$lat_Atl <- pp_atl_s_dup2$lat_right
+
 ```
 
 

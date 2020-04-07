@@ -438,7 +438,7 @@ The Lorenz curve (red line) above shows how the top few percent of reporters con
 
 ### 3.5.3 Under-representation of certain areas
 
-It is also important to consider variation in the sample size of number of votes in each neighbourhood:
+It is also important to consider variation in the sample size of number of votes in each census tract. We can analyse it certain areas are under-represented in our dataset by using the `summary()` function.
 
 ```{r samplesize}
 
@@ -446,7 +446,7 @@ summary(atl_pp_wins$num_votes)
 
 ```
 
-
+Whereas the average sample size per area is quite large, 
 
 CONTINUE HERE!!
 

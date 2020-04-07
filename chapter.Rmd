@@ -135,7 +135,8 @@ We can use the function `read.csv()` to create a new dataframe that includes tho
 
 ```{r getatlandapp}
 
-pp_atl <- pp_data[which(pp_data$place_name_right == "Atlanta" | pp_data$place_name_left == "Atlanta"), ]
+pp_atl <- pp_data[which(pp_data$place_name_right == "Atlanta" | 
+                          pp_data$place_name_left == "Atlanta"), ]
 
 ```
 
@@ -153,7 +154,9 @@ We are interested in analysing the proportion of 'safer' votes in each neighbour
 
 ```{r counttwoatlanta}
 
-table(pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$place_name_left == "Atlanta") #count votes in which both images are from Atlanta
+#count votes in which both images are from Atlanta
+table(pp_atl_s$place_name_right == "Atlanta" & 
+        pp_atl_s$place_name_left == "Atlanta")
 
 ```
 
@@ -163,7 +166,8 @@ In total, 678 pairwise comparisons are based on two images from the city of Atla
 
 pp_atl_s <- pp_atl_s[order(pp_atl_s$X), ] #order file by vote number
 
-pp_atl_s_dup <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$place_name_left == "Atlanta"), ] #new dataset: both images are from Atlanta
+pp_atl_s_dup <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & 
+                                 pp_atl_s$place_name_left == "Atlanta"), ] #new dataset: both images from Atlanta
 pp_atl_s_dup2 <- pp_atl_s_dup #duplicate new dataset
 
 pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X), ] #delete duplicated votes from main dataset
@@ -174,8 +178,10 @@ Now, the main dataset only includes those pairwise comparison in which only one 
 
 ```{r coordsleftpic}
 
-pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
-pp_atl_s$lat_Atl[pp_atl_s$place_name_left == "Atlanta"] <- pp_atl_s$lat_left[pp_atl_s$place_name_left == "Atlanta"]
+pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
+      pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
+pp_atl_s$lat_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
+      pp_atl_s$lat_left[pp_atl_s$place_name_left == "Atlanta"]
 
 ```
 
@@ -183,8 +189,10 @@ We then reproduce the same step with those votes in which the image of the right
 
 ```{r coordsrightpic}
 
-pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
-pp_atl_s$lat_Atl[pp_atl_s$place_name_right == "Atlanta"] <- pp_atl_s$lat_right[pp_atl_s$place_name_right == "Atlanta"]
+pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
+      pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
+pp_atl_s$lat_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
+      pp_atl_s$lat_right[pp_atl_s$place_name_right == "Atlanta"]
 
 ```
 

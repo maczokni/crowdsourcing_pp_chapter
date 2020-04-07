@@ -31,7 +31,32 @@ What types of data are commonly crowdsourced?
 
 # 2. Strengths and weaknesses of crowdsourced data
 
-What are some strengths and weaknesses of crowdsourced data?
+@solymosi2020 STRENGTHS
+
+Capture the spatial-temporal specific nature of attitudes and emotions towards crime.	23/27
+Record data on individual variables and specific types of fear/disorder.	12/27
+Record data on architectural features.	20/27
+Reduced cost of data collection.	11/27
+
+
+WEAKNESSES
+
+Self-selection bias:
+males tend to be more represented than females, and young citizens are overrepresented compared to older groups @chataway2017
+check @salesses2013
+
+Participation inequality:
+FixMyStreet data, one fourth of all reports had been produced by one percent of users, while 73% of people in the sample contributed only once (@solymosi2017).
+
+Under-representation of certain areas
+
+Participation decrease, sample attrition over time @solymosi2020 @blom2010
+
+Repeatedly asking about fear might increase/cause fear
+
+Lack of temporal variability in some web-based measures 
+
+Validity of measures
 
 # 3. Crowdsourcing perceptions of safety: Step-by-step example in R
 
@@ -39,7 +64,7 @@ In order to illustrate the use of crowdsourced data in criminological research, 
 
 ## 3.1 The Place Pulse project
 
-Place Pulse 2.0 was an online crowdsourcing platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained were shown to participants, who then were asked ‘Which place looks safer?’ (see Figure 1). The platform could also be used to report which of the two images looked wealthier, more beautiful, more boring, livelier or more depressing, but we will focus on the 'safer' answers in this chapter. Images were selected randomly from Google Street View across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. The platform recorded all responses in a public dataset, but responders did not provide any further information about themselves, which means that we do not know their social and demographic characteristics. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it, but the platform was closed in 2019. We have been granted access to all the data recorded between the XX of XXXX of XXXXX and the XX of XXXX of XXXXXX to write this chapter, which has been uploaded onto an open repository with consent of the data producers [@salesses2013].
+Place Pulse 2.0 was an online crowdsourcing platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained were shown to participants, who then were asked ‘Which place looks safer?’ (see Figure 1). The platform could also be used to report which of the two images looked wealthier, more beautiful, more boring, livelier or more depressing, but we will focus on the 'safer' answers in this chapter. Images were selected randomly from Google Street View across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. The platform recorded all responses in a public dataset, but responders did not provide any further information about themselves, which means that we do not know their social and demographic characteristics. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it, but the platform was closed in 2019. We have been granted access to all the data recorded between the 28th May 2013 and the 22nd August 2019 to write this chapter, which has been uploaded onto an open repository with consent of the data producers [@salesses2013].
 
 ![Figure 1: Place Pulse website](figures/Place_Pulse.jpg)
 
@@ -276,7 +301,7 @@ Now we can map our data. See (LINK WITH MAPPING CHAPTER) for more information ab
 ```{r plotpoints}
 
 map <- ggplot(data = atl) + geom_sf() + theme_void() +
-  coord_sf(xlim = c(-84, -84.7), ylim = c(33.6, 34), expand = FALSE) #create map
+  coord_sf(xlim = c(-84.7, -84), ylim = c(33.6, 34), expand = FALSE) #create map
   
 map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl), size = .1) #plot map with points
 
@@ -311,18 +336,109 @@ Finally, we can plot the propotion of 'safer' votes in each census tract.
 
 ggplot(data = atl_pp_wins) + 
   geom_sf(aes(fill = winscore)) +
-  coord_sf(xlim = c(-84, -84.7), ylim = c(33.5, 34), expand = FALSE) +
+  coord_sf(xlim = c(-84.7, -84), ylim = c(33.5, 34), expand = FALSE) +
   theme_void() 
 
 ```
 
-There are many more things one can do with these data. For example, we could look at the descriptive statistics of the proportion of 'safer' votes in each area: 
+There are many more things one can do with these data. For example, we could look at the descriptive statistics and boxplot of the proportion of 'safer' votes in each area: 
 
 ```{r}
 
 summary(atl_pp_wins$winscore) #descriptive statistics of proportion of 'safer' votes per tract
 
+p <- ggplot(atl_pp_wins, aes(y = winscore))
+p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") #boxplot
+
 ```
+
+You can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
+
+## 3.5 Exploring the known issues of crowdsourced data within Place Pulse
+
+In section 2, we mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset. Nevertheless, the sample's self-selection biases should be checked when possible. Here we will examine whether our sample size is affected by participation inequality, under-representation of certain areas and participation decrease. We will also study the validity of this crowdsourced data as a measure of perceived safety.
+
+### 3.5.1 Participation inequality (supercontributors)
+
+Crowdsourced data is usually affected by a few number of supercontributors that produce most votes. In order to check if our dataset is affected by this, we first need to create a new dataframe showing the number of votes that each study participant had made. To do this, we will use code from the `dplyr` library:
+
+```{r create voter table}
+
+voter <- pp_data %>% 
+  group_by(voter_uniqueid) %>% 
+  summarise(num_votes = n())
+
+```
+
+If you want, you can have a look at this new dataframe using the `View()` function. If you do this, you might see, we have some very active participants. The top voter, for instance, has made `r voter %>% arrange(-num_votes) %>% head(1) %>% pull(num_votes)` votes on places. That is some very prolific participation! On the other hand, you can also see that `r nrow(voter %>% filter(num_votes == 1))` of the participants made only one vote. We are definitely seeing signs of participation inequality in these data. 
+
+In fact, we can examine how much of the votes are produced by these "supercontributors". For example, we can assess the proportion of votes made by the top 1% of voters. We can do this using the `subset()` and `quantile()` functions:
+
+```{r top1perc}
+
+top_1percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
+
+```
+
+We can see that this new dataframe contains 954 people, who are our top 1% contributors to the Place Plus dataset. We will now examine how much of the total number of votes are generated by the top 1% of users:
+
+```{r top1perccontrib}
+
+sum(top_1percent$num_votes) / sum(voter$num_votes) * 100
+
+```
+
+That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors.
+
+#### Activity 1
+
+Can you tell me what proportion of the votes were made by the top 10% of participants? What about the top 25%? 
+
+```{r activity1, echo = FALSE, eval=FALSE}
+
+top_10percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 10/100)) #subset top 10% participants
+
+sum(top_10percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 10% participants
+
+top_25percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 25/100)) #subset top 25% participants
+
+sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 25% participants
+
+```
+
+### 3.5.2 Quantifying participation inequality
+
+One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualising it using a Lorenz curve. The Gini index (or Gini ratio) is a measure of statistical dispersion intended to measure inequality. Although it tends to be used to examine income inequality, it has also been freunqtly used to assess participation inequality in crowdsourcing platforms [see @solymosi2017]. Similarly, the Lorenz curve is a visual representation of inequality. For this you will need the library `ineq` so if you do not already have this you must install with the command: 
+
+```{r, eval = FALSE}
+
+install.packages("ineq") 
+
+```
+
+Then you can load this library and calculate the index using the `Gini()` function: 
+
+```{r gini}
+
+Gini(voter$num_votes)
+
+```
+
+Remember that a score of 0 is perfect equality (everyone makes equal number of votes), while 1 is perfect inequality (only one person making all the reports, and no one else making any). Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States of America showed a Gini coefficient of 0.39.  
+To visualise this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
+
+```{r lorenz}
+
+plot(Lc(voter$num_votes), xlab = "Cumulative share of participants from lowest to higher number of votes",
+     ylab = "Cumulative share of votes",col="darkred",lwd=2) 
+
+```
+
+The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. 
+
+With this information we can now quantify how severe the participation inequality in our data, and compare with other crowdsourced data for context and understanding. 
+
+### 3.5.3 Under-representation of certain areas
 
 It is also important to consider variation in the sample size of number of votes in each neighbourhood:
 
@@ -343,99 +459,7 @@ Note: Buil-Gil et al. (2020) @builgil2020 propose a new method to compute estima
 
 
 
-You can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data!
-
-## 3.5 Exploring the known issues of crowdsourced data within Place Pulse
-
-We mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind. Here we explore whether they are present in Place Pulse, and what that might mean for any conclusions we draw from our analyses. 
-
-First, create a new dataframe showing the number of votes that each study participant had made. To do this, we will use code from the `dplyr` library: 
-
-```{r create voter table}
-voter <- pp_data %>% 
-  group_by(voter_uniqueid) %>% 
-  summarise(num_votes = n())
-
-```
-
-
-If you want, you can have a look at this new dataframe using the `View()` function. If you do this, you might see, we have some very active participants! The top voter there has made `r voter %>% arrange(-num_votes) %>% head(1) %>% pull(num_votes)` votes on places! That is some very prolific participation! On the other hand, you can also see that `r nrow(voter %>% filter(num_votes == 1))` of the participants made only one vote! We are definitely seeing signs of participation inequality in these data. 
-
-### 3.5.1 Participation inequality (supercontributors)
-
-In fact, let's see, how much of the votes do the "supercontributors" account for? Let's say we want to consider the top 1% of voters. We can do this using the `subset()` and `quantile()` functions:
-
-```{r top1perc}
-
-top_1percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
-
-```
-
-We can see that this new dataframe contains 954 people, who are our top 1% contributors to the Place Plus data set. Let's see how much of the total number of votes they contribute:
-
-
-```{r top1perccontrib}
-
-sum(top_1percent$num_votes) / sum(voter$num_votes) * 100
-
-```
-
-That is a lot! `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors!
-
-#### Activity 1
-
-Can you tell me what proportion of the votes were made by the top 10% of participants? What about the top 25%? 
-
-```{r activity1, echo = FALSE, eval=FALSE}
-
-
-top_10percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 10/100)) #subset top 10% participants
-
-sum(top_10percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 10% participants
-
-top_25percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 25/100)) #subset top 25% participants
-
-sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 25% participants
-
-
-```
-
-### 3.5.2 Quantifying participation inequality
-
-One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualising using a Lorenz curve. 
-
-For this you will need the library `ineq` so if you don't already have this you must install with the command: 
-
-```{r, eval = FALSE}
-
-install.packages("ineq") 
-
-```
-
-Then you can load this library and calculate the index using the `Gini()` function: 
-
-```{r gini}
-
-Gini(voter$num_votes)
-
-```
-
-Remember that a score of 0 is perfect equality (everyone makes equal number of votes), while 1 is perfect inequality (only one person making all the reports, and no one else making any) . Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States of America showed a Gini coefficient of 0.39.  
-To visualise this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
-
-```{r lorenz}
-
-plot(Lc(voter$num_votes), xlab = "Cumulative share of participants from lowest to higher number of votes",
-     ylab = "Cumulative share of votes",col="darkred",lwd=2) 
-
-```
-
-The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. 
-
-With this information we can now quantify how severe the participation inequality in our data, and compare with other crowdsourced data for context and understanding. 
-
-
-### 3.5.3 Study participation descrease in Place Pulse
+### 3.5.4 Study participation descrease in Place Pulse
 
 !!!This should also be broken up and motivated/exaplained!!!
 
@@ -458,12 +482,11 @@ ggplot(by_day, aes(x = day, y = num_votes)) +
 
 ```
 
-
 Note: large peak beginning on July 24th 2013: publication of @salesses2013 on July 24th and press release via MIT News (http://news.mit.edu/2013/quantifying-urban-perceptions-0724)
 Note: large peak beginning on October 15th 2014: publication of @Harvey2014 MSc thesis
 
 
-### 3.4.4 Measure validity
+### 3.4.5 Measure validity
 
 Validity of an assessment is the degree to which it measures what it is supposed to measure. 
 

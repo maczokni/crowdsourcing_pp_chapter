@@ -434,9 +434,7 @@ plot(Lc(voter$num_votes), xlab = "Cumulative share of participants from lowest t
 
 ```
 
-The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. 
-
-With this information we can now quantify how severe the participation inequality in our data, and compare with other crowdsourced data for context and understanding. 
+The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. With this information we can now quantify how severe the participation inequality is in our data, and compare with other crowdsourced data for context and understanding. 
 
 ### 3.5.3 Under-representation of certain areas
 

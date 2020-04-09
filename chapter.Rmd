@@ -7,6 +7,7 @@ date: "31/03/2020"
 output:
   pdf_document: default
   word_document: default
+bibliography: refs.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -24,6 +25,13 @@ options(tinytex.verbose = TRUE)
 ```
 
 # 1. Introduction 
+
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens, the 'crowd', to achieve a common goal or cumulative result, usually via a platform powered by new technologies, mobile phones, social media or a website (@howe2006). For example, during the 2007-2009 wildfires in Santa Barbara, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response (@goodchild2010). Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety (@solymosi2018). In this chapter we will review some the published literature about the use of crowdsourcing in criminological research, discuss some of the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step--by-step exemplar study about perceptions of disorder in Atlanta, Georgia.
+
+
+
+
+
 
 What is crowdsourcing?
 

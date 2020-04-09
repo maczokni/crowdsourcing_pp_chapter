@@ -1,8 +1,11 @@
 ---
 title: "Crowdsourcing public perceptions of space and safety"
+abstract: "Insert abstract here
+  \\par
+  \\textbf{Keywords:} Fear of crime, perceived safety, crime mapping, open data, GIS, Atlanta"
 author: |
   | David Buil-Gil and Reka Solymosi
-  | Department of Criminology, University of Manchester
+  | Department of Criminology, University of Manchester, UK
 date: "09/04/2020"
 output:
   pdf_document: default
@@ -24,17 +27,22 @@ library(dplyr)
 options(tinytex.verbose = TRUE)
 ```
 
+**Full reference:** Buil-Gil, D., & Solymosi, R. (2020). Crowdsourcing public perceptions of space and safety. In E. Groff & C. Haberman (Eds.), *The Study of crime and place: A methods handbook*. Temple University Press.
+
 # 1. Introduction 
 
-Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens, the 'crowd', to achieve a common goal or cumulative result, usually via a platform powered by new technologies, mobile phones, social media or a website [@howe2006]. For instance, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some the published literature about the use of crowdsourcing in criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study about crowdsourced perceptions of safety in Atlanta, Georgia.
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (the 'crowd') to achieve a common goal or cumulative result, usually via a platform powered by new technologies, mobile phones, social media or website [@howe2006]. For instance, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature on the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study about crowdsourced perceptions of safety in Atlanta, Georgia.
 
-In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and disorder and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to explore new explanations of crime and perceived safety. On one hand, open access to online discussions on social media and forums enables detecting various forms of online crimes, such as hate speech towards minority groups [@miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some use large crowdsourced datasets to detect and explain criminal activity.
+In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and disorder and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open access to online discussions on social media and forums enables detecting various forms of online crimes, such as hate speech towards minority groups [@miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some use large crowdsourced datasets to detect and explain criminal activity.
 
-On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that the public emotions about crime are not always explained by the prevalence and harms of crime itself, but instead fear of crime emotions are the result of individual developmental processes transformed into personal predisposition to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
+On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual developmental processes transformed into personal predisposition to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
 
 To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, and used these data to map the users' fear across the different areas of London, UK. @salesses2013 made use of the Place Pluse platform, which asks participants to assess two images taken from Google Street View in terms of which of them looks safer, to produce a map of perceived safety in New York, US. @birendoim2016 developed a mobile app to record data about perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogota, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded by FixMyStreet, an online problem reporting website, to examine the perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms designed to study the fear of crime across many counties [see @solymosi2020].
 
 # 2. Strengths and weaknesses of crowdsourced data
+
+Although crowdsourced datasets have some key strengths over data recorded by traditional survey 
+
 
 @solymosi2020 STRENGTHS
 
@@ -92,18 +100,18 @@ We can begin by examining which cities were more frequenty assessed within the P
 pp_data %>%
   group_by(place_name_left) %>%
   summarize(Count = n()) %>%
-  top_n(5)
+  top_n(3)
 
 ```
 
-Atlanta was the city with a largest number of votes amongst those images that appeared in tge left part of the comparison, but we can also check this for those images shown in the right side:
+Atlanta was the city with a largest number of votes amongst those images that appeared in the left part of the comparison, but we can also check this for those images shown in the right side:
 
 ```{r top5placeright}
 
 pp_data %>%
   group_by(place_name_right) %>%
   summarize(Count = n()) %>%
-  top_n(5)
+  top_n(3)
 
 ```
 
@@ -141,7 +149,7 @@ We can use the function `read.csv()` to create a new dataframe that includes tho
 ```{r getatlandapp}
 
 pp_atl <- pp_data[which(pp_data$place_name_right == "Atlanta" | 
-                          pp_data$place_name_left == "Atlanta"), ]
+                        pp_data$place_name_left  == "Atlanta"), ]
 
 ```
 
@@ -161,7 +169,7 @@ We are interested in analysing the proportion of 'safer' votes in each neighbour
 
 #count votes in which both images are from Atlanta
 table(pp_atl_s$place_name_right == "Atlanta" & 
-        pp_atl_s$place_name_left == "Atlanta")
+      pp_atl_s$place_name_left  == "Atlanta")
 
 ```
 
@@ -171,11 +179,11 @@ In total, 678 pairwise comparisons are based on two images from the city of Atla
 
 pp_atl_s <- pp_atl_s[order(pp_atl_s$X), ] #order file by vote number
 
-pp_atl_s_dup <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & 
-                                 pp_atl_s$place_name_left == "Atlanta"), ] #new dataset: both images from Atlanta
+pp_atl_s_dup  <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & 
+                                pp_atl_s$place_name_left  == "Atlanta"), ] #new dataset
 pp_atl_s_dup2 <- pp_atl_s_dup #duplicate new dataset
 
-pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X), ] #delete duplicated votes from main dataset
+pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X), ] #delete duplicated from main dataset
 
 ```
 
@@ -185,8 +193,8 @@ Now, the main dataset only includes those pairwise comparison in which only one 
 
 pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
       pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
-pp_atl_s$lat_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
-      pp_atl_s$lat_left[pp_atl_s$place_name_left == "Atlanta"]
+pp_atl_s$lat_Atl[pp_atl_s$place_name_left  == "Atlanta"] <- 
+      pp_atl_s$lat_left[pp_atl_s$place_name_left  == "Atlanta"]
 
 ```
 
@@ -196,8 +204,8 @@ We then reproduce the same step with those votes in which the image of the right
 
 pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
       pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
-pp_atl_s$lat_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
-      pp_atl_s$lat_right[pp_atl_s$place_name_right == "Atlanta"]
+pp_atl_s$lat_Atl[pp_atl_s$place_name_right  == "Atlanta"] <- 
+      pp_atl_s$lat_right[pp_atl_s$place_name_right  == "Atlanta"]
 
 ```
 
@@ -206,7 +214,7 @@ Remember that we had previously created two new datasets with those votes in whi
 ```{r coordslefttwoatlanta}
 
 pp_atl_s_dup$long_Atl <- pp_atl_s_dup$long_left
-pp_atl_s_dup$lat_Atl <- pp_atl_s_dup$lat_left
+pp_atl_s_dup$lat_Atl  <- pp_atl_s_dup$lat_left
 
 ```
 
@@ -215,7 +223,7 @@ And then we allocate the coordinates of the right image to the second dataset of
 ```{r coordsrighttwoatlanta}
 
 pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
-pp_atl_s_dup2$lat_Atl <- pp_atl_s_dup2$lat_right
+pp_atl_s_dup2$lat_Atl  <- pp_atl_s_dup2$lat_right
 
 ```
 
@@ -223,12 +231,12 @@ Before merging all the data into a single dataset, we will create a new column t
 
 ```{r assign1or0}
 
-pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "left"] <- 1
-pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "right"] <- 0
-pp_atl_s$win[pp_atl_s$place_name_left == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
+pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "left"]  <- 1
+pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "right"] <- 0
+pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
 
 pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "right"] <- 1
-pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"] <- 0
+pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"]  <- 0
 pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
 
 ```
@@ -237,12 +245,12 @@ Similarly, in the 'pp_atl_s_dup' dataset, we can assign a 1 to those cases in wh
 
 ```{r assign1or0twoatlanta}
 
-pp_atl_s_dup$win[pp_atl_s_dup$choice == "left"] <- 1
-pp_atl_s_dup$win[pp_atl_s_dup$choice == "right"] <- 0
-pp_atl_s_dup$win[pp_atl_s_dup$choice == "equal"] <- 0
+pp_atl_s_dup$win[pp_atl_s_dup$choice  == "left"]  <- 1
+pp_atl_s_dup$win[pp_atl_s_dup$choice  == "right"] <- 0
+pp_atl_s_dup$win[pp_atl_s_dup$choice  == "equal"] <- 0
 
 pp_atl_s_dup2$win[pp_atl_s_dup$choice == "right"] <- 1
-pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"] <- 0
+pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"]  <- 0
 pp_atl_s_dup2$win[pp_atl_s_dup$choice == "equal"] <- 0
 
 ```
@@ -314,9 +322,11 @@ Now we can map our data. See (LINK WITH MAPPING CHAPTER) for more information ab
 ```{r plotpoints}
 
 map <- ggplot(data = atl) + geom_sf() + theme_void() +
-  coord_sf(xlim = c(-84.7, -84), ylim = c(33.6, 34), expand = FALSE) #create map
+       coord_sf(xlim = c(-84.7, -84), ylim = c(33.6, 34), 
+                expand = FALSE) #create map
   
-map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl), size = .1) #plot map with points
+map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl),
+                 size = .1) #plot map with points
 
 ```
 
@@ -325,9 +335,9 @@ This is a very busy map. Maybe instead we want to get some sort of average score
 ```{r calcwinscore}
 
 points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% 
-  group_by(TRACT) %>% 
-  summarise(winscore = mean(win, na.rm = TRUE), 
-            num_votes = n())
+                      group_by(TRACT) %>% 
+                      summarise(winscore = mean(win, na.rm = TRUE), 
+                                num_votes = n())
 
 ```
 
@@ -361,6 +371,7 @@ There are many more things one can do with these data. For example, we could loo
 summary(atl_pp_wins$winscore) #descriptive statistics of proportion of 'safer' votes per tract
 
 p <- ggplot(atl_pp_wins, aes(y = winscore))
+
 p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") #boxplot
 
 ```
@@ -442,8 +453,9 @@ To visualize this we can use a Lorenz curve using the `plot()` and `Lc()` functi
 
 ```{r lorenz}
 
-plot(Lc(voter$num_votes), xlab = "Cumulative share of participants from lowest to higher number of votes",
-     ylab = "Cumulative share of votes",col="darkred",lwd=2) 
+plot(Lc(voter$num_votes),
+     xlab = "Cumulative share of participants from lowest to higher number of votes",
+     ylab = "Cumulative share of votes", col = "darkred", lwd = 2) 
 
 ```
 
@@ -477,19 +489,19 @@ Note: Buil-Gil et al. (2020) @builgil2020 propose a new method to compute estima
 ```{r datestuff}
 
 by_day <- pp_data %>% 
-  mutate(day = ymd(day)) %>% 
-  group_by(day) %>% 
-  summarise(num_votes = n()) %>% 
-  complete(day = seq.Date(min(day), max(day), by="day")) %>% 
-  mutate(num_votes = replace_na(num_votes, 0))
+          mutate(day = ymd(day)) %>% 
+          group_by(day) %>% 
+          summarise(num_votes = n()) %>% 
+          complete(day = seq.Date(min(day), max(day), by = "day")) %>% 
+          mutate(num_votes = replace_na(num_votes, 0))
 
 
 ggplot(by_day, aes(x = day, y = num_votes)) + 
-  geom_line() + 
-  geom_smooth(lwd = 1.5, col = "red") + 
-  theme_bw() + 
-  xlab("Days since website launch") + 
-  ylab("Number of votes") 
+       geom_line() + 
+       geom_smooth(lwd = 1.5, col = "red") + 
+       theme_bw() + 
+       xlab("Days since website launch") + 
+       ylab("Number of votes") 
 
 ```
 
@@ -501,15 +513,15 @@ Note: large peak beginning on October 15th 2014: publication of @Harvey2014 MSc 
 
 Validity of an assessment is the degree to which it measures what it is supposed to measure. 
 
-# Wrap-up/Where to next:
+# Conclusions
 
-## Open topics in crowdsourced data
+Open topics in crowdsourced data
 
-## Further applications to crime and place research
+Further applications to crime and place research
 
 # Authors bios
 
-David Buil-Gil is a Research Fellow at the Department of Criminology of the University of Manchester, UK, and a member of the Cathie Marsh Institute for Social Research at this same university. His research interests cover small area estimation applications in criminology, environmental criminology, crime mapping, emotions about crime, perceptions about the police, crime reporting, new methods for data collection and open data.
+David Buil-Gil is a Research Fellow at the Department of Criminology of the University of Manchester, UK, and a member of the Cathie Marsh Institute for Social Research at this same university. His research interests cover small area estimation applications in criminology, environmental criminology, crime mapping, emotions about crime, crime reporting, new methods for data collection and open data.
 
 Reka Solymosi is a Lecturer in Quantiative Methods at the Department of Criminology of the University of Manchetser, UK, with interests in data analysis and visualization, crowdsourcing, rstats, fear of crime, transport, and collecting data about everyday life. As a former crime analyst, she is interested in practical applications to research and solving everyday problems with data.
 

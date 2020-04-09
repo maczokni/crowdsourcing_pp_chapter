@@ -506,3 +506,9 @@ Validity of an assessment is the degree to which it measures what it is supposed
 ## Open topics in crowdsourced data
 
 ## Further applications to crime and place research
+
+# Authors bios
+
+David Buil-Gil is a Research Fellow at the Department of Criminology of the University of Manchester, UK, and a member of the Cathie Marsh Institute for Social Research at this same university. His research interests cover small area estimation applications in criminology, environmental criminology, crime mapping, emotions about crime, perceptions about the police, crime reporting, new methods for data collection and open data.
+
+Reka Solymosi is a Lecturer in Quantiative Methods at the Department of Criminology of the University of Manchetser, UK, with interests in data analysis and visualization, crowdsourcing, rstats, fear of crime, transport, and collecting data about everyday life. As a former crime analyst, she is interested in practical applications to research and solving everyday problems with data.

@@ -1,6 +1,0 @@
-"0","st_crs(points_atl_s) == st_crs(atl) #check if coordinate reference system is the same of both layers
-"
-"1","[1]"
-"1"," TRUE"
-"1","
-"

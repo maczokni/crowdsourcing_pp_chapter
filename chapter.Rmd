@@ -6,7 +6,7 @@ abstract: "Insert abstract here
 author: |
   | David Buil-Gil and Reka Solymosi
   | Department of Criminology, University of Manchester, UK
-date: "09/04/2020"
+date: "24/04/2020"
 output:
   pdf_document: default
   word_document: default
@@ -29,19 +29,23 @@ options(tinytex.verbose = TRUE)
 
 **Full reference:** Buil-Gil, D., & Solymosi, R. (2020). Crowdsourcing public perceptions of space and safety. In E. Groff & C. Haberman (Eds.), *The Study of crime and place: A methods handbook*. Temple University Press.
 
+**Contact details:** David Buil-Gil. G18 Humanities Bridgeford Street Building, Cathie Marsh Institute for Social Research, University of Manchester. E-mail address: *david.builgil@manchester.ac.uk*
+
+**ORCID IDs:** David Buil-Gil: 0000-0002-7549-6317. Reka Solymosi: 0000-0001-8689-1526.
+
 # 1. Introduction 
 
-Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (the 'crowd') to achieve a common goal or cumulative result, usually via a platform powered by new technologies, mobile phones, social media or website [@howe2006]. For instance, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature on the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study about crowdsourced perceptions of safety in Atlanta, Georgia.
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (the 'crowd') to achieve a common goal or cumulative result, usually via a platform powered by digital technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a very small cost, which explains why data generated through crowdsourcing is currently utilized for a variety of function ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007]. As an example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature about the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study in R software using crowdsourced perceptions of safety in Atlanta, Georgia.
 
-In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and disorder and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open access to online discussions on social media and forums enables detecting various forms of online crimes, such as hate speech towards minority groups [@miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some use large crowdsourced datasets to detect and explain criminal activity.
+In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some criminologists use large crowdsourced datasets to detect and explain criminal activity.
 
-On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual developmental processes transformed into personal predisposition to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
+On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
 
-To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, and used these data to map the users' fear across the different areas of London, UK. @salesses2013 made use of the Place Pluse platform, which asks participants to assess two images taken from Google Street View in terms of which of them looks safer, to produce a map of perceived safety in New York, US. @birendoim2016 developed a mobile app to record data about perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogota, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded by FixMyStreet, an online problem reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms designed to study the fear of crime across many counties [see @solymosi2020].
+To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allows authors to map the users' fear pf crime across the different areas of London, UK. @salesses2013 designed and recorded data from the Place Pluse platform, which asks participants to choose 'which place looks safer' between two images taken from Google Street View. Then @salesses2013 produced a map of perceived safety in New York, USA. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogota, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded by FixMyStreet, an online problem reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms that have been designed and utilized to study the fear of crime [see @solymosi2020].
 
 # 2. Strengths and weaknesses of crowdsourced data
 
-Although crowdsourced datasets about public perceptions of space and safety have some key strengths over data recorded by traditional survey methods (e.g., precise spatial data, information about immediate environmental variables, reduced cost), their unique mode of production is also associated to certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability of final results [@builgil2020; @elliott2017]. Amongst those limitations identified by researchers making use of crowdsourcing projects to study the fear of crime, the ones that are most commonly hihlighted are related to the participation inequality arising from self-selection in crowdsourced samples, the difficulty to interpret results, and the under-representation of certain areas and times [@solymosi2020]. Others also identify that the number of participants in crowdsourcing projects tends to decrease over time (i.e., participation decrease), and some platforms have difficulties to engage participant, which is reflected in small recorded samples [e.g., @blom2010]. We will briefly review some of these strengths and weaknesses of crowdsourced data and illustrate some of them with data about perceptions of safety in Atlanta.
+Although crowdsourced data about public perceptions of space and safety have some key strengths over data recorded by traditional survey methods (e.g., precise spatial data, information about immediate environmental variables, reduced cost), their unique mode of production is also associated to certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability of final results [@builgil2020; @elliott2017]. Amongst those limitations identified by researchers using crowdsourced data to study the fear of crime, the ones that are most commonly mentioned are related to the participation inequality arising from self-selection in crowdsourced samples, the difficulty to interpret results, and the under-representation of certain areas and times [@solymosi2020]. Others also identify that the number of participants in crowdsourcing projects tends to decrease over time (i.e., participation decrease), and some platforms have difficulties to engage participant and can only record small samples [e.g., @blom2010]. We will briefly review some of these strengths and weaknesses of crowdsourced data and illustrate some of them with data about perceptions of safety in Atlanta.
 
 
 
@@ -102,9 +106,9 @@ We can begin by examining which cities were more frequenty assessed within the P
 ```{r top5placeleft}
 
 pp_data %>%
-  group_by(place_name_left) %>%
-  summarize(Count = n()) %>%
-  top_n(3)
+  group_by(place_name_left) %>% # categories based on cities on the left
+  summarize(Count = n()) %>% # count number of units in each category
+  top_n(3) # print 3 most frequent categories
 
 ```
 
@@ -113,9 +117,10 @@ Atlanta was the city with a largest number of votes amongst those images that ap
 ```{r top5placeright}
 
 pp_data %>%
-  group_by(place_name_right) %>%
-  summarize(Count = n()) %>%
-  top_n(3)
+  group_by(place_name_right) %>% # categories based on cities on the right
+  summarize(Count = n()) %>% # count number of units in each category
+  top_n(3) # print 3 most frequent categories
+
 
 ```
 
@@ -124,8 +129,8 @@ Atlanta was indeed the city with the largest number of votes. We can also check 
 ```{r topstudyquestions}
 
 pp_data %>%
-  group_by(study_question) %>%
-  summarize(Count = n())
+  group_by(study_question) %>% # categories based on the questions
+  summarize(Count = n()) # count number of units in each category
 
 ```
 
@@ -134,9 +139,9 @@ We can see that safety was the most commonly assessed variable, with 509,961 vot
 ```{r topchoice}
 
 pp_data %>%
-  group_by(choice) %>%
-  summarize(Count = n()) %>%
-  top_n(3)
+  group_by(choice) %>% # categories based on vote
+  summarize(Count = n()) %>% # count number of units in each category
+  top_n(3) # print 3 most frequent categories
 
 ```
 
@@ -148,12 +153,13 @@ When it comes to crowdsourced data, you will have to be an expert data wrangler 
 
 Atlanta is the capital city of the American State of Georgia. In 2018, its estimated papulation was close to 500,000 residents, and thus it is the 37th most populated city in the United States. There are two main reasons why we are conducing this exemplar study in Atlanta: first, as shown above, it was the city with the largest number of votes in the Place Pulse platform, and second, there is available open data at a detailed geographical scale about its social, demographic and crime characteristics that can be easily used to explain the patterns observed in Place Pulse data. Moreover, various papers have analysed the predictors of crime and fear of crime in this city, which can be used to interpret our results [see @mcnulty2000, @tester2011]
 
-We can use the function `read.csv()` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta.
+We can use the function `filter()` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta.
 
 ```{r getatlandapp}
 
-pp_atl <- pp_data[which(pp_data$place_name_right == "Atlanta" | 
-                        pp_data$place_name_left  == "Atlanta"), ]
+# select cases in which the image of the right or the image of the left was from Atlanta
+pp_atl <- pp_data %>%
+  filter(place_name_right == "Atlanta" | place_name_left == "Atlanta")
 
 ```
 
@@ -161,7 +167,8 @@ We will also focus on the ratings of areas as safer, as we are interested in peo
 
 ```{r getsafetyq}
 
-pp_atl_s <- pp_atl[ which(pp_atl$study_question == "safer"), ]
+pp_atl_s <- pp_atl %>%
+  filter(study_question == "safer") # select votes of 'safer'
 
 ```
 
@@ -171,54 +178,72 @@ We are interested in analysing the proportion of 'safer' votes in each neighbour
 
 ```{r counttwoatlanta}
 
-#count votes in which both images are from Atlanta
-table(pp_atl_s$place_name_right == "Atlanta" & 
-      pp_atl_s$place_name_left  == "Atlanta")
+# create dataset of votes in which both images are from Atlanta
+pp_atl_s_dup  <- pp_atl_s %>%
+    filter(place_name_right == "Atlanta" & place_name_left == "Atlanta") 
+
+# print the count of votes as a result
+pp_atl_s_dup %>%
+    summarize(count = n()) 
 
 ```
 
-In total, 678 pairwise comparisons are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to report the images on the left). For now, we delete these cases from the main dataframe, but we will merge them once all the data has been cleaned.
+In total, 678 pairwise comparisons are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to report the images on the left). For now, we delete duplicated cases from the main dataframe by using the `anti_join()` function, which searches those duplicated units that exist in the newly created dataset `pp_atl_dup` and deletes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
 
 ```{r duplicatedatatwoatlanta}
 
-pp_atl_s <- pp_atl_s[order(pp_atl_s$X), ] #order file by vote number
+#pp_atl_s <- pp_atl_s %>%
+#  arrange(desc(X)) #order file by vote number
 
-pp_atl_s_dup  <- pp_atl_s[which(pp_atl_s$place_name_right == "Atlanta" & 
-                                pp_atl_s$place_name_left  == "Atlanta"), ] #new dataset
-pp_atl_s_dup2 <- pp_atl_s_dup #duplicate new dataset
+# duplicate the new dataset
+pp_atl_s_dup2 <- pp_atl_s_dup 
 
-pp_atl_s <- pp_atl_s[!(pp_atl_s$X %in% pp_atl_s_dup$X), ] #delete duplicated from main dataset
+# delete duplicated votes from main dataset
+pp_atl_s <- pp_atl_s %>%
+  anti_join(x = pp_atl_s, y = pp_atl_s_dup, by = "X")
 
 ```
 
-Now, the main dataset only includes those pairwise comparison in which only one image was from Atlanta. We create two new columns that specify the coordinates of the picture from Atlanta. First, we allocate the coordinates to those votes in which the image of the left is from Atlanta:
+Now, the main dataset includes only those pairwise comparison in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph was from Atlanta or not.
+
+DELETE: First, we allocate the coordinates to those votes in which the image of the left is from Atlanta:
 
 ```{r coordsleftpic}
 
-pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
-      pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
-pp_atl_s$lat_Atl[pp_atl_s$place_name_left  == "Atlanta"] <- 
-      pp_atl_s$lat_left[pp_atl_s$place_name_left  == "Atlanta"]
+pp_atl_s <- pp_atl_s %>%
+    mutate(long_Atl = if_else(place_name_left == "Atlanta", long_left, long_right),
+           lat_Atl  = if_else(place_name_left == "Atlanta", lat_left , lat_right))
+
+#pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
+#      pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
+#pp_atl_s$lat_Atl[pp_atl_s$place_name_left  == "Atlanta"] <- 
+#      pp_atl_s$lat_left[pp_atl_s$place_name_left  == "Atlanta"]
 
 ```
+
+THIS CAN BE DELETED:
 
 We then reproduce the same step with those votes in which the image of the right side of the comparison is from Atlanta:
 
 ```{r coordsrightpic}
 
-pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
-      pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
-pp_atl_s$lat_Atl[pp_atl_s$place_name_right  == "Atlanta"] <- 
-      pp_atl_s$lat_right[pp_atl_s$place_name_right  == "Atlanta"]
+#pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
+#      pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
+#pp_atl_s$lat_Atl[pp_atl_s$place_name_right  == "Atlanta"] <- 
+#      pp_atl_s$lat_right[pp_atl_s$place_name_right  == "Atlanta"]
 
 ```
 
-Remember that we had previously created two new datasets with those votes in which both images are from Atlanta. The first dataset ('pp_atl_s_dup') will be used to assess the images in the left, while the second dataset ('pp_atl_s_dup2') refers to the images in the right. We can then allocate the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
+Remember that we had previously created two new datasets with those votes in which both images are from Atlanta. The first dataset (`pp_atl_s_dup`) will be used to assess the images in the left, while the second dataset (`pp_atl_s_dup2`) refers to the images in the right. We can then allocate the coordinates of the left image to first dataset of votes in which both images are from Atlanta:
 
 ```{r coordslefttwoatlanta}
 
-pp_atl_s_dup$long_Atl <- pp_atl_s_dup$long_left
-pp_atl_s_dup$lat_Atl  <- pp_atl_s_dup$lat_left
+pp_atl_s_dup <- pp_atl_s_dup %>%
+  mutate(long_Atl = long_left,
+         lat_Atl  = lat_left)
+
+#pp_atl_s_dup$long_Atl <- pp_atl_s_dup$long_left
+#pp_atl_s_dup$lat_Atl  <- pp_atl_s_dup$lat_left
 
 ```
 
@@ -226,8 +251,12 @@ And then we allocate the coordinates of the right image to the second dataset of
 
 ```{r coordsrighttwoatlanta}
 
-pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
-pp_atl_s_dup2$lat_Atl  <- pp_atl_s_dup2$lat_right
+pp_atl_s_dup2 <- pp_atl_s_dup2 %>%
+  mutate(long_Atl = long_right,
+         lat_Atl  = lat_right)
+
+#pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
+#pp_atl_s_dup2$lat_Atl  <- pp_atl_s_dup2$lat_right
 
 ```
 
@@ -235,13 +264,17 @@ Before merging all the data into a single dataset, we will create a new column t
 
 ```{r assign1or0}
 
-pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "left"]  <- 1
-pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "right"] <- 0
-pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
+pp_atl_s <- pp_atl_s %>%
+  mutate(win = if_else((place_name_left  == "Atlanta" & choice == "left") |
+                       (place_name_right == "Atlanta" & choice == "right"), 1, 0))
 
-pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "right"] <- 1
-pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"]  <- 0
-pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
+#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "left"]  <- 1
+#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "right"] <- 0
+#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
+
+#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "right"] <- 1
+#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"]  <- 0
+#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
 
 ```
 
@@ -249,13 +282,19 @@ Similarly, in the 'pp_atl_s_dup' dataset, we can assign a 1 to those cases in wh
 
 ```{r assign1or0twoatlanta}
 
-pp_atl_s_dup$win[pp_atl_s_dup$choice  == "left"]  <- 1
-pp_atl_s_dup$win[pp_atl_s_dup$choice  == "right"] <- 0
-pp_atl_s_dup$win[pp_atl_s_dup$choice  == "equal"] <- 0
+pp_atl_s_dup <- pp_atl_s_dup %>%
+  mutate(win = if_else(choice == "left", 1, 0))
 
-pp_atl_s_dup2$win[pp_atl_s_dup$choice == "right"] <- 1
-pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"]  <- 0
-pp_atl_s_dup2$win[pp_atl_s_dup$choice == "equal"] <- 0
+pp_atl_s_dup2 <- pp_atl_s_dup %>%
+  mutate(win = if_else(choice == "right", 1, 0))
+
+#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "left"]  <- 1
+#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "right"] <- 0
+#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "equal"] <- 0
+
+#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "right"] <- 1
+#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"]  <- 0
+#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "equal"] <- 0
 
 ```
 
@@ -376,7 +415,7 @@ summary(atl_pp_wins$winscore) #descriptive statistics of proportion of 'safer' v
 
 p <- ggplot(atl_pp_wins, aes(y = winscore))
 
-p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") #boxplot
+p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") # boxplot
 
 ```
 

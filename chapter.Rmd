@@ -35,7 +35,7 @@ options(tinytex.verbose = TRUE)
 
 # 1. Introduction 
 
-Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (the 'crowd') to achieve a common goal or cumulative result, usually via a platform powered by digital technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a very small cost, which explains why data generated through crowdsourcing is currently utilized for a variety of function ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007]. As an example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature about the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study in R software using crowdsourced perceptions of safety in Atlanta, Georgia.
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (*the 'crowd'*) to achieve a common goal or cumulative result, usually via a platform powered by digital technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a very small cost, which explains why data generated through crowdsourcing is currently utilized for a variety of function ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007]. As an example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature about the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study in `R` software [@R2020] using crowdsourced perceptions of safety in Atlanta, Georgia.
 
 In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some criminologists use large crowdsourced datasets to detect and explain criminal activity.
 
@@ -91,7 +91,7 @@ Place Pulse 2.0 was an online crowdsourcing platform designed to record data abo
 
 ## 3.2 Download and explore Place Pulse data
 
-We have saved all Place Pulse data in a data repository on FigShare. You can download this directly into R by using the `read.csv()` function. It is a large file so it may take some minutes to read in, be patient!
+We have saved all Place Pulse data in a data repository on FigShare. You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
 
 ```{r readpp}
 
@@ -99,9 +99,9 @@ pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137')
 
 ```
 
-This data set includes 17 variables, but we will only use some of them. A unique identification code was given to each participant (i.e., 'voter_uniqueid') and image (i.e., 'place_id_left' for images in the left side of the pairwise comparison and 'place_id_right' for images in the right part). The columns 'place_name_left' and 'place_name_right' specify the city of each photograph. The column 'choice' shows if the user perceived the image in the left or right to be 'safer' (participants could also answe 'equal'), and the column 'study_question' allows us to study perceptions about different variables (e.g., safety, wealth, beauty). The strings 'day' and 'time' specify the moment when each vote toke place, and the columns 'long_right', 'lat_right', 'long_left' and 'lat_left' show the longitude and latitude of both images.
+This data set includes 17 variables, but we will only use some of them. A unique identification code was given to each participant (*'voter_uniqueid'*) and image (*'place_id_left'* for images in the left side of the pairwise comparison and *'place_id_right'* for images in the right part). The columns *'place_name_left'* and *'place_name_right'* specify the city of each photograph. The column *'choice'* shows if the user perceived the image in the left or right to be 'safer' (participants could also answer 'equal'), and the column *'study_question'* allows studying perceptions about different variables (e.g., safety, wealth, beauty). The columns *'day'* and *'time'* specify the moment when each vote took place, and the columns *'long_right'*, *'lat_right'*, *'long_left'* and *'lat_left'* show the longitude and latitude of both photographs.
 
-We can begin by examining which cities were more frequenty assessed within the Place Pulse platform. This can be checked first for images in the left side of the pairwise comparison, and then for images in the right. We can use the `top_n()` function from `dplyr` package to check this:
+We can begin by examining which cities were more frequenty assessed within the Place Pulse platform. This can be checked for images in the left side of the pairwise comparison first, and then for images in the right. We can use the `group_by()` and `summarize()` functions from `dplyr` package [@wickham2020] to check this:
 
 ```{r top5placeleft}
 
@@ -124,36 +124,36 @@ pp_data %>%
 
 ```
 
-Atlanta was indeed the city with the largest number of votes. We can also check which variables were more frequently assessed by participants:
+Atlanta was indeed the city with the largest number of votes. We can also check which variables (e.g., safety, beauty, wealth) were more frequently assessed by participants:
 
 ```{r topstudyquestions}
 
 pp_data %>%
-  group_by(study_question) %>% # categories based on the questions
+  group_by(study_question) %>% # categories based on study questions
   summarize(Count = n()) # count number of units in each category
 
 ```
 
-We can see that safety was the most commonly assessed variable, with 509,961 votes in total. In this book chapter we will examine reports of safety in the city of Atlanta. Before analysing the data, however, we can also examine if participants were more inclined to vote for images in the left or right part of the platform.
+We see that safety was the most commonly assessed variable, with 509,961 votes in total. In this chapter we will examine reports of safety in the city of Atlanta. Before analysing the data, however, we can also examine if participants were more inclined to vote for images in the left or right part of the platform. In other words, we analyse if responses were biased by the position in which images were shown on the website.
 
 ```{r topchoice}
 
 pp_data %>%
-  group_by(choice) %>% # categories based on vote
+  group_by(choice) %>% # categories based on vote (right, left or equal)
   summarize(Count = n()) %>% # count number of units in each category
   top_n(3) # print 3 most frequent categories
 
 ```
 
-The frequency of votes for left and right options is very similar, which shows that the position of the image does not appear to have an affect on participants' votes.
+The frequency of votes for left and right options is very similar, and thus we can conclude that the position of the image on the web does not appear to have an affect on participants' votes.
 
 ## 3.3 Cleaning Place Pulse data
 
 When it comes to crowdsourced data, you will have to be an expert data wrangler to make sure you can get the data to behave like you want it to - in other words, to make the data available in a format that allows you to answer your research questions. For example, in this case, we want to map the perceived safety of areas in Atlanta. To do this, first we have to select the area of Atlanta and the votes about safety.
 
-Atlanta is the capital city of the American State of Georgia. In 2018, its estimated papulation was close to 500,000 residents, and thus it is the 37th most populated city in the United States. There are two main reasons why we are conducing this exemplar study in Atlanta: first, as shown above, it was the city with the largest number of votes in the Place Pulse platform, and second, there is available open data at a detailed geographical scale about its social, demographic and crime characteristics that can be easily used to explain the patterns observed in Place Pulse data. Moreover, various papers have analysed the predictors of crime and fear of crime in this city, which can be used to interpret our results [see @mcnulty2000, @tester2011]
+Atlanta is the capital city of the State of Georgia, in the US. In 2018, its estimated papulation was close to 500,000 residents, and thus it is the 37th most populated city in the United States. There are two main reasons why we are conducting this exemplar study in Atlanta: first, as shown above, it was the city with the largest number of votes in the Place Pulse platform; and second, there is available open data about the social, demographic and crime characteristics of Atlanta neighborhoods, which can be easily accessed to explain the patterns observed in Place Pulse data. Moreover, various papers have analysed the predictors of crime and fear of crime in this city, which can be used to interpret our results [see @mcnulty2000; @tester2011]
 
-We can use the function `filter()` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta.
+We can use the function `filter()` from `dplyr` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta.
 
 ```{r getatlandapp}
 
@@ -172,9 +172,9 @@ pp_atl_s <- pp_atl %>%
 
 ```
 
-You can see now we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
+You can see now that we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
 
-We are interested in analysing the proportion of 'safer' votes in each neighbourhood of Atlanta. In order to assign each photograph to their neighbourhood, we will create two new columns that specify the longitude and latitude of the image of Atlanta being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' than the other picture. Some pairwise comparisons, however, assessed two images from Atlanta, which means that we will need to duplicate these votes to account for both the image assessed as 'safer' and the picture reported to be 'not safer'. First, we want to know the number of comparisons in which both images are from Atlanta.
+We are interested in analysing the proportion of 'safer' votes in each neighbourhood of Atlanta. In order to assign each photograph to their neighbourhood, we need to create two new columns that specify the longitude and latitude of the image being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' (i.e., less safe or equal) than the other picture. Some pairwise comparisons, however, assessed two different images from Atlanta, which means that we will need to duplicate these votes to account for both the image on the right and left of the pariwise comparison. First, we want to know the number of comparisons in which both images are from Atlanta. We can use the function `filter()` from `dplyr`, which we have already used above.
 
 ```{r counttwoatlanta}
 
@@ -188,12 +188,9 @@ pp_atl_s_dup %>%
 
 ```
 
-In total, 678 pairwise comparisons are based on two images from the city of Atlanta, whereas 36,536 compare one image from Atlanta with a picture from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to report the images on the left). For now, we delete duplicated cases from the main dataframe by using the `anti_join()` function, which searches those duplicated units that exist in the newly created dataset `pp_atl_dup` and deletes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
+In total, 678 pairwise comparisons are based on two images from Atlanta, whereas 36,536 compare one image from Atlanta with a picture from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to report the images on the left). For now, we delete duplicated cases from the main dataframe by using the `anti_join()` function from `dplyr`, which searches those duplicated units that exist in the newly created dataset `pp_atl_dup` and deletes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
 
 ```{r duplicatedatatwoatlanta}
-
-#pp_atl_s <- pp_atl_s %>%
-#  arrange(desc(X)) #order file by vote number
 
 # duplicate the new dataset
 pp_atl_s_dup2 <- pp_atl_s_dup 
@@ -204,33 +201,17 @@ pp_atl_s <- pp_atl_s %>%
 
 ```
 
-Now, the main dataset includes only those pairwise comparison in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph was from Atlanta or not.
+Now, the main dataset includes only those pairwise comparison in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph was from Atlanta or not.
 
 DELETE: First, we allocate the coordinates to those votes in which the image of the left is from Atlanta:
 
 ```{r coordsleftpic}
 
+# copy longitude and latitude from left image if left image is from Atlanta, 
+# otherwise copy from the right image
 pp_atl_s <- pp_atl_s %>%
     mutate(long_Atl = if_else(place_name_left == "Atlanta", long_left, long_right),
            lat_Atl  = if_else(place_name_left == "Atlanta", lat_left , lat_right))
-
-#pp_atl_s$long_Atl[pp_atl_s$place_name_left == "Atlanta"] <- 
-#      pp_atl_s$long_left[pp_atl_s$place_name_left == "Atlanta"]
-#pp_atl_s$lat_Atl[pp_atl_s$place_name_left  == "Atlanta"] <- 
-#      pp_atl_s$lat_left[pp_atl_s$place_name_left  == "Atlanta"]
-
-```
-
-THIS CAN BE DELETED:
-
-We then reproduce the same step with those votes in which the image of the right side of the comparison is from Atlanta:
-
-```{r coordsrightpic}
-
-#pp_atl_s$long_Atl[pp_atl_s$place_name_right == "Atlanta"] <- 
-#      pp_atl_s$long_right[pp_atl_s$place_name_right == "Atlanta"] 
-#pp_atl_s$lat_Atl[pp_atl_s$place_name_right  == "Atlanta"] <- 
-#      pp_atl_s$lat_right[pp_atl_s$place_name_right  == "Atlanta"]
 
 ```
 
@@ -238,12 +219,10 @@ Remember that we had previously created two new datasets with those votes in whi
 
 ```{r coordslefttwoatlanta}
 
+# copy coordinates from left image to new columns
 pp_atl_s_dup <- pp_atl_s_dup %>%
   mutate(long_Atl = long_left,
          lat_Atl  = lat_left)
-
-#pp_atl_s_dup$long_Atl <- pp_atl_s_dup$long_left
-#pp_atl_s_dup$lat_Atl  <- pp_atl_s_dup$lat_left
 
 ```
 
@@ -251,50 +230,36 @@ And then we allocate the coordinates of the right image to the second dataset of
 
 ```{r coordsrighttwoatlanta}
 
+# copy coordinates from right image to new columns
 pp_atl_s_dup2 <- pp_atl_s_dup2 %>%
   mutate(long_Atl = long_right,
          lat_Atl  = lat_right)
 
-#pp_atl_s_dup2$long_Atl <- pp_atl_s_dup2$long_right
-#pp_atl_s_dup2$lat_Atl  <- pp_atl_s_dup2$lat_right
-
 ```
 
-Before merging all the data into a single dataset, we will create a new column that distinguishes those images of Atlanta that were assessed as 'safer' from those reported as "less safe' or 'equal'. We can do this first in the main dataset (which only includes pairwise comparisons with one picture from Atlanta), by checking if the choice of each vote (i.e., 'left', 'right', or 'equal') corresponds to the position of the image from Atlanta. We assign a 1 when the user's vote corresponds to the position of the image of Atlanta, whereas a 0 is assigned when the image of a different city was chosen to be 'safer' and when users voted 'equal'.
+Before merging all the data into a single dataset, we will also create a new column that distinguishes those images of Atlanta that were assessed as 'safer' from those reported as 'less safe' or 'equal'. We do this first in the main dataset (which only includes pairwise comparisons with one picture from Atlanta), by checking if the choice of each vote (i.e., 'left', 'right', or 'equal') corresponds to the position of the image from Atlanta. We assign a 1 if the user choose the image of Atlanta as 'safer', whereas a 0 is assigned when the image of a different city was chosen to be 'safer' and when users voted 'equal'. We can also use the `mutate()` and `if_else()` functions from `dplyr` here.
 
 ```{r assign1or0}
 
+# if left image is from Atlanta and user voted for left image, assing 1, otherwise 0
+# if right image is from Atlanta and user voted for right image, assign 1, otherwise 0
 pp_atl_s <- pp_atl_s %>%
   mutate(win = if_else((place_name_left  == "Atlanta" & choice == "left") |
                        (place_name_right == "Atlanta" & choice == "right"), 1, 0))
 
-#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "left"]  <- 1
-#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "right"] <- 0
-#pp_atl_s$win[pp_atl_s$place_name_left  == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
-
-#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "right"] <- 1
-#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "left"]  <- 0
-#pp_atl_s$win[pp_atl_s$place_name_right == "Atlanta" & pp_atl_s$choice == "equal"] <- 0
-
 ```
 
-Similarly, in the 'pp_atl_s_dup' dataset, we can assign a 1 to those cases in which participants voted that the left image looked 'safer' and a 0 otherwise, given that this dataset has been previously created to assess the images of the left of pairwise comparisons in which both images were from Atlanta. And we can do the same with the second dataset that compares two images from Atlanta, which in this case refers to the image in the right.
+Similarly, in the `pp_atl_s_dup` dataset, we assign a 1 to those cases in which participants voted for the left image as 'safer' and a 0 otherwise, given that this dataset had been previously created to assess left images in cases when both images were from Atlanta. And we do the same with the second dataset (`pp_atl_s_dup2`) that compares two images from Atlanta, which in this case refers to the image in the right.
 
 ```{r assign1or0twoatlanta}
 
+# if participant voted for left image, assign 1, otherwise 0
 pp_atl_s_dup <- pp_atl_s_dup %>%
   mutate(win = if_else(choice == "left", 1, 0))
 
+# if participant voted for righ image, assign 1, otherwise 0
 pp_atl_s_dup2 <- pp_atl_s_dup %>%
   mutate(win = if_else(choice == "right", 1, 0))
-
-#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "left"]  <- 1
-#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "right"] <- 0
-#pp_atl_s_dup$win[pp_atl_s_dup$choice  == "equal"] <- 0
-
-#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "right"] <- 1
-#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "left"]  <- 0
-#pp_atl_s_dup2$win[pp_atl_s_dup$choice == "equal"] <- 0
 
 ```
 
@@ -310,9 +275,9 @@ We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that
 
 ## 3.4 Map Place Pulse data
 
-It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [@solymosi2015]. We will be using the `sf` and `ggplot2` libraries in order to create a map of perceived safety of built environment across the city of Atlanta.
+It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` and `ggplot2` libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF). For now, you can just use the code below, with the `st_read()` function in the `sf` package: 
+First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package: 
 
 ```{r loadshapefile}
 
@@ -320,7 +285,7 @@ atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=
 
 ```
 
-We can see what this looks like by using the `plot()` function to plot the geometry of the 'atl' object we created, called with the `st_geometry()` function: 
+We can see what this file looks like by using the `plot()` function to plot the geometry of the 'atl' object we created, called with the `st_geometry()` function: 
 
 ```{r plotatlgeom}
 
@@ -336,7 +301,7 @@ points_atl_s <- st_as_sf(pp_atl_s, coords = c("lat_Atl", "long_Atl")) #geocode '
 
 ```
 
-Now to be able to plot both these spatial layers on the same map, their coordinate reference systems (CRS) need to match. We can check these with the `st_crs()` function: 
+In order to plot both these spatial layers (i.e., votes recorded from Place Pulse and Atlanta census tracts) on the same map, their coordinate reference systems (CRS) need to match. We can check these with the `st_crs()` function: 
 
 ```{r checkcrs}
 
@@ -360,7 +325,7 @@ st_crs(points_atl_s) == st_crs(atl) #check if coordinate reference system is the
 
 ```
 
-Now we can map our data. See (LINK WITH MAPPING CHAPTER) for more information about crime mapping.
+Thus, we can now map our data. See (LINK WITH MAPPING CHAPTER) for more information about crime mapping.
 
 ```{r plotpoints}
 
@@ -373,7 +338,7 @@ map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl),
 
 ```
 
-This is a very busy map. Maybe instead we want to get some sort of average score for each census tract. We then calculate the proportion of 'safer' responses in each area. Note that @salesses2013 suggest computing a Q-score per image corrected by the "win" and "loss" ratio of all photographs with which it is compared, but for the purpose of this chapter we will compute a simple proportion that will allow us to directly analyse the geographical distribution of perceived safety. 
+This is a very busy map. Maybe instead we want to get some sort of average score for each census tract. We then calculate the proportion of 'safer' responses in each area [see @builgil2020]. Note that @salesses2013 suggest computing a Q-score per image corrected by the "win" and "loss" ratio of all photographs with which it is compared, but for the purpose of this chapter we will compute a simple proportion that will allow us to directly analyse the geographical distribution of perceived safety. 
 
 ```{r calcwinscore}
 
@@ -384,14 +349,16 @@ points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>%
 
 ```
 
-And we can add the average score of 'safer' reponses per area to the original shapefile of census tracts. We will also delete those census tracts in which we do not have any assessed of perceived safety.
+And we can add the average score of 'safer' reponses per area to the original shapefile of census tracts. We will also delete those census tracts in which we do not have any vote of perceived safety.
  
 ```{r joinwin}
 
 st_geometry(points_atl_s_nhood) <- NULL
 
+# merge census tracts and Place Pulse votes based on TRACT column
 atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT"))
 
+# delete census tracts with 0 votes (NAs)
 atl_pp_wins <- atl_pp_wins[!is.na(atl_pp_wins$winscore), ]
 
 ```
@@ -411,7 +378,7 @@ There are many more things one can do with these data. For example, we could loo
 
 ```{r}
 
-summary(atl_pp_wins$winscore) #descriptive statistics of proportion of 'safer' votes per tract
+summary(atl_pp_wins$winscore) # descriptive statistics of proportion of 'safer' votes per tract
 
 p <- ggplot(atl_pp_wins, aes(y = winscore))
 
@@ -423,7 +390,7 @@ You can do much more, but here we will focus on the specific issues to explore d
 
 ## 3.5 Exploring the known issues of crowdsourced data within Place Pulse
 
-In section 2, we mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset. Nevertheless, the sample's self-selection biases should be checked when possible. Here we will examine whether our sample size is affected by participation inequality, under-representation of certain areas and participation decrease. We will also study the validity of this crowdsourced data as a measure of perceived safety.
+In section 2, we mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in data recorded from Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset [@builgil2020]. Nevertheless, the sample's self-selection biases should be checked when possible. For instance, the first edition of Place Pulse, which was designed to register some demographic variables from participants, identified that 76.0% of those who reported their gender were males, and only 21.1% were females, and the median self-reported age was 28 years [@salesses2013]. Here we examine data from Place Pulse 2.0, which does not record social and demographic variables from participants, but we will examine whether our sample size is affected by other issues such as participation inequality, under-representation of certain areas and participation decrease. We will also study the validity of these crowdsourced data as a measure of perceived safety.
 
 ### 3.5.1 Participation inequality (supercontributors)
 
@@ -443,6 +410,7 @@ In fact, we can examine how much of the votes are produced by these "supercontri
 
 ```{r top1perc}
 
+# subset the top 1% of most prolific participants
 top_1percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
 
 ```
@@ -475,7 +443,7 @@ sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes b
 
 ### 3.5.2 Quantifying participation inequality
 
-One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualising it using a Lorenz curve. The Gini index (or Gini ratio) is a measure of statistical dispersion intended to measure inequality. Although it tends to be used to examine income inequality, it has also been freunqtly used to assess participation inequality in crowdsourcing platforms [see @solymosi2017]. Similarly, the Lorenz curve is a visual representation of inequality. For this you will need the library `ineq` so if you do not already have this you must install with the command: 
+One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualising it using a Lorenz curve. The Gini index (or Gini ratio) is a measure of statistical dispersion intended to measure inequality [@gastwirth1972]. Although it tends to be used to examine income inequality, it has also been frequently used to assess participation inequality in crowdsourcing platforms [see @solymosi2017; @solymosi2018]. Similarly, the Lorenz curve is a visual representation of inequality. For this you will need the library `ineq` [@zeileis2015] so if you do not already have this you must install with the command: 
 
 ```{r, eval = FALSE}
 
@@ -491,8 +459,7 @@ Gini(voter$num_votes)
 
 ```
 
-Remember that a score of 0 is perfect equality (everyone makes equal number of votes), while 1 is perfect inequality (only one person making all the reports, and no one else making any). Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States of America showed a Gini coefficient of 0.39.  
-To visualize this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
+Remember that a score of 0 is perfect equality (everyone makes equal number of votes), while 1 is perfect inequality (only one person making all the reports, and no one else making any). Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States of America showed a Gini coefficient of 0.39. To visualize this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
 
 ```{r lorenz}
 

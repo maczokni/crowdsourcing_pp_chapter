@@ -21,6 +21,7 @@ library(ineq)
 library(lubridate)
 library(tidyr)
 library(dplyr)
+library(purrr)
 ```
 
 ```{r, include=FALSE}
@@ -274,9 +275,9 @@ We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that
 
 It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` and `ggplot2` libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package [@pebesma2020]: 
+First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package [@pebesma2020]:
 
-```{r loadshapefile}
+```{r loadshapefile, results = "hide"}
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
@@ -302,7 +303,7 @@ In order to plot both these spatial layers (i.e., votes recorded from Place Puls
 
 ```{r checkcrs}
 
-st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same of both layers
+st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same in both layers
 
 ```
 
@@ -318,7 +319,7 @@ Now, if we check, they should have the same CRS:
 
 ```{r checkcrs2}
 
-st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same of both layers
+st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same in both layers
 
 ```
 
@@ -426,7 +427,7 @@ That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100
 
 Can you tell me what proportion of the votes were made by the top 10% of participants? What about the top 25%? 
 
-```{r activity1, echo = FALSE, eval=FALSE}
+```{r activity1, echo = FALSE, eval = FALSE}
 
 top_10percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 10/100)) #subset top 10% participants
 
@@ -466,7 +467,7 @@ plot(Lc(voter$num_votes),
 
 ```
 
-The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. With this information we can now quantify how severe the participation inequality is in our data, and compare with other crowdsourced data for context and understanding. 
+The Lorenz curve (red line) above shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. With this information we can now quantify how severe the participation inequality is in our data, and compare with other crowdsourced data for context and understanding.
 
 ### 3.5.3 Under-representation of certain areas
 
@@ -519,6 +520,90 @@ Note: large peak beginning on October 15th 2014: publication of @Harvey2014 MSc 
 ### 3.4.5 Measure validity
 
 Validity of an assessment is the degree to which it measures what it is supposed to measure. 
+
+```{r model, include=FALSE}
+
+# download key statistics for census tracts
+Migration <- read.csv("https://opendata.arcgis.com/datasets/738458ea84ae4d5ea412a843960a99b4_637.csv") #download migration data
+Migration <- Migration[c("GEOID", "pMoved_e")] #select variable % Moved in the last year, 2017
+
+Ethnicity <- read.csv("https://opendata.arcgis.com/datasets/ad1c598875644ad1b8a0397107091d1c_37.csv") #download ethnicity data
+Whites <- Ethnicity[c("GEOID", "pNHWhite_e")] #select variable % Not Hispanic, White alone, 2017
+Blacks <- Ethnicity[c("GEOID", "pNHBlack_e")] #select variable % Not Hispanic, Black or African American alone, 2017
+
+Occ_houses <- read.csv("https://opendata.arcgis.com/datasets/4692d4db01a14b92965addc80a00cd94_317.csv") #download housing data
+Occ_houses <- Occ_houses[c("GEOID", "pOccHU_e")] #select variable % Occupied housing units, 2017
+
+rent1000 <- read.csv("https://opendata.arcgis.com/datasets/db14dda46ba845e0b4081e67d647e15b_337.csv") #download rent data
+rent1000 <- rent1000[c("GEOID", "pGrent1000P_e")] #select variable % Gross rent $1,000 or more, 2017
+
+# merge all independent variables in a dataset
+
+exp_variables <- list(Migration, Whites, Blacks, Occ_houses, rent1000) %>% 
+  reduce(left_join, by = "GEOID")
+#Exp_variables <- merge(Migration, Whites, by = "GEOID")
+#Exp_variables <- merge(Exp_variables, Blacks, by = "GEOID")
+#Exp_variables <- merge(Exp_variables, Occ_houses, by = "GEOID")
+#Exp_variables <- merge(Exp_variables, rent1000, by = "GEOID")
+
+exp_variables$GEOID <- as.factor(exp_variables$GEOID)
+
+# merge dependent and independent variables
+atl_pp_covs <- atl_pp_wins %>%
+  left_join(exp_variables, by = c("FIPS" = "GEOID"), all.x = TRUE)
+#Atlanta_map3 <- merge(Atlanta_map2, Exp_variables, by = "GEOID", all.x = TRUE) 
+
+#standardise all variables to facilitate interpretation of coefficients
+atl_pp_covs <- atl_pp_covs %>%
+  mutate(Safety_s        = (winscore      - mean(winscore))      / sd(winscore)  ,
+         pMoved_e_s      = (pMoved_e      - mean(pMoved_e))      / sd(pMoved_e)  ,
+         pNHWhite_e_s    = (pNHWhite_e    - mean(pNHWhite_e))    / sd(pNHWhite_e),
+         pNHBlack_e_s    = (pNHBlack_e    - mean(pNHBlack_e))    / sd(pNHBlack_e),
+         pOccHU_e_s      = (pOccHU_e      - mean(pOccHU_e))      / sd(pOccHU_e)  ,
+         pGrent1000P_e_s = (pGrent1000P_e - mean(pGrent1000P_e)) / sd(pGrent1000P_e))
+#Atlanta_map3$Safety_s <- (Atlanta_map3$Safety-mean(Atlanta_map3$Safety))/sd(Atlanta_map3$Safety)
+#Atlanta_map3$pMoved_e_s <- (Atlanta_map3$pMoved_e-mean(Atlanta_map3$pMoved_e))/sd(Atlanta_map3$pMoved_e)
+#Atlanta_map3$pNHWhite_e_s <- (Atlanta_map3$pNHWhite_e-mean(Atlanta_map3$pNHWhite_e))/sd(Atlanta_map3$pNHWhite_e)
+#Atlanta_map3$pNHBlack_e_s <- (Atlanta_map3$pNHBlack_e-mean(Atlanta_map3$pNHBlack_e))/sd(Atlanta_map3$pNHBlack_e)
+#Atlanta_map3$pOccHU_e_s <- (Atlanta_map3$pOccHU_e-mean(Atlanta_map3$pOccHU_e))/sd(Atlanta_map3$pOccHU_e)
+#Atlanta_map3$pGrent1000P_e_s <- (Atlanta_map3$pGrent1000P_e-mean(Atlanta_map3$pGrent1000P_e))/sd(Atlanta_map3$pGrent1000P_e)
+
+# fit non-spatial linear model (OLS)
+model <- lm(formula = Safety_s ~ pMoved_e_s +
+            pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+            data = atl_pp_covs)
+
+# obtain model results
+summary(model)
+
+# fit spatial lag model
+model.lag <- spatialreg::lagsarlm(formula = Safety_s ~ pMoved_e_s +
+                      pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+                      data = atl_pp_covs, prox, zero.policy = T) 
+
+# obtain model results
+summary(model.lag)
+
+# fit spatial error model
+model.error <- spatialreg::errorsarlm(formula = Safety_s ~ pMoved_e_s +
+                          pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+                          data = atl_pp_covs, prox, zero.policy = T)
+
+# obtain model results
+summary(model.error)
+
+label <- c(
+  `(Intercept)`   = "Intercept",
+  pMoved_e_s      = "% Moved in last year",
+  pNHWhite_e_s    = "% White",
+  pNHBlack_e_s    = "% African American",
+  pOccHU_e_s      = "% Occupied housing units",
+  pGrent1000P_e_s = "% Rent $1,000 or more"
+)
+
+tab_model(model, model.lag, model.error, pred.labels = label)
+
+```
 
 # Conclusions
 

@@ -203,12 +203,9 @@ pp_atl_s <- pp_atl_s %>%
 
 Now, the main dataset includes only those pairwise comparison in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph was from Atlanta or not.
 
-DELETE: First, we allocate the coordinates to those votes in which the image of the left is from Atlanta:
-
 ```{r coordsleftpic}
 
-# copy longitude and latitude from left image if left image is from Atlanta, 
-# otherwise copy from the right image
+# copy coordinates from left image if it is from Atlanta, otherwise copy from right image
 pp_atl_s <- pp_atl_s %>%
     mutate(long_Atl = if_else(place_name_left == "Atlanta", long_left, long_right),
            lat_Atl  = if_else(place_name_left == "Atlanta", lat_left , lat_right))
@@ -297,7 +294,7 @@ Now, to be able to plot the safety votes on this map, we first need to make our 
 
 ```{r geocodepp}
 
-points_atl_s <- st_as_sf(pp_atl_s, coords = c("lat_Atl", "long_Atl")) #geocode 'safe' votes in Atlanta
+points_atl_s <- st_as_sf(pp_atl_s, coords = c("lat_Atl", "long_Atl")) #geocode votes
 
 ```
 
@@ -305,7 +302,7 @@ In order to plot both these spatial layers (i.e., votes recorded from Place Puls
 
 ```{r checkcrs}
 
-st_crs(points_atl_s) == st_crs(atl) #check if coordinate reference system is the same of both layers
+st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same of both layers
 
 ```
 
@@ -321,7 +318,7 @@ Now, if we check, they should have the same CRS:
 
 ```{r checkcrs2}
 
-st_crs(points_atl_s) == st_crs(atl) #check if coordinate reference system is the same of both layers
+st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same of both layers
 
 ```
 
@@ -355,7 +352,7 @@ And we can add the average score of 'safer' reponses per area to the original sh
 
 st_geometry(points_atl_s_nhood) <- NULL
 
-# merge census tracts and Place Pulse votes based on TRACT column
+# merge census tracts and Place Pulse votes based on 'TRACT' column
 atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT"))
 
 # delete census tracts with 0 votes (NAs)
@@ -378,7 +375,7 @@ There are many more things one can do with these data. For example, we could loo
 
 ```{r}
 
-summary(atl_pp_wins$winscore) # descriptive statistics of proportion of 'safer' votes per tract
+summary(atl_pp_wins$winscore) # descriptive statistics: proportion 'safer' votes per tract
 
 p <- ggplot(atl_pp_wins, aes(y = winscore))
 
@@ -388,7 +385,7 @@ p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") 
 
 You can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
 
-## 3.5 Exploring the known issues of crowdsourced data within Place Pulse
+## 3.5 Exploring known issues of crowdsourced data within Place Pulse
 
 In section 2, we mentioned a few issues that are usually present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in data recorded from Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset [@builgil2020]. Nevertheless, the sample's self-selection biases should be checked when possible. For instance, the first edition of Place Pulse, which was designed to register some demographic variables from participants, identified that 76.0% of those who reported their gender were males, and only 21.1% were females, and the median self-reported age was 28 years [@salesses2013]. Here we examine data from Place Pulse 2.0, which does not record social and demographic variables from participants, but we will examine whether our sample size is affected by other issues such as participation inequality, under-representation of certain areas and participation decrease. We will also study the validity of these crowdsourced data as a measure of perceived safety.
 
@@ -410,7 +407,7 @@ In fact, we can examine how much of the votes are produced by these "supercontri
 
 ```{r top1perc}
 
-# subset the top 1% of most prolific participants
+# subset top 1% of most prolific participants
 top_1percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
 
 ```

@@ -79,7 +79,7 @@ Lack of temporal variability in some web-based measures
 
 Validity of measures
 
-# 3. Crowdsourcing perceptions of safety: Step-by-step example in R
+# 3. Crowdsourcing perceptions of safety: Step-by-step example in `R`
 
 In order to illustrate the use of crowdsourced data in criminological research, we present below an exemplar study using data recorded by the Place Pulse 2.0 platform [@salesses2013]. This section will introduce the Place Pulse project and provide `R` codes to download, explore and clean this source of crowdsourced data. Then, we will analyse the spatial distribution of crowdsourced perceptions of space and safety in Atlanta, Georgia, and illustrate with examples some known issues of crowdsourced data (i.e., participantion inequality, participation decrease and measure validity).
 
@@ -121,7 +121,6 @@ pp_data %>%
   summarize(Count = n()) %>% # count number of units in each category
   top_n(3) # print 3 most frequent categories
 
-
 ```
 
 Atlanta was indeed the city with the largest number of votes. We can also check which variables (e.g., safety, beauty, wealth) were more frequently assessed by participants:
@@ -130,7 +129,8 @@ Atlanta was indeed the city with the largest number of votes. We can also check 
 
 pp_data %>%
   group_by(study_question) %>% # categories based on study questions
-  summarize(Count = n()) # count number of units in each category
+  summarize(Count = n()) %>% # count number of units in each category
+  arrange(desc(Count)) # reorder in descending order
 
 ```
 
@@ -157,7 +157,7 @@ We can use the function `filter()` from `dplyr` to create a new dataframe that i
 
 ```{r getatlandapp}
 
-# select cases in which the image of the right or the image of the left was from Atlanta
+# select cases in which the image of the right or left is from Atlanta
 pp_atl <- pp_data %>%
   filter(place_name_right == "Atlanta" | place_name_left == "Atlanta")
 
@@ -277,7 +277,7 @@ We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that
 
 It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` and `ggplot2` libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package: 
+First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package [@pebesma2020]: 
 
 ```{r loadshapefile}
 

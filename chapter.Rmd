@@ -24,7 +24,7 @@ library(dplyr)
 library(purrr)
 ```
 
-```{r, include=FALSE}
+```{r Rmarkdown_setup, include=FALSE}
 options(tinytex.verbose = TRUE)
 ```
 
@@ -277,7 +277,7 @@ It is possible to use mapping techniques learned in other chapters (LINK WITH MA
 
 First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile from Harvard University. You can go on their website to find out more about this boundary data: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL). We can download the shapefile directly using their Application Programme Interfact (or API) - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). For now, you can just use the code below, with the `st_read()` function in the `sf` package [@pebesma2020]:
 
-```{r loadshapefile, results = "hide"}
+```{r loadshapefile, echo = TRUE, results = "hide"}
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
@@ -330,8 +330,9 @@ Thus, we can now map our data. See (LINK WITH MAPPING CHAPTER) for more informat
 map <- ggplot(data = atl) + geom_sf() + theme_void() +
        coord_sf(xlim = c(-84.7, -84), ylim = c(33.6, 34), 
                 expand = FALSE) #create map
-  
-map + geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl),
+
+map + ggtitle("Crowdsourced votes of safety in Atlanta") +
+  geom_point(data = pp_atl_s, aes(x = lat_Atl, y = long_Atl),
                  size = .1) #plot map with points
 
 ```
@@ -366,6 +367,7 @@ Finally, we can plot the propotion of 'safer' votes in each census tract.
 ```{r mapwins}
 
 ggplot(data = atl_pp_wins) + 
+  ggtitle("Proportion of 'safer' votes per census tract") +
   geom_sf(aes(fill = winscore)) +
   coord_sf(xlim = c(-84.7, -84), ylim = c(33.5, 34), expand = FALSE) +
   theme_void() 
@@ -380,7 +382,7 @@ summary(atl_pp_wins$winscore) # descriptive statistics: proportion 'safer' votes
 
 p <- ggplot(atl_pp_wins, aes(y = winscore))
 
-p + geom_boxplot() + ggtitle("Boxplot of percentage of 'safer' votes per area") # boxplot
+p + geom_boxplot() + ggtitle("Boxplot of proportion of 'safer' votes per area") # boxplot
 
 ```
 
@@ -550,7 +552,7 @@ exp_variables$GEOID <- as.factor(exp_variables$GEOID)
 
 # merge dependent and independent variables
 atl_pp_covs <- atl_pp_wins %>%
-  left_join(exp_variables, by = c("FIPS" = "GEOID"), all.x = TRUE)
+  left_join(exp_variables, by = c("FIPS" = "GEOID"))
 #Atlanta_map3 <- merge(Atlanta_map2, Exp_variables, by = "GEOID", all.x = TRUE) 
 
 #standardise all variables to facilitate interpretation of coefficients

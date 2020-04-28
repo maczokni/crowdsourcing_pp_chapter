@@ -281,6 +281,9 @@ First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile fr
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
+atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
+atl <- st_as_sf(atl)
+
 ```
 
 We can see what this file looks like by using the `plot()` function to plot the geometry of the 'atl' object we created, called with the `st_geometry()` function: 
@@ -526,33 +529,53 @@ Validity of an assessment is the degree to which it measures what it is supposed
 ```{r model, include=FALSE}
 
 # download key statistics for census tracts
-Migration <- read.csv("https://opendata.arcgis.com/datasets/738458ea84ae4d5ea412a843960a99b4_637.csv") #download migration data
-Migration <- Migration[c("GEOID", "pMoved_e")] #select variable % Moved in the last year, 2017
+Migration <- read.csv("covariates_model/Migration_(by_Census_Tract)_2017.csv")
+Ethnicity <- read.csv("covariates_model/Ethnicity_(by_Census_Tract)_2017.csv") 
+Occ_houses <- read.csv("covariates_model/Housing_Characteristics_(by_Census_Tract)_2017.csv")
+rent1000 <- read.csv("covariates_model/Gross_Rent_(by_Census_Tract)_2017.csv")
+Income <- read.csv("covariates_model/Income_by_Census_Tract_2017.csv")
 
-Ethnicity <- read.csv("https://opendata.arcgis.com/datasets/ad1c598875644ad1b8a0397107091d1c_37.csv") #download ethnicity data
-Whites <- Ethnicity[c("GEOID", "pNHWhite_e")] #select variable % Not Hispanic, White alone, 2017
-Blacks <- Ethnicity[c("GEOID", "pNHBlack_e")] #select variable % Not Hispanic, Black or African American alone, 2017
+#Employment <- read.csv("covariates_model/Unemployment_2015.csv")
+#Income <- read.csv("covariates_model/Income_2015.csv")
 
-Occ_houses <- read.csv("https://opendata.arcgis.com/datasets/4692d4db01a14b92965addc80a00cd94_317.csv") #download housing data
-Occ_houses <- Occ_houses[c("GEOID", "pOccHU_e")] #select variable % Occupied housing units, 2017
+#Migration <-  read.csv("https://opendata.arcgis.com/datasets/738458ea84ae4d5ea412a843960a99b4_637.csv") #download migration data
+#Migration <- Migration[c("GEOID", "pMoved_e")] #select variable % Moved in the last year, 2017
 
-rent1000 <- read.csv("https://opendata.arcgis.com/datasets/db14dda46ba845e0b4081e67d647e15b_337.csv") #download rent data
-rent1000 <- rent1000[c("GEOID", "pGrent1000P_e")] #select variable % Gross rent $1,000 or more, 2017
+#Ethnicity <- read.csv("https://opendata.arcgis.com/datasets/ad1c598875644ad1b8a0397107091d1c_37.csv") #download ethnicity data
+#Whites <- Ethnicity[c("GEOID", "pNHWhite_e")] #select variable % Not Hispanic, White alone, 2017
+#Blacks <- Ethnicity[c("GEOID", "pNHBlack_e")] #select variable % Not Hispanic, Black or African American alone, 2017
+
+#Occ_houses <- read.csv("https://opendata.arcgis.com/datasets/4692d4db01a14b92965addc80a00cd94_317.csv") #download housing data
+#Occ_houses <- Occ_houses[c("GEOID", "pOccHU_e")] #select variable % Occupied housing units, 2017
+
+#rent1000 <- read.csv("https://opendata.arcgis.com/datasets/db14dda46ba845e0b4081e67d647e15b_337.csv") #download rent data
+#rent1000 <- rent1000[c("GEOID", "pGrent1000P_e")] #select variable % Gross rent $1,000 or more, 2017
 
 # merge all independent variables in a dataset
 
-exp_variables <- list(Migration, Whites, Blacks, Occ_houses, rent1000) %>% 
-  reduce(left_join, by = "GEOID")
+#exp_variables <- list(Employment, Income) %>% 
+#  reduce(left_join, by = "TRACTCE10") %>%
+#  select(TRACTCE10, Percent_Percent_Unemployed__Civ, Average_Per_capita_Inc)
+
+exp_variables <- list(Migration, Whites, Blacks, Occ_houses, rent1000, Income) %>% 
+  reduce(left_join, by = "GEOID") %>%
+  select(GEOID, pMoved_e, pNHWhite_e, pNHBlack_e, pOccHU_e, pGrent1000P_e, pHHIncLt10k_e)
+
 #Exp_variables <- merge(Migration, Whites, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, Blacks, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, Occ_houses, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, rent1000, by = "GEOID")
 
-exp_variables$GEOID <- as.factor(exp_variables$GEOID)
+exp_variables$GEOID10 <- as.factor(exp_variables$GEOID10)
+
+class(atl_pp_wins$TRACT)
+atl_pp_wins$TRACT <- as.numeric(atl_pp_wins$TRACT)
+
+
 
 # merge dependent and independent variables
 atl_pp_covs <- atl_pp_wins %>%
-  left_join(exp_variables, by = c("FIPS" = "GEOID"))
+  left_join(exp_variables, by = c("TRACT" = "TRACTCE10"))
 #Atlanta_map3 <- merge(Atlanta_map2, Exp_variables, by = "GEOID", all.x = TRUE) 
 
 #standardise all variables to facilitate interpretation of coefficients

@@ -557,35 +557,46 @@ Income <- read.csv("covariates_model/Income_by_Census_Tract_2017.csv")
 #  reduce(left_join, by = "TRACTCE10") %>%
 #  select(TRACTCE10, Percent_Percent_Unemployed__Civ, Average_Per_capita_Inc)
 
-exp_variables <- list(Migration, Whites, Blacks, Occ_houses, rent1000, Income) %>% 
-  reduce(left_join, by = "GEOID") %>%
-  select(GEOID, pMoved_e, pNHWhite_e, pNHBlack_e, pOccHU_e, pGrent1000P_e, pHHIncLt10k_e)
+Migration$NAME
+
+exp_variables <- list(Migration, Ethnicity, Occ_houses, rent1000, Income) %>% 
+  reduce(left_join, by = "NAME") %>%
+  select(NAME, pMoved_e, pNHWhite_e, pNHBlack_e, pOccHU_e, pGrent1000P_e, pHHIncLt10k_e) %>%
+  mutate(NAME = gsub("(.*),.*", "\\1", NAME),
+         NAME = sub(".*? ", "", NAME),
+         NAME = sub(".*? ", "", NAME))
+
+#exp_variables$NAME <- gsub("(.*),.*", "\\1", exp_variables$NAME)
+
+#exp_variables$NAME <- sub(".*? ", "", exp_variables$NAME)
+#exp_variables$NAME <- sub(".*? ", "", exp_variables$NAME)
 
 #Exp_variables <- merge(Migration, Whites, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, Blacks, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, Occ_houses, by = "GEOID")
 #Exp_variables <- merge(Exp_variables, rent1000, by = "GEOID")
 
-exp_variables$GEOID10 <- as.factor(exp_variables$GEOID10)
-
-class(atl_pp_wins$TRACT)
-atl_pp_wins$TRACT <- as.numeric(atl_pp_wins$TRACT)
-
-
+exp_variables$GEOID <- as.vector(exp_variables$GEOID)
 
 # merge dependent and independent variables
 atl_pp_covs <- atl_pp_wins %>%
-  left_join(exp_variables, by = c("TRACT" = "TRACTCE10"))
+  left_join(exp_variables, by = c("TRACTID" = "NAME"))
+
+table(is.na(atl_pp_covs$pNHBlack_e))
+
 #Atlanta_map3 <- merge(Atlanta_map2, Exp_variables, by = "GEOID", all.x = TRUE) 
 
 #standardise all variables to facilitate interpretation of coefficients
 atl_pp_covs <- atl_pp_covs %>%
-  mutate(Safety_s        = (winscore      - mean(winscore))      / sd(winscore)  ,
+  filter(!is.na(pMoved_e)) %>%
+  mutate(winscore        = winscore * 100,
+         winscore_s      = (winscore      - mean(winscore))      / sd(winscore)  ,
          pMoved_e_s      = (pMoved_e      - mean(pMoved_e))      / sd(pMoved_e)  ,
          pNHWhite_e_s    = (pNHWhite_e    - mean(pNHWhite_e))    / sd(pNHWhite_e),
          pNHBlack_e_s    = (pNHBlack_e    - mean(pNHBlack_e))    / sd(pNHBlack_e),
          pOccHU_e_s      = (pOccHU_e      - mean(pOccHU_e))      / sd(pOccHU_e)  ,
-         pGrent1000P_e_s = (pGrent1000P_e - mean(pGrent1000P_e)) / sd(pGrent1000P_e))
+         pGrent1000P_e_s = (pGrent1000P_e - mean(pGrent1000P_e)) / sd(pGrent1000P_e),
+         pHHIncLt10k_e_s = (pHHIncLt10k_e - mean(pHHIncLt10k_e)) / sd(pHHIncLt10k_e))
 #Atlanta_map3$Safety_s <- (Atlanta_map3$Safety-mean(Atlanta_map3$Safety))/sd(Atlanta_map3$Safety)
 #Atlanta_map3$pMoved_e_s <- (Atlanta_map3$pMoved_e-mean(Atlanta_map3$pMoved_e))/sd(Atlanta_map3$pMoved_e)
 #Atlanta_map3$pNHWhite_e_s <- (Atlanta_map3$pNHWhite_e-mean(Atlanta_map3$pNHWhite_e))/sd(Atlanta_map3$pNHWhite_e)
@@ -593,17 +604,29 @@ atl_pp_covs <- atl_pp_covs %>%
 #Atlanta_map3$pOccHU_e_s <- (Atlanta_map3$pOccHU_e-mean(Atlanta_map3$pOccHU_e))/sd(Atlanta_map3$pOccHU_e)
 #Atlanta_map3$pGrent1000P_e_s <- (Atlanta_map3$pGrent1000P_e-mean(Atlanta_map3$pGrent1000P_e))/sd(Atlanta_map3$pGrent1000P_e)
 
+
 # fit non-spatial linear model (OLS)
-model <- lm(formula = Safety_s ~ pMoved_e_s +
-            pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+model <- lm(formula = winscore ~ pMoved_e +
+            pNHWhite_e + pNHBlack_e + pOccHU_e + pGrent1000P_e + pHHIncLt10k_e,
+            data = atl_pp_covs)
+
+model <- lm(formula = winscore_s ~ pMoved_e_s +
+            pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
             data = atl_pp_covs)
 
 # obtain model results
 summary(model)
 
+library(spdep)
+
+nb <- poly2nb(atl_pp_covs, queen = TRUE) #compute neighbors list based on 'Queen' contiguity approach
+
+prox <- nb2listw(nb, style = "W", zero.policy = TRUE) #compute proximity matrix (all neighbours have equal weights)
+
+
 # fit spatial lag model
 model.lag <- spatialreg::lagsarlm(formula = Safety_s ~ pMoved_e_s +
-                      pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+                      pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
                       data = atl_pp_covs, prox, zero.policy = T) 
 
 # obtain model results
@@ -611,7 +634,7 @@ summary(model.lag)
 
 # fit spatial error model
 model.error <- spatialreg::errorsarlm(formula = Safety_s ~ pMoved_e_s +
-                          pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s,
+                          pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
                           data = atl_pp_covs, prox, zero.policy = T)
 
 # obtain model results

@@ -281,8 +281,8 @@ First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile fr
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
-atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
-atl <- st_as_sf(atl)
+#atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
+#atl <- st_as_sf(atl)
 
 ```
 
@@ -520,138 +520,6 @@ ggplot(by_day, aes(x = day, y = num_votes)) +
 
 Note: large peak beginning on July 24th 2013: publication of @salesses2013 on July 24th and press release via MIT News (http://news.mit.edu/2013/quantifying-urban-perceptions-0724)
 Note: large peak beginning on October 15th 2014: publication of @Harvey2014 MSc thesis
-
-
-### 3.4.5 Measure validity
-
-Validity of an assessment is the degree to which it measures what it is supposed to measure. 
-
-```{r model, include=FALSE}
-
-# download key statistics for census tracts
-Migration <- read.csv("covariates_model/Migration_(by_Census_Tract)_2017.csv")
-Ethnicity <- read.csv("covariates_model/Ethnicity_(by_Census_Tract)_2017.csv") 
-Occ_houses <- read.csv("covariates_model/Housing_Characteristics_(by_Census_Tract)_2017.csv")
-rent1000 <- read.csv("covariates_model/Gross_Rent_(by_Census_Tract)_2017.csv")
-Income <- read.csv("covariates_model/Income_by_Census_Tract_2017.csv")
-
-#Employment <- read.csv("covariates_model/Unemployment_2015.csv")
-#Income <- read.csv("covariates_model/Income_2015.csv")
-
-#Migration <-  read.csv("https://opendata.arcgis.com/datasets/738458ea84ae4d5ea412a843960a99b4_637.csv") #download migration data
-#Migration <- Migration[c("GEOID", "pMoved_e")] #select variable % Moved in the last year, 2017
-
-#Ethnicity <- read.csv("https://opendata.arcgis.com/datasets/ad1c598875644ad1b8a0397107091d1c_37.csv") #download ethnicity data
-#Whites <- Ethnicity[c("GEOID", "pNHWhite_e")] #select variable % Not Hispanic, White alone, 2017
-#Blacks <- Ethnicity[c("GEOID", "pNHBlack_e")] #select variable % Not Hispanic, Black or African American alone, 2017
-
-#Occ_houses <- read.csv("https://opendata.arcgis.com/datasets/4692d4db01a14b92965addc80a00cd94_317.csv") #download housing data
-#Occ_houses <- Occ_houses[c("GEOID", "pOccHU_e")] #select variable % Occupied housing units, 2017
-
-#rent1000 <- read.csv("https://opendata.arcgis.com/datasets/db14dda46ba845e0b4081e67d647e15b_337.csv") #download rent data
-#rent1000 <- rent1000[c("GEOID", "pGrent1000P_e")] #select variable % Gross rent $1,000 or more, 2017
-
-# merge all independent variables in a dataset
-
-#exp_variables <- list(Employment, Income) %>% 
-#  reduce(left_join, by = "TRACTCE10") %>%
-#  select(TRACTCE10, Percent_Percent_Unemployed__Civ, Average_Per_capita_Inc)
-
-Migration$NAME
-
-exp_variables <- list(Migration, Ethnicity, Occ_houses, rent1000, Income) %>% 
-  reduce(left_join, by = "NAME") %>%
-  select(NAME, pMoved_e, pNHWhite_e, pNHBlack_e, pOccHU_e, pGrent1000P_e, pHHIncLt10k_e) %>%
-  mutate(NAME = gsub("(.*),.*", "\\1", NAME),
-         NAME = sub(".*? ", "", NAME),
-         NAME = sub(".*? ", "", NAME))
-
-#exp_variables$NAME <- gsub("(.*),.*", "\\1", exp_variables$NAME)
-
-#exp_variables$NAME <- sub(".*? ", "", exp_variables$NAME)
-#exp_variables$NAME <- sub(".*? ", "", exp_variables$NAME)
-
-#Exp_variables <- merge(Migration, Whites, by = "GEOID")
-#Exp_variables <- merge(Exp_variables, Blacks, by = "GEOID")
-#Exp_variables <- merge(Exp_variables, Occ_houses, by = "GEOID")
-#Exp_variables <- merge(Exp_variables, rent1000, by = "GEOID")
-
-exp_variables$GEOID <- as.vector(exp_variables$GEOID)
-
-# merge dependent and independent variables
-atl_pp_covs <- atl_pp_wins %>%
-  left_join(exp_variables, by = c("TRACTID" = "NAME"))
-
-table(is.na(atl_pp_covs$pNHBlack_e))
-
-#Atlanta_map3 <- merge(Atlanta_map2, Exp_variables, by = "GEOID", all.x = TRUE) 
-
-#standardise all variables to facilitate interpretation of coefficients
-atl_pp_covs <- atl_pp_covs %>%
-  filter(!is.na(pMoved_e)) %>%
-  mutate(winscore        = winscore * 100,
-         winscore_s      = (winscore      - mean(winscore))      / sd(winscore)  ,
-         pMoved_e_s      = (pMoved_e      - mean(pMoved_e))      / sd(pMoved_e)  ,
-         pNHWhite_e_s    = (pNHWhite_e    - mean(pNHWhite_e))    / sd(pNHWhite_e),
-         pNHBlack_e_s    = (pNHBlack_e    - mean(pNHBlack_e))    / sd(pNHBlack_e),
-         pOccHU_e_s      = (pOccHU_e      - mean(pOccHU_e))      / sd(pOccHU_e)  ,
-         pGrent1000P_e_s = (pGrent1000P_e - mean(pGrent1000P_e)) / sd(pGrent1000P_e),
-         pHHIncLt10k_e_s = (pHHIncLt10k_e - mean(pHHIncLt10k_e)) / sd(pHHIncLt10k_e))
-#Atlanta_map3$Safety_s <- (Atlanta_map3$Safety-mean(Atlanta_map3$Safety))/sd(Atlanta_map3$Safety)
-#Atlanta_map3$pMoved_e_s <- (Atlanta_map3$pMoved_e-mean(Atlanta_map3$pMoved_e))/sd(Atlanta_map3$pMoved_e)
-#Atlanta_map3$pNHWhite_e_s <- (Atlanta_map3$pNHWhite_e-mean(Atlanta_map3$pNHWhite_e))/sd(Atlanta_map3$pNHWhite_e)
-#Atlanta_map3$pNHBlack_e_s <- (Atlanta_map3$pNHBlack_e-mean(Atlanta_map3$pNHBlack_e))/sd(Atlanta_map3$pNHBlack_e)
-#Atlanta_map3$pOccHU_e_s <- (Atlanta_map3$pOccHU_e-mean(Atlanta_map3$pOccHU_e))/sd(Atlanta_map3$pOccHU_e)
-#Atlanta_map3$pGrent1000P_e_s <- (Atlanta_map3$pGrent1000P_e-mean(Atlanta_map3$pGrent1000P_e))/sd(Atlanta_map3$pGrent1000P_e)
-
-
-# fit non-spatial linear model (OLS)
-model <- lm(formula = winscore ~ pMoved_e +
-            pNHWhite_e + pNHBlack_e + pOccHU_e + pGrent1000P_e + pHHIncLt10k_e,
-            data = atl_pp_covs)
-
-model <- lm(formula = winscore_s ~ pMoved_e_s +
-            pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
-            data = atl_pp_covs)
-
-# obtain model results
-summary(model)
-
-library(spdep)
-
-nb <- poly2nb(atl_pp_covs, queen = TRUE) #compute neighbors list based on 'Queen' contiguity approach
-
-prox <- nb2listw(nb, style = "W", zero.policy = TRUE) #compute proximity matrix (all neighbours have equal weights)
-
-
-# fit spatial lag model
-model.lag <- spatialreg::lagsarlm(formula = Safety_s ~ pMoved_e_s +
-                      pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
-                      data = atl_pp_covs, prox, zero.policy = T) 
-
-# obtain model results
-summary(model.lag)
-
-# fit spatial error model
-model.error <- spatialreg::errorsarlm(formula = Safety_s ~ pMoved_e_s +
-                          pNHWhite_e_s + pNHBlack_e_s + pOccHU_e_s + pGrent1000P_e_s + pHHIncLt10k_e_s,
-                          data = atl_pp_covs, prox, zero.policy = T)
-
-# obtain model results
-summary(model.error)
-
-label <- c(
-  `(Intercept)`   = "Intercept",
-  pMoved_e_s      = "% Moved in last year",
-  pNHWhite_e_s    = "% White",
-  pNHBlack_e_s    = "% African American",
-  pOccHU_e_s      = "% Occupied housing units",
-  pGrent1000P_e_s = "% Rent $1,000 or more"
-)
-
-tab_model(model, model.lag, model.error, pred.labels = label)
-
-```
 
 # Conclusions
 

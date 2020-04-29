@@ -281,6 +281,7 @@ First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile fr
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
+#library(geojsonio)
 #atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
 #atl <- st_as_sf(atl)
 

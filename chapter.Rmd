@@ -6,7 +6,7 @@ abstract: "Digital platforms allow recording large volumes of data in relatively
 author: |
   | David Buil-Gil and Reka Solymosi
   | Department of Criminology, University of Manchester, UK
-date: "24/04/2020"
+date: "30/04/2020"
 output:
   pdf_document: default
   word_document: default
@@ -40,45 +40,28 @@ Crowdsourcing refers to the practise of enlisting the knowledge, experience or s
 
 In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, researchers have shown how users' online communication behaviors can be crowdsourced and analyzed for measuring the breakdown of social and physical order at detailed spatial scales [@erete2016; @williams2017]. Criminologists can use large crowdsourced datasets to detect and explain criminal activity and disorder.
 
-On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
+On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996; @hough2004]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime and the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
 
-To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allows authors to map the users' fear pf crime across the different areas of London, UK. @salesses2013 designed and recorded data from the Place Pluse platform, which asks participants to choose 'which place looks safer' between two images taken from Google Street View. Then @salesses2013 produced a map of perceived safety in New York, USA. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogota, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded by FixMyStreet, an online problem reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms that have been designed and utilized to study the fear of crime [see @solymosi2020].
+To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allowed authors to map the users' fear of crime across different areas of London, UK. @salesses2013 designed and recorded data from the Place Pluse platform, which asks participants to choose 'which place looks safer' between two images taken from Google Street View. Then, @salesses2013 produced a map of perceived safety in New York, USA. In this chapter we will also use data recorded from Place Pulse to analyse perceived safety in Atlanta. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogotá, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded from FixMyStreet, an online problem-reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms that have been designed and utilized to study the fear of crime [see a review in @solymosi2020].
 
 # 2. Strengths and weaknesses of crowdsourced data
 
-Although crowdsourced data about public perceptions of space and safety have some key strengths over data recorded by traditional survey methods (e.g., precise spatial data, information about immediate environmental variables, reduced cost), their unique mode of production is also associated with certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability of final results [@builgil2020; @elliott2017]. Amongst those limitations identified by researchers using crowdsourced data to study the fear of crime, the ones that are most commonly mentioned are related to the participation inequality arising from self-selection in crowdsourced samples, the difficulty to interpret results, and the under-representation of certain areas and times [@solymosi2020]. Others also identify that the number of participants in crowdsourcing projects tends to decrease over time (i.e., participation decrease), and some platforms have difficulties to engage participant and can only record small samples [e.g., @blom2010]. We will briefly review some of these strengths and weaknesses of crowdsourced data and illustrate some of them with data about perceptions of safety in Atlanta.
+Although crowdsourced data about public perceptions of space and safety have some key strengths over data recorded from traditional survey methods (e.g., precise spatial data, information about immediate environmental variables, reduced cost), their unique mode of production is also associated with certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability of final results [@builgil2020; @elliott2017]. Amongst those limitations identified by researchers using crowdsourced data to study emotions about crime, the ones that are most commonly mentioned are related to the participation inequality arising from participants' self-selection, difficulty to interpret results, and under-representation of certain areas and times [@solymosi2020]. Others also identify that the number of participants in crowdsourcing projects tends to decrease over time (i.e., participation decrease), and some platforms have difficulties to engage participant and can only record small samples [e.g., @blom2010]. We will briefly review some of these strengths and weaknesses of crowdsourced data and illustrate some of them with crowdsourced data about perceptions of safety in Atlanta.
+
+@solymosi2020 conducted a systematic review of 27 studies published between 2010 and 2018 utilizing or discussing the use of crowdsourcing to study perceptions and emotions about crime. The most frequent strength of crowdsourcing and app-based methods identified by researchers was that these techniques allow capturing the spatial-temporal specific nature of emotions about crime, which was identified by 23 out of 27 papers. It is well known today that 'mental events' of fear of crime are qualitatively and quantitatively different from 'mental states' of worry or anxiety: whereas emotional reactions of fear take place under the presence of situational and context-specific elements that make the person feel threatened [@castrotoledo2017], concerns and worries about crime refer to more general concerns about both immediate and future risks [@builgil2019; @hough2004]. Thus, crowdsourcing techniques powered by digital technologies enable recording emotions of fear of crime in their precise space and time, which allows ultimately to "un-erroneously associate them [experiences of fear] with elements of the environmental backcloth such as incivilities, crime, and disorder” [@solymosi2015, p. 198]. This is related to another important strength of crowdsourcing: these techniques also allow recording data about the architechtural features and environmental characteristics of spaces where mental events of fear are more common [@chataway2017; @traunmueller2015].
+
+Another obvious advantage of crowdsourcing is its reduced cost of data collections. Large volumes of data can be recorded at a very low cost. As an example, @dubey2016 analyzed more than 350,000 votes of perceived safety recorded from the Place Pulse platform, and @solymosi2017 analyzed more than 275,000 reports of disorder in London. These large sample sizes are very costly to record by using traditional sample surveys. In this chapter we will illustrate how to download data about more than 1.5 million votes registered from the Place Pulse platform. and we will analyze more than 35,000 votes online perceived safety in Atlanta.
+
+Crowdsorucing offer advantages over other methods to record data about perceptions of space and crime, but its unique mode of production also create certain challenges that may affect the validity and precision of recorded data. Perhaps the main weakness of data recorded from crowdsourcing is related to the participants' self-selection. While probability surveys are carefully designed to select participants randomly, and thus all units in the population have equal probability of being chosen, crowdsourcing projects harness data from non-probability samples who decide when and where to share their perceptions and emotions, or whether they want to participate at all [@elliott2017]. The mode of production of crowdsourced data increases the risk of self-selection bias, and as a consequence males and youngs citizens tend to be overrepresented in crowdsourced data [@chataway2017] and citizens from deprived areas are generally less represented than persons from wealthy areas [@solymosi2018]. For example, @salesses2015 observed that 78.3% of those participants who informed about their gender when using the Place Pulse platform were males, and @solymosi2017 highlight that only 26.0% of those who informed about their gender when reporting instances of disorder via FixMyStreet were females.
+
+Those crowdsourcing platforms that allow participants to vote multiple times may also suffer from participation inequality (or unequal participation). In order words, "it is often observed that few users are responsible for most crowdsourced information, while the majority participate only a few times" [@builgil2020, p. 6]. To illustrate this, @dubey2016 shows that 6,118 of the 81,730 persons who used the Place Pulse platform participated only once, while 30 users participated more than 1,000 times and the most prolific user voted 7,168 times. @solymosi2017 also shows that one fourth of all FixMyStreet reports are produced by one percent of participants, and 73% of persons contribute only once.
+
+The fact that participants of crowdsourcing projects can decide where and when to participate also explains why certain areas and times are under-represented. For instance, it is likely that app-based platforms fail to capture data from high-crime-density areas, since participants may avoid those areas where they feel exposed to crime [@innes2015]. The routine activity of participants is also reflected on an under-representation of votes at night [@blom2010].
+
+Finally, there are also ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020].
 
 
-
-
-
-
-@solymosi2020 STRENGTHS
-
-Capture the spatial-temporal specific nature of attitudes and emotions towards crime.	23/27
-Record data on individual variables and specific types of fear/disorder.	12/27
-Record data on architectural features.	20/27
-Reduced cost of data collection.	11/27
-
-
-WEAKNESSES
-
-Self-selection bias:
-males tend to be more represented than females, and young citizens are overrepresented compared to older groups @chataway2017
-check @salesses2013
-
-Participation inequality:
-FixMyStreet data, one fourth of all reports had been produced by one percent of users, while 73% of people in the sample contributed only once (@solymosi2017).
-
-Under-representation of certain areas
-
-Participation decrease, sample attrition over time @solymosi2020 @blom2010
-
-Repeatedly asking about fear might increase/cause fear
-
-Lack of temporal variability in some web-based measures 
-
-Validity of measures
+ADD REFS: @innes2015 @jackson2015
 
 # 3. Crowdsourcing perceptions of safety: Step-by-step example in `R`
 
@@ -92,7 +75,7 @@ Place Pulse 2.0 was an online crowdsourcing platform designed to record data abo
 
 ## 3.2 Download and explore Place Pulse data
 
-We have saved all Place Pulse data in a data repository on FigShare. You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
+We have saved all Place Pulse data (more than 1.5 million votes) in a data repository on FigShare. You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
 
 ```{r readpp}
 
@@ -299,7 +282,8 @@ We can see what this file looks like by using the `plot()` function to plot the 
 
 ```{r plotatlgeom}
 
-plot(st_geometry(atl))
+plot(st_geometry(atl),
+     main = "Atlanta Region census tracts")
 
 ```
 
@@ -496,6 +480,25 @@ summary(atl_pp_wins$num_votes)
 Whereas the average sample size per area is quite large, 
 
 CONTINUE HERE!!
+
+```{r votes_per_sqmile}
+
+atl_pp_wins <- atl_pp_wins %>%
+  mutate(votes_sqmile = num_votes / SQ_MILES)
+
+```
+
+XXXX
+
+```{r map_votesmile}
+
+ggplot(data = atl_pp_wins) + 
+   ggtitle("Number of votes per square mile") + 
+   geom_sf(aes(fill = votes_sqmile)) + 
+   coord_sf(xlim = c(-84.7, -84), ylim = c(33.5, 34), expand = FALSE) + 
+   theme_void()
+
+```
 
 
 

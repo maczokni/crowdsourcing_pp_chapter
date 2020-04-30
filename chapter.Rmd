@@ -131,7 +131,7 @@ Atlanta was indeed the city with the largest number of votes. We can also check 
 pp_data %>%
   group_by(study_question) %>% # categories based on study questions
   summarize(Count = n()) %>% # count number of units in each category
-  arrange(desc(Count)) # reorder in descending order
+  arrange(desc(Count)) # print in descending order
 
 ```
 
@@ -179,7 +179,7 @@ We are interested in analysing the proportion of 'safer' votes in each neighbour
 
 ```{r counttwoatlanta}
 
-# create dataset of votes in which both images are from Atlanta
+# create dataset in which both images are from Atlanta
 pp_atl_s_dup  <- pp_atl_s %>%
     filter(place_name_right == "Atlanta" & place_name_left == "Atlanta") 
 
@@ -217,7 +217,7 @@ Remember that we had previously created two new datasets with those votes in whi
 
 ```{r coordslefttwoatlanta}
 
-# copy coordinates from left image to new columns
+# copy coordinates from left image
 pp_atl_s_dup <- pp_atl_s_dup %>%
   mutate(long_Atl = long_left,
          lat_Atl  = lat_left)
@@ -228,7 +228,7 @@ And then we allocate the coordinates of the right image to the second dataset of
 
 ```{r coordsrighttwoatlanta}
 
-# copy coordinates from right image to new columns
+# copy coordinates from right image
 pp_atl_s_dup2 <- pp_atl_s_dup2 %>%
   mutate(long_Atl = long_right,
          lat_Atl  = lat_right)

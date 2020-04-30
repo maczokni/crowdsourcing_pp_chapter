@@ -36,9 +36,11 @@ options(tinytex.verbose = TRUE)
 
 # 1. Introduction 
 
-Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (*the 'crowd'*) to achieve a common goal or cumulative result, usually via a platform powered by digital technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a very small cost, which explains why data generated through crowdsourcing is currently utilized for a variety of function ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007]. As an example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature about the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study in `R` software [@R2020] using crowdsourced perceptions of safety in Atlanta, Georgia.
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (*the 'crowd'*) to achieve a common goal or cumulative result, usually via a platform powered by online technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a very small cost, which explains why data generated through crowdsourcing is currently utilized for a variety of functions ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007; @hecker2019]. As an example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Similarly, crowdsourcing projects have been deployed to harness people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. In this chapter we review some published literature about the use of crowdsourcing for criminological research, discuss the main strenghts and limitations of data produced from crowdsourcing platforms, and present an step-by-step exemplar study in `R` software [@R2020] using crowdsourced perceptions of safety in Atlanta, Georgia.
 
-In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, @williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some criminologists use large crowdsourced datasets to detect and explain criminal activity.
+In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate those forms of online hate speech with offline racially and religiously aggravated crimes [@williams2020]. Moreover, some argue that crowdsourcing users' online communication behaviors on social media, 
+
+@williams2017 [p. 334] argue that "open-source communications, in particular from Twitter, have potential for measuring the breakdown of social and physical order at the borough level", which is also shown by @erete2016. Thus, some criminologists use large crowdsourced datasets to detect and explain criminal activity.
 
 On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime as well as the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
 
@@ -86,7 +88,7 @@ In order to illustrate the use of crowdsourced data in criminological research, 
 
 ## 3.1 The Place Pulse project
 
-Place Pulse 2.0 was an online crowdsourcing platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained were shown to participants, who then were asked ‘Which place looks safer?’ (see Figure 1). The platform could also be used to report which of the two images looked wealthier, more beautiful, more boring, livelier or more depressing, but we will focus on the 'safer' answers in this chapter. Images were selected randomly from Google Street View across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. The platform recorded all responses in a public dataset, but responders did not provide any further information about themselves, which means that we do not know their social and demographic characteristics. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it, but the platform was closed in 2019. We have been granted access to all the data recorded between the 28th May 2013 and the 22nd August 2019 to write this chapter, which has been uploaded onto an open repository with consent of the data producers [@salesses2013].
+Place Pulse 2.0 was an online crowdsourcing platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression. Two images obtained were shown to participants, who then were asked ‘Which place looks safer?’ (see Figure 1). The platform could also be used to report which of the two images looked wealthier, more beautiful, more boring, livelier or more depressing, but we will focus on the 'safer' answers in this chapter. Images were selected randomly from Google Street View across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. The platform recorded all responses in a public dataset, but responders did not provide any further information about themselves, which means that we do not know their social and demographic characteristics. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it, but the platform was closed in late 2019. We have been granted access to all the data recorded between the 28th May 2013 and the 22nd August 2019 to write this chapter. Data have been uploaded onto an open repository with consent of the data producers [@salesses2013].
 
 ![Figure 1: Place Pulse website](figures/Place_Pulse.jpg)
 
@@ -100,7 +102,7 @@ pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137')
 
 ```
 
-This data set includes 17 variables, but we will only use some of them. A unique identification code was given to each participant (*'voter_uniqueid'*) and image (*'place_id_left'* for images in the left side of the pairwise comparison and *'place_id_right'* for images in the right part). The columns *'place_name_left'* and *'place_name_right'* specify the city of each photograph. The column *'choice'* shows if the user perceived the image in the left or right to be 'safer' (participants could also answer 'equal'), and the column *'study_question'* allows studying perceptions about different variables (e.g., safety, wealth, beauty). The columns *'day'* and *'time'* specify the moment when each vote took place, and the columns *'long_right'*, *'lat_right'*, *'long_left'* and *'lat_left'* show the longitude and latitude of both photographs.
+This dataset includes 17 variables, but we will only use some of them. A unique identification code was given to each participant (*'voter_uniqueid'*) and image (*'place_id_left'* for images in the left side of the pairwise comparison and *'place_id_right'* for images in the right part). The columns *'place_name_left'* and *'place_name_right'* specify the city of each photograph. The column *'choice'* shows if the user perceived the image in the left or right to be 'safer' (participants could also answer 'equal'), and the column *'study_question'* allows studying perceptions about different variables (e.g., safety, wealth, beauty). The columns *'day'* and *'time'* specify the moment when each vote took place, and the columns *'long_right'*, *'lat_right'*, *'long_left'* and *'lat_left'* show the longitude and latitude of both photographs.
 
 We can begin by examining which cities were more frequenty assessed within the Place Pulse platform. This can be checked for images in the left side of the pairwise comparison first, and then for images in the right. We can use the `group_by()` and `summarize()` functions from `dplyr` package [@wickham2020] to check this:
 
@@ -239,8 +241,8 @@ Before merging all the data into a single dataset, we will also create a new col
 
 ```{r assign1or0}
 
-# if left image is from Atlanta and user voted for left image, assing 1, otherwise 0
-# if right image is from Atlanta and user voted for right image, assign 1, otherwise 0
+# if left image is from Atlanta and user voted for left image as 'safer', assing 1, otherwise 0
+# if right image is from Atlanta and user voted for right image as 'safer', assign 1, otherwise 0
 pp_atl_s <- pp_atl_s %>%
   mutate(win = if_else((place_name_left  == "Atlanta" & choice == "left") |
                        (place_name_right == "Atlanta" & choice == "right"), 1, 0))
@@ -251,11 +253,11 @@ Similarly, in the `pp_atl_s_dup` dataset, we assign a 1 to those cases in which 
 
 ```{r assign1or0twoatlanta}
 
-# if participant voted for left image, assign 1, otherwise 0
+# if participant voted for left image as 'safer', assign 1, otherwise 0
 pp_atl_s_dup <- pp_atl_s_dup %>%
   mutate(win = if_else(choice == "left", 1, 0))
 
-# if participant voted for righ image, assign 1, otherwise 0
+# if participant voted for righ image as 'safer', assign 1, otherwise 0
 pp_atl_s_dup2 <- pp_atl_s_dup %>%
   mutate(win = if_else(choice == "right", 1, 0))
 
@@ -281,9 +283,11 @@ First, acquire a shapefile for Atlanta. Let's use the census tracts shapefile fr
 
 atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
-#library(geojsonio)
-#atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
-#atl <- st_as_sf(atl)
+atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
+
+library(geojsonio)
+atl <- geojson_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson",  what = "sp")
+atl <- st_as_sf(atl)
 
 ```
 
@@ -533,5 +537,9 @@ Further applications to crime and place research
 David Buil-Gil is a Research Fellow at the Department of Criminology of the University of Manchester, UK, and a member of the Cathie Marsh Institute for Social Research at this same university. His research interests cover small area estimation applications in criminology, environmental criminology, crime mapping, emotions about crime, crime reporting, new methods for data collection and open data.
 
 Reka Solymosi is a Lecturer in Quantiative Methods at the Department of Criminology of the University of Manchetser, UK, with interests in data analysis and visualization, crowdsourcing, rstats, fear of crime, transport, and collecting data about everyday life. As a former crime analyst, she is interested in practical applications to research and solving everyday problems with data.
+
+# Acknowledgments
+
+The authors would like to thank César A. Hidalgo for providing access to the data used in this book chapter.
 
 # References

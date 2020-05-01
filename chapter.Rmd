@@ -68,7 +68,7 @@ In order to illustrate the use of crowdsourcing in criminological research, we p
 
 Place Pulse 2.0 was an online crowdsourcing platform designed to record data about citizens' perceptions of safety, beauty, wealth, liveability, boredom and depression in urban areas. Two images were shown to participants, who then were asked to answer *‘Which place looks safer?’* (see Figure 1). Participants could also be asked which of the two images looked wealthier, more beautiful, more boring, livelier or more depressing, but we will focus on perceptions of space and safety in this chapter. Images were selected randomly from Google Street View across 56 cities from 28 countries, and these captions were originally taken between 2007 and 2012. The platform recorded all votes in a public dataset, but respondents did not provide any further information about themselves, which means that we do not know the social and demographic characteristics of participants. Place Pulse used to be hosted in an open website (http://pulse.media.mit.edu/) and anyone could use it, but the platform was closed in late 2019. We have been granted access to all the data recorded between May 28th 2013 and August 22nd 2019 to write this chapter. All data have also been uploaded onto an open repository with consent of the data producers [@salesses2013].
 
-![Figure 1: Place Pulse website](figures/Place_Pulse.jpg)
+![Figure 1: Place Pulse website](figures/Place_Pulse2.jpg)
 
 ## 3.2 Download and explore Place Pulse data
 
@@ -76,7 +76,7 @@ We have saved all Place Pulse data (more than 1.5 million votes) in a data repos
 
 ```{r readpp}
 
-pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137') 
+pp_data <- read.csv('https://ndownloader.figshare.com/files/21739137')
 
 ```
 
@@ -134,7 +134,7 @@ When it comes to crowdsourced data, the first step is to clean the data to make 
 
 Atlanta is the capital city of the State of Georgia, United States. In 2018, its estimated papulation was close to 500,000 residents, and it is the 37th most populated city in the United States. There are two main reasons why we are conducting this exemplar study in Atlanta: first, as shown above, it was the city with the largest number of votes in the Place Pulse platform; and second, there is available open data about the social, demographic and crime characteristics of Atlanta neighborhoods, which can be easily accessed to explain the patterns observed in Place Pulse data. Moreover, various papers have analysed the predictors of crime and fear of crime in this city, which can be used to interpret our results [see @mcnulty2000; @tester2011]
 
-We can use the function `filter()` from `dplyr` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta. Thus, we remove all those votes in other cities.
+We can use the function `filter()` from `dplyr` to create a new dataframe that includes those pairwise comparisons in which either the image of the right or the image of the left, or both, are from Atlanta. Thus, we remove all those votes for images of other cities.
 
 ```{r getatlandapp}
 
@@ -144,7 +144,7 @@ pp_atl <- pp_data %>%
 
 ```
 
-We will also focus on the ratings of areas as safer, as we are interested in people's perceptions of place and safety: 
+We will also focus on the ratings of areas as 'safer', as we are interested in people's perceptions of place and safety: 
 
 ```{r getsafetyq}
 
@@ -155,7 +155,7 @@ pp_atl_s <- pp_atl %>%
 
 You can see now that we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
 
-We are interested in analysing the proportion of 'safer' votes in each neighborhood of Atlanta. In order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' (i.e., less safe or equal) than the other photograph. Some pairwise comparisons, however, assessed two different images from Atlanta, which means that we will need to duplicate these votes to account for both the image on the right and left of the pariwise comparison. First, we want to know the number of comparisons in which both images are from Atlanta. We can use the function `filter()` from `dplyr`, which we have also used above.
+We are interested in analysing the proportion of 'safer' votes in each neighborhood of Atlanta. In order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' (i.e., less safe or equal) than the other photograph. Some pairwise comparisons, however, assessed two different images from Atlanta, which means that we will need to duplicate these votes to account for both images on the right and left of the pariwise comparison. First, we want to know the number of comparisons in which both images are from Atlanta. We can use the function `filter()` from `dplyr`, which we have also used above.
 
 ```{r counttwoatlanta}
 
@@ -169,7 +169,7 @@ pp_atl_s_dup %>%
 
 ```
 
-In total, 678 pairwise comparisons are based on two images from Atlanta, whereas 36,536 compare one image from Atlanta against a photogrpah from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to rate the images on the left). For now, we also delete these duplicated cases from the main dataframe by using the `anti_join()` function from `dplyr`, which searches those units that exist in the newly created dataset `pp_atl_dup` and deletes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
+In total, 678 pairwise comparisons are based on two images from Atlanta, whereas 36,536 compare one image from Atlanta against a photogrpah from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to rate the images on the left). For now, we also delete these duplicated cases from the main dataframe by using the `anti_join()` function from `dplyr`, which searches those units that exist in the newly created dataset `pp_atl_dup` and removes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
 
 ```{r duplicatedatatwoatlanta}
 
@@ -182,7 +182,7 @@ pp_atl_s <- pp_atl_s %>%
 
 ```
 
-Now, the main dataset includes only those pairwise comparisons in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph was from Atlanta or not.
+Now, the main dataset includes only those pairwise comparisons in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph is from Atlanta or not.
 
 ```{r coordsleftpic}
 
@@ -219,8 +219,8 @@ Before merging all the data into a single dataset, we will also create a new col
 
 ```{r assign1or0}
 
-# if left image is from Atlanta and user voted for left image as 'safer', assing 1, otherwise 0
-# if right image is from Atlanta and user voted for right image as 'safer', assign 1, otherwise 0
+# if left image is from Atlanta and left image is chosen as 'safer', assing 1, otherwise 0
+# if right image is from Atlanta and right image is chosen as 'safer', assign 1, otherwise 0
 pp_atl_s <- pp_atl_s %>%
   mutate(win = if_else((place_name_left  == "Atlanta" & choice == "left") |
                        (place_name_right == "Atlanta" & choice == "right"), 1, 0))
@@ -253,9 +253,9 @@ We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that
 
 ## 3.4 Map Place Pulse data
 
-It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` and `ggplot2` libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
+It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a shapefile for Atlanta. We can download the Atlanta Region census tracts shapefile from various sources. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. You can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Programme Interfact (or API) and the `geojson_sp()` function from `geojsonio` package [@chamberlain2020] - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). In case this API call fails (e.g., because of a network error), we have uploaded the original shapefile onto a Github repository: [https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson](https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson). And you can also download this file from the Worldmap platform of Harvard University: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL) using the the `st_read()` function of `sf` package [@pebesma2020]. You can just use the code below:
+First, acquire a shapefile for Atlanta. We can download the Atlanta Region census tracts shapefile from various sources. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. You can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Programme Interfact (or API) and the `geojson_sp()` function from `geojsonio` package [@chamberlain2020] - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). In case this API call fails (e.g., because of a network error), we have uploaded the original shapefile onto a Github repository: [https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson](https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson). And you can also download this file from the Worldmap platform of Harvard University: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL) using the the `st_read()` function of `sf` package. You can just use the code below:
 
 ```{r loadshapefile}
 
@@ -270,7 +270,7 @@ atl <- geojson_sp("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c
 # convert sp file into st
 atl <- st_as_sf(atl)
 
-# download json file from WorldMap of Harvard University
+# download json from WorldMap of Harvard University
 #atl <- st_read("http://worldmap.harvard.edu/download/wfs/1824/json?outputFormat=json&service=WFS&request=GetFeature&format_options=charset%3AUTF-8&typename=geonode%3AAtlanta_Census_Tracts_SHL&version=1.0.0")
 
 ```
@@ -284,7 +284,7 @@ plot(st_geometry(atl),
 
 ```
 
-Now, to be able to plot the safety votes on this map, we first need to make our votes a spatial object, by specfying that the "long_Atl" and "lat_Atl" columns contain our longitude and latitude information. We use the `st_as_sf()` function for this: 
+Now, to be able to plot the safety votes on this map, we first need to make our votes a spatial object, by specfying that the *'long_Atl'* and *'lat_Atl'* columns contain our longitude and latitude information. We use the `st_as_sf()` function for this: 
 
 ```{r geocodepp}
 
@@ -300,7 +300,7 @@ st_crs(points_atl_s) == st_crs(atl) #check if CRS is the same in both layers
 
 ```
 
-We function tells us that it is 'false' that both CRS are not equal, but we can change this with the following line of code:
+The function tells us that it is 'false' that both CRS are equal, but we can change this with the following line of code:
 
 ```{r changecrs}
 
@@ -330,28 +330,30 @@ map + ggtitle("Crowdsourced votes of safety in Atlanta") +
 
 ```
 
-This is a very busy map. Maybe instead we want to get some sort of average score for each census tract. We then calculate the proportion of 'safer' responses in each area [see @builgil2020]. Note that @salesses2013 suggest computing a Q-score per image corrected by the "win" and "loss" ratio of all photographs with which it is compared, but for the purpose of this chapter we will compute a simple proportion that will allow us to directly analyse the geographical distribution of perceived safety. 
+This is a very busy map. Maybe instead we want to get some sort of average score for each census tract. We then calculate the proportion of 'safer' responses in each area. Note that @salesses2013 suggest computing a Q-score per image corrected by the "win" and "loss" ratio of all photographs with which it is compared, but for the purpose of this chapter we will compute a simple proportion that will allow us to directly analyse the geographical distribution of perceived safety [see @builgil2020]. 
 
 ```{r calcwinscore}
 
-points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% 
-                      group_by(TRACT) %>% 
-                      summarise(winscore = mean(win, na.rm = TRUE), 
-                                num_votes = n())
+points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% # find points that intersect with tracts
+                      group_by(TRACT) %>% # make groups based on census tracts
+                      summarise(winscore = mean(win, na.rm = TRUE), # proportion of 'safer' votes
+                                num_votes = n()) # count number of votes
 
 ```
 
-And we can add the average score of 'safer' reponses per area to the original shapefile of census tracts. We will also delete those census tracts in which we do not have any vote of perceived safety.
+And we can add the average score of 'safer' reponses per area to the original shapefile of census tracts using the `left_join()` function of `dplyr`. We will also delete those census tracts in which we do not have any vote of perceived safety by using the `filter()` function.
  
 ```{r joinwin}
 
+# @REKA: CAN YOU ADD A SHORT NOTE HERE?
 st_geometry(points_atl_s_nhood) <- NULL
 
 # merge census tracts and Place Pulse votes based on 'TRACT' column
 atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT"))
 
 # delete census tracts with 0 votes (NAs)
-atl_pp_wins <- atl_pp_wins[!is.na(atl_pp_wins$winscore), ]
+atl_pp_wins <- atl_pp_wins %>%
+  filter(!is.na(winscore))
 
 ```
 
@@ -367,7 +369,7 @@ ggplot(data = atl_pp_wins) +
 
 ```
 
-There are many more things one can do with these data. For example, we could look at the descriptive statistics and boxplot of the proportion of 'safer' votes in each area: 
+There are many more things one can do with these data. For example, we could look at the descriptive statistics (`summary()` function) and boxplot of the proportion of 'safer' votes in each area (`geom_boxplot()` function from `ggplot2`). 
 
 ```{r summary_areas}
 
@@ -379,9 +381,7 @@ p + geom_boxplot() + ggtitle("Boxplot of proportion of 'safer' votes per area") 
 
 ```
 
-
-
-
+Researchers may also be interested in analyzing the environmental characteristics of those places that are the safest or the least safe according to Place Pulse participants. We show below some lines of code that will print the coordinates of places rated as the safest and the least safe. To illustrate this, we only consider those places that have been evaluated at least 20 times, to increase the validity of these rates, but one may decide to reduce or increase this threshold value according to different criteria. For example, if we were interested in obtaining the coordinates of the five places rated as the safest we would need to change the last line of code by `head(5)`, or `tail(5)` to obtain the coordinates of the least safe places.
 
 ```{r image_safest}
 
@@ -391,18 +391,15 @@ points_atl_s %>%
   summarize(winscore = mean(win, na.rm = TRUE), # calculate proportion of 'safer' responses
            num_votes = n()) %>% # count number of votes
   filter(num_votes >= 20) %>% # filter out pictures with less than 20 votes
-  arrange(winscore) %>% # order by proportion of 'safer' responses
+  arrange(desc(winscore)) %>% # order by proportion of 'safer' responses
   filter(row_number()==1 | row_number()==n()) # print lowest and highest score
-
 
 ```
 
+This allows criminologists to study the characteristics of those places rated by participants are more or less safe. If we use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe the places assessed by Place Pulse as the least safe and safest amongst those rated by at least 20 participants, we can easily see that the least safe place is characterized by very dense vegetation (which may be perceived to offer concealment for possible criminals), lack of exit routes to escape from a potential threat, and an abandoned house with signs of physical disorder (see @fisher1992)
 
 
-
-
-
-
+ADD REF: @fisher1992
 
 ![Figure 2: Least safe and safest places rated by at least 20 Place Pulse users](figures/unsafe_safe.jpg)
 

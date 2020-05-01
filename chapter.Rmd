@@ -518,20 +518,18 @@ We see that areas in the centre tend to have larger number of votes and are ther
 
 ### 3.5.4 Study participation descrease in Place Pulse
 
+Finally, some researchers have identified that the number of users of crowdsourcing projects decreases over time: whereas the number of participants tends to be large during the first few days, users lose interest in the project if they do not obtain clear short-term benefits from using it [see @blom2010; @solymosi2020]. We can also expore whether our Place Pulse dataset is affected by participation decrease.
 
-
-
-!!!This should also be broken up and motivated/exaplained!!!
+We will use various functions from `dplyr` and `ggplot2` packages (seen above) to visualize the number of votes since the Place Pulse website launch until its closure. But we also need to use other key functions: *(i)* the `ymd()` function from `lubricate` package is used to transform the dates in which votes took place into `Date` objects [@spinu2020], and the *(ii)* the `complete()` function from `tidyr` package is used to turn implicit missing dates into explicit missing dates and create a timeline of dates with and without votes [@wickham2020c].
 
 ```{r datestuff}
 
 by_day <- pp_data %>% 
-          mutate(day = ymd(day)) %>% 
-          group_by(day) %>% 
-          summarise(num_votes = n()) %>% 
-          complete(day = seq.Date(min(day), max(day), by = "day")) %>% 
-          mutate(num_votes = replace_na(num_votes, 0))
-
+          mutate(day = ymd(day)) %>% # create new column by transforming into 'Date' objects
+          group_by(day) %>% # create groups by days
+          summarise(num_votes = n()) %>% # count number of votes by day
+          complete(day = seq.Date(min(day), max(day), by = "day")) %>% # complete days with 0 votes
+          mutate(num_votes = replace_na(num_votes, 0)) # create new column: num votes by day
 
 ggplot(by_day, aes(x = day, y = num_votes)) + 
        geom_line() + 
@@ -542,10 +540,13 @@ ggplot(by_day, aes(x = day, y = num_votes)) +
 
 ```
 
-Note: large peak beginning on July 24th 2013: publication of @salesses2013 on July 24th and press release via MIT News (http://news.mit.edu/2013/quantifying-urban-perceptions-0724)
-Note: large peak beginning on October 15th 2014: publication of @Harvey2014 MSc thesis
+The number of votes within the Place Pulse platform clearly decreased over time, but we also observe some peaks even years after the launching of the project. Some of these peaks match the dates of key publications using Place Pulse data and media releases, which shows that participation in crowdsoucing projects can be enhanced by periodic campaigns. For example, we observe a large peak beginning on July 24th 2013, date in which @salesses2013 published their paper and the Massachusetts Institute of Technology published a news article about the Place Pulse platform on their website: [http://news.mit.edu/2013/quantifying-urban-perceptions-0724](http://news.mit.edu/2013/quantifying-urban-perceptions-0724). We also observe another peak of participation beginning on October 15th 2014, just after the publication of @harvey2014 Master's thesis about how to automate the study of the  characteristics of streetscape skeletons and urban perceptions from Place Pulse data.
 
 # Conclusions
+
+
+
+
 
 Open topics in crowdsourced data
 

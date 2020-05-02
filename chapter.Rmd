@@ -6,7 +6,7 @@ abstract: "Digital platforms allow recording large volumes of data in relatively
 author: |
   | David Buil-Gil and Reka Solymosi
   | Department of Criminology, University of Manchester, UK
-date: "30/04/2020"
+date: "02/05/2020"
 output:
   pdf_document: default
   word_document: default
@@ -40,25 +40,25 @@ Crowdsourcing refers to the practise of enlisting the knowledge, experience or s
 
 In criminological research, crowdsourcing analysis has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime, thus allowing researchers to devise new explanations of crime and perceived safety. On one hand, open data recorded from social media and online forums enables detecting various forms of online crimes [e.g., hate speech towards minority groups; @miro2018], and even associate patterns of online communication with offline serious offences [@bendler2014; @williams2020]. Moreover, researchers have shown how users' online communication behaviors can be crowdsourced and analyzed for measuring the breakdown of social and physical order at detailed spatial scales [@erete2016; @williams2017]. Criminologists can use large crowdsourced datasets to detect and explain criminal activity and disorder.
 
-On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996; @hough2004]. The public perceptions and emotions about crime have traditionally been analysed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime and the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
+On the other hands, those researchers interested in the public perceptions about space and safety explore the use of volunteered crowdsourced information to explain the citizens' perceptions and emotions about crime. Criminologists have long known that public emotions about crime are not always explained by the prevalence and harms of crime, but instead fear of crime emotions are the result of individual predispositions to experience negative emotions about crime, which become fear of crime episodes under the presence of certain social and situational influences [@gabriel2003; @hale1996; @hough2004]. The public perceptions and emotions about crime have traditionally been analyzed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited to capture the time and context-specific emotional reactions of fear of crime and the citizens' behavioural responses to such emotions of fear (e.g., avoidance behaviors, acquiring alarm systems or weapons). As an alternartive, some researchers have endorsed the use crowdsourcing and app-based tool to record data about the places and times in which episodes of fear of crime are more frequent, in order to fully conceptualize and operationalize the fear of crime as a function of individuals and their immediate environment [@solymosi2018; @solymosi2020].
 
-To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allowed authors to map the users' fear of crime across different areas of London, UK. @salesses2013 designed and recorded data from the Place Pluse platform, which asks participants to choose 'which place looks safer' between two images taken from Google Street View. Then, @salesses2013 produced a map of perceived safety in New York, USA. In this chapter we will also use data recorded from Place Pulse to analyse perceived safety in Atlanta. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogotá, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded from FixMyStreet, an online problem-reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many others crowdsourcing platforms that have been designed and utilized to study the fear of crime [see a review in @solymosi2020].
+To mention only a few examples of crowdsourcing platforms deployed to record data about perceptions and emotions about crime, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allowed authors to map the users' fear of crime across different areas of London, UK. @salesses2013 designed and recorded data from the Place Pulse platform, which asks participants to choose 'which place looks safer' between two images taken from Google Street View. Then, @salesses2013 produced a map of perceived safety in New York. In this chapter we will also use data recorded from Place Pulse to analyse perceived safety in Atlanta. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogotá, Colombia, to report those areas in which they feel less safe. And @solymosi2017 analysed secondary data recorded from FixMyStreet, an online problem-reporting website, to examine perceptions of neighborhood disorder in London, UK. These are only a few examples, but there are many other crowdsourcing platforms that have been designed and utilized to study the fear of crime [see a review in @solymosi2020].
 
 # 2. Strengths and weaknesses of crowdsourced data
 
 Crowdsourced data about public perceptions of space and safety have some key strengths over data recorded from traditional survey methods (e.g., precise spatial data, information about immediate environmental variables, reduced cost). However, the mode of production of crowdsourcing is also associated with certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability of final results [@builgil2020; @elliott2017]. Amongst those limitations identified by researchers, the ones that are most commonly mentioned are related to the unequal participation arising from participants' self-selection, difficulty to interpret results, and under-representation of certain areas and times [@solymosi2020]. Others also identify that the number of participants in crowdsourcing projects tends to decrease over time (i.e., participation decrease), and some platforms have difficulties to engage participant and can only record small samples [e.g., @blom2010]. We will briefly review some of these strengths and weaknesses of crowdsourcing projects and illustrate some of them with crowdsourced data about perceptions of safety in Atlanta.
 
-@solymosi2020 conducted a systematic review of 27 studies utilizing or discussing the use of crowdsourcing to study perceptions and emotions about crime. The most frequent strength of crowdsourcing and app-based methods identified by researchers was that these techniques allow capturing the spatial-temporal specific nature of fear of crime, which was identified by 23 out of 27 papers. It is well known today that 'mental events' of fear of crime are qualitatively and quantitatively different from 'mental states' of worry or anxiety: whereas emotional reactions of fear take place due to the presence of situational and context-specific elements that make the person feel threatened [@castrotoledo2017], anxieties and worries about crime refer to more general concerns about immediate and future risks [@builgil2019; @hough2004]. Crowdsourcing techniques powered by digital technologies enable recording emotions of fear of crime in their precise space and time, which allows ultimately to "un-erroneously associate them [experiences of fear] with elements of the environmental backcloth such as incivilities, crime, and disorder” [@solymosi2015, p. 198]. This is related to another important strength of crowdsourcing: these techniques also allow recording data about the architechtural features and environmental characteristics of spaces where mental events of fear are more common [@chataway2017; @traunmueller2015].
+@solymosi2020 conducted a systematic review of 27 studies utilizing or discussing the use of crowdsourcing to study perceptions and emotions about crime. The most frequent strength of crowdsourcing and app-based methods identified by researchers was that these techniques allow capturing the spatial-temporal specific nature of fear of crime, which was identified by 23 out of 27 papers. It is well known today that 'mental events' of fear of crime are qualitatively and quantitatively different from 'mental states' of worry or anxiety: whereas emotional reactions of fear take place due to the presence of situational and context-specific elements that make the person feel threatened [@castrotoledo2017], anxieties and worries about crime refer to more general concerns about immediate and future risks [@builgil2019; @hough2004]. Crowdsourcing techniques powered by digital technologies enable recording emotions of fear of crime in their precise space and time, which ultimately allows to "un-erroneously associate them [experiences of fear] with elements of the environmental backcloth such as incivilities, crime, and disorder” [@solymosi2015, p. 198]. This is related to another important strength of crowdsourcing: these techniques allow recording data about the architechtural features and environmental characteristics of spaces where mental events of fear are more common [@chataway2017; @traunmueller2015].
 
-Another obvious advantage of crowdsourcing is its reduced cost of data collections. Large volumes of data can be recorded at a very low cost. @dubey2016, for example, analyzed more than 350,000 votes of perceived safety recorded from the Place Pulse platform; and @solymosi2017 analyzed more than 275,000 reports of disorder in London. These large samples are very costly to record by using traditional probability surveys. In this chapter we will illustrate how to download data about more than 1.5 million votes registered from the Place Pulse platform, and we will analyze more than 35,000 votes of perceived safety in Atlanta.
+Another obvious advantage of crowdsourcing is its reduced cost of data collection. Large volumes of data can be recorded at a very low cost. @dubey2016, for example, analyzed more than 350,000 votes of perceived safety recorded from the Place Pulse platform; and @solymosi2017 analyzed more than 275,000 reports of disorder in London. These large samples are very costly to record by using traditional probability surveys. In this chapter we will illustrate how to download data about more than 1.5 million votes registered from the Place Pulse platform, and we will analyze more than 35,000 votes of perceived safety in Atlanta.
 
-Crowdsorucing offers advantages over other methods to record data about perceptions of space and crime, but its unique mode of production also creates certain challenges that may affect the validity and precision of recorded data. Perhaps the main weakness of data recorded from crowdsourcing is related to participants' self-selection. While probability surveys are carefully designed to select participants randomly, which means that all units in the population have equal probability of being chosen, crowdsourcing projects harness data from non-probability samples who decide when and where to share their perceptions and emotions, and whether they want to participate at all [@elliott2017]. The mode of production of crowdsourced data increases the risk of self-selection bias, and as a consequence males and young citizens tend to be overrepresented in these data [@chataway2017], and citizens from deprived areas are generally less represented than persons from wealthy neighborhoods [@solymosi2018]. For example, @salesses2013 observed that 78.3% of participants who informed about their gender when using the Place Pulse platform were males, and @solymosi2017 highlight that only 26.0% of those who informed about their gender when reporting instances of disorder via FixMyStreet were females.
+Crowdsourcing offers advantages over other methods to record data about perceptions of space and crime, but its unique mode of production also creates certain challenges that may affect the validity and precision of recorded data. Perhaps the main weakness of data recorded from crowdsourcing is related to participants' self-selection. Probability surveys are carefully designed to select participants randomly, which means that all units in the population have equal probabilities of being chosen; whereas crowdsourcing projects harness data from non-probability samples who decide when and where to share their perceptions and emotions, and whether they want to participate at all [@elliott2017]. The mode of production of crowdsourced data increases the risk of self-selection bias, and as a consequence males and young citizens tend to be overrepresented in these data [@chataway2017], and citizens from deprived areas are generally less represented than persons from wealthy neighborhoods [@solymosi2018]. For example, @salesses2013 observed that 78.3% of participants who informed about their gender when using the Place Pulse platform were males, and @solymosi2017 highlight that only 26.0% of those who informed about their gender when reporting instances of disorder via FixMyStreet were females.
 
 Those crowdsourcing platforms that allow participants to vote multiple times may also suffer from participation inequality (or unequal participation). In order words, "it is often observed that few users are responsible for most crowdsourced information, while the majority participate only a few times" [@builgil2020, p. 6]. To illustrate this, @dubey2016 show that 6,118 of the 81,730 persons who used the Place Pulse platform participated only once, while 30 users participated more than 1,000 times and the most prolific user voted 7,168 times. @solymosi2017 also show that one fourth of all FixMyStreet reports are produced by one percent of participants, and 73% of participants contribute only once.
 
 The fact that users of crowdsourcing projects can decide where and when to participate also explains why certain areas and times are underrepresented. For instance, it is likely that app-based platforms fail to capture data from high-crime-density areas, since participants may avoid those places where they feel more exposed to crime [@innes2015]. The routine activities of participants are also reflected on an under-representation of votes at night [@blom2010].
 
-Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020].
+Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020].
 
 # 3. Crowdsourcing perceptions of safety: Step-by-step example in `R`
 
@@ -155,7 +155,7 @@ pp_atl_s <- pp_atl %>%
 
 You can see now that we have a dataframe of `r nrow(pp_atl_s)` votes about the safety of places in Atlanta.
 
-We are interested in analysing the proportion of 'safer' votes in each neighborhood of Atlanta. In order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' (i.e., less safe or equal) than the other photograph. Some pairwise comparisons, however, assessed two different images from Atlanta, which means that we will need to duplicate these votes to account for both images on the right and left of the pariwise comparison. First, we want to know the number of comparisons in which both images are from Atlanta. We can use the function `filter()` from `dplyr`, which we have also used above.
+We are interested in analyzing the proportion of 'safer' votes in each neighborhood of Atlanta. In order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image of Atlanta being assessed. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' or 'not safer' (i.e., less safe or equal) than the other photograph. Some pairwise comparisons, however, assessed two different images from Atlanta, which means that we will need to duplicate those votes to account for both images on the right and left of the pairwise comparison. First, we want to know the number of comparisons in which both images are from Atlanta. We can use the function `filter()` from `dplyr`, which we have also used above.
 
 ```{r counttwoatlanta}
 
@@ -169,7 +169,7 @@ pp_atl_s_dup %>%
 
 ```
 
-In total, 678 pairwise comparisons are based on two images from Atlanta, whereas 36,536 compare one image from Atlanta against a photogrpah from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to rate the images on the left). For now, we also delete these duplicated cases from the main dataframe by using the `anti_join()` function from `dplyr`, which searches those units that exist in the newly created dataset `pp_atl_dup` and removes them from the main dataset of votes. We will merge all units together once all the data has been cleaned.
+In total, 678 pairwise comparisons are based on two images from Atlanta, whereas 36,536 compare one image from Atlanta against a photogrpah from any other city. We will duplicate those comparisons in which both images were taken in Atlanta and attach them to two new datasets (one to assess the images on the right, and the other to rate the images on the left). For now, we also delete these duplicated cases from the main dataframe by using the `anti_join()` function from `dplyr`, which searches those units that exist in the newly created dataset `pp_atl_dup` and removes them from the main dataset of votes. We will merge all units together once all data have been cleaned.
 
 ```{r duplicatedatatwoatlanta}
 
@@ -182,7 +182,7 @@ pp_atl_s <- pp_atl_s %>%
 
 ```
 
-Now, the main dataset includes only those pairwise comparisons in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the image of the left or right depending on whether the left photoraph is from Atlanta or not.
+Now, the main dataset includes only those pairwise comparisons in which only one image is from Atlanta. We create two new columns that specify the coordinates of the photograph from Atlanta. We use the `mutate()` function from `dplyr` to create the new columns and the `if_else()` function to copy the coordinates of the left (or right) image depending on whether the left photoraph is from Atlanta or not.
 
 ```{r coordsleftpic}
 
@@ -215,12 +215,12 @@ pp_atl_s_dup2 <- pp_atl_s_dup2 %>%
 
 ```
 
-Before merging all the data into a single dataset, we will also create a new column that distinguishes those images of Atlanta that were assessed as 'safer' from those reported as 'less safe' or 'equal'. This will allow us computing the proportion of 'safer' votes in each area in the future. We do this first in the main dataset (for now, it only includes votes with one picture from Atlanta), by checking if the choice of each vote (i.e., 'left', 'right', or 'equal') corresponds to the position of the image from Atlanta. We assign a 1 if the user chose the image of Atlanta as 'safer', whereas a 0 is assigned when the image of a different city was chosen to be 'safer' and when users voted 'equal'. We also use the `mutate()` and `if_else()` functions from `dplyr`.
+Before merging all the data into a single dataset, we will also create a new column that distinguishes those images of Atlanta that were assessed as 'safer' from those reported as 'less safe' or 'equal'. Later we will use this column to compute the proportion of 'safer' votes in each area. We do this first in the main dataset (for now, it only includes votes with one picture from Atlanta), by checking if the choice of each vote (i.e., 'left', 'right', or 'equal') corresponds to the position of the image from Atlanta. We assign a 1 if the user chose the image of Atlanta as 'safer', whereas a 0 is assigned when the image of a different city was chosen to be 'safer' and when users voted 'equal'. We also use the `mutate()` and `if_else()` functions from `dplyr`.
 
 ```{r assign1or0}
 
-# if left image is from Atlanta and left image is chosen as 'safer', assing 1, otherwise 0
-# if right image is from Atlanta and right image is chosen as 'safer', assign 1, otherwise 0
+# if left image is from Atlanta and left image chosen as 'safer' or
+# right image is from Atlanta and right image chosen as 'safer', assign 1, otherwise 0
 pp_atl_s <- pp_atl_s %>%
   mutate(win = if_else((place_name_left  == "Atlanta" & choice == "left") |
                        (place_name_right == "Atlanta" & choice == "right"), 1, 0))
@@ -241,7 +241,7 @@ pp_atl_s_dup2 <- pp_atl_s_dup %>%
 
 ```
 
-Now that our dataset has been cleaned and is ready to be analysed, we can merge all the data together wit the `rbind()` function.
+Now that our dataset has been cleaned and is ready to be analyzed, we can merge all the data together with the `rbind()` function.
 
 ```{r merge}
 
@@ -249,17 +249,17 @@ pp_atl_s <- rbind(pp_atl_s, pp_atl_s_dup, pp_atl_s_dup2)
 
 ```
 
-We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that is ready to be analysed.
+We have a dataframe of `r nrow(pp_atl_s)` votes about the safety in Atlanta that is ready to be analyzed.
 
 ## 3.4 Map Place Pulse data
 
-It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map the crowdsourced data [see also @solymosi2015]. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
+It is possible to use mapping techniques learned in other chapters (LINK WITH MAPPING CHAPTER) to map crowdsourced data [see also @solymosi2015]. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
 First, acquire a shapefile for Atlanta. We can download the Atlanta Region census tracts shapefile from various sources. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. You can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Programme Interfact (or API) and the `geojson_sp()` function from `geojsonio` package [@chamberlain2020] - this is something discussed in greater detail on the chapter on Open Data (CHAPTER REF LANGTON AND SOLYMOSI, 2020). In case this API call fails (e.g., because of a network error), we have uploaded the original shapefile onto a Github repository: [https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson](https://github.com/maczokni/crowdsourcing_pp_chapter/blob/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson). And you can also download this file from the Worldmap platform of Harvard University: [https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL](https://worldmap.harvard.edu/data/geonode:Atlanta_Census_Tracts_SHL) using the the `st_read()` function of `sf` package. You can just use the code below:
 
 ```{r loadshapefile}
 
-library(geojsonio) #load 'geojsonio' package
+library(geojsonio) # load 'geojsonio' package
 
 # download geojson from Georgia Association of Regional Commissions open data
 atl <- geojson_sp("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1817e6_49.geojson")
@@ -334,14 +334,14 @@ This is a very busy map. Maybe instead we want to get some sort of average score
 
 ```{r calcwinscore}
 
-points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% # find points that intersect with tracts
-                      group_by(TRACT) %>% # make groups based on census tracts
-                      summarise(winscore = mean(win, na.rm = TRUE), # proportion of 'safer' votes
+points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% # intersection of points and areas
+                      group_by(TRACT) %>% # make groups based on tracts
+                      summarise(winscore = mean(win, na.rm = TRUE), # proportion 'safer'
                                 num_votes = n()) # count number of votes
 
 ```
 
-And we can add the average score of 'safer' reponses per area to the original shapefile of census tracts using the `left_join()` function of `dplyr`. We will also delete those census tracts in which we do not have any vote of perceived safety by using the `filter()` function.
+We can add the average score of 'safer' reponses per area to the original shapefile of census tracts using the `left_join()` function of `dplyr`. We will also delete those census tracts in which we do not have any vote of perceived safety by using the `filter()` function.
  
 ```{r joinwin}
 
@@ -349,12 +349,9 @@ And we can add the average score of 'safer' reponses per area to the original sh
 st_geometry(points_atl_s_nhood) <- NULL
 
 # merge census tracts and Place Pulse votes based on 'TRACT' column
-atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT"))
-
-# delete census tracts with 0 votes (NAs)
-atl_pp_wins <- atl_pp_wins %>%
-  filter(!is.na(winscore))
-
+atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT")) %>%
+  filter(!is.na(winscore)) # delete census tracts with 0 votes (NAs)
+  
 ```
 
 Finally, we can plot the propotion of 'safer' votes in each census tract.
@@ -369,7 +366,7 @@ ggplot(data = atl_pp_wins) +
 
 ```
 
-There are many more things one can do with these data. For example, we could look at the descriptive statistics (`summary()` function) and boxplot of the proportion of 'safer' votes in each area (`geom_boxplot()` function from `ggplot2`). 
+There are many more things one can do with these data. For example, we could look at the descriptive statistics using the `summary()` function, and produce a boxplot of the proportion of 'safer' votes in each area using the `geom_boxplot()` function from `ggplot2`. 
 
 ```{r summary_areas}
 
@@ -381,18 +378,18 @@ p + geom_boxplot() + ggtitle("Boxplot of proportion of 'safer' votes per area") 
 
 ```
 
-Researchers may also be interested in analyzing the environmental characteristics of those places assessed as the safest or the least safe according to Place Pulse participants. We show below some lines of code to print the coordinates of places rated as the safest and the least safe. To illustrate this, we only consider those places that have been evaluated by at least 20 participants, to increase the validity of these rates, but one may decide to reduce or increase this threshold number according to different criteria. For example, if we were interested in obtaining the coordinates of the five places rated as the safest we would need to change the last line of code by `head(5)`, or `tail(5)` to obtain the coordinates of the five least safe places.
+Researchers may also be interested in analyzing the environmental characteristics of those places assessed by Place Pulse users to be the safest or the least safe. We show below some lines of code to print the coordinates of places rated as the safest and the least safe. To illustrate this, we only consider those places that have been evaluated by at least 20 participants, to increase the validity of these rates, but one may decide to reduce or increase this threshold number according to different criteria. For example, if we were interested in obtaining the coordinates of the five places rated as the safest we would need to change the last line of code by `head(5)`, or `tail(5)` to obtain the coordinates of the five least safe places.
 
 ```{r image_safest}
 
 points_atl_s %>%
-  mutate(geom_text = as.character(st_geometry(geometry))) %>% # geographic information into character
-  group_by(geom_text) %>% # group votets based on geographic information of photographs
-  summarize(winscore = mean(win, na.rm = TRUE), # calculate proportion of 'safer' responses
+  mutate(geom_text = as.character(st_geometry(geometry))) %>% # spatial data into character
+  group_by(geom_text) %>% # group votes based on spatial data
+  summarize(winscore = mean(win, na.rm = TRUE), # calculate proportion of 'safer'
            num_votes = n()) %>% # count number of votes
   filter(num_votes >= 20) %>% # filter out pictures with less than 20 votes
   arrange(desc(winscore)) %>% # order by proportion of 'safer' responses
-  filter(row_number()==1 | row_number()==n()) # print lowest and highest score
+  filter(row_number() == 1 | row_number() == n()) # print lowest and highest score
 
 ```
 
@@ -402,11 +399,11 @@ This may be used by criminologists to observe the characteristics of those place
 
 ## 3.5 Exploring known issues of crowdsourced data within Place Pulse
 
-In section 2, we mentioned a few issues that may be present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in data recorded from Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset [@elliott2017; @chataway2017], but the sample's self-selection bias should be checked when possible. For instance, the first edition of Place Pulse, which was designed to record some demographic variables from participants, identified that 78.3% of those who reported their sex were males, and only 21.7% were females, and the median self-reported age was 28 years [@salesses2013]. Here we examine data from Place Pulse 2.0, which does not record social and demographic variables from participants, but we will examine whether our sample is affected by other issues such as participation inequality, under-representation of certain areas and participation decrease.
+In section 2, we mentioned a few issues that may be present in crowdsourced data, and which are important to keep in mind when ussing these data in criminological research. Here we explore whether some of these issues are present in data recorded from Place Pulse, and what that might mean for any conclusions we draw from our analyses. We shall keep in mind that the Place Pulse project did not record information about participants' demographic characteristics, and thus we cannot direclty examine the self-selection biases that may affect this dataset [@elliott2017; @chataway2017], but the sample's self-selection bias should be checked when possible. For instance, the first edition of Place Pulse, which was designed to record some demographic variables from participants, identified that 78.3% of those who reported their sex were males, and only 21.7% were females, and the median self-reported age was 28 years [@salesses2013]. Here we examine data from Place Pulse 2.0, which does not record social and demographic variables from participants, but we will examine whether our sample is affected by other issues such as participation inequality, under-representation of certain areas and participation decrease.
 
 ### 3.5.1 Participation inequality ('supercontributors')
 
-Crowdsourced data tend to be affected by a few number of supercontributors that produce most votes[@dubey2016; @solymosi2017]. In order to check if our dataset is affected by this, we first need to create a new dataframe showing the number of votes that each study participant had made. To do this, we will use the `group_by()` and `summarise()` functions from the `dplyr` library:
+Crowdsourced data tend to be affected by a few number of supercontributors that produce most votes [@dubey2016; @solymosi2017]. In order to check if our dataset is affected by this, we first need to create a new dataframe showing the number of votes that each study participant had made. To do this, we will use the `group_by()` and `summarise()` functions from the `dplyr` library:
 
 ```{r create voter table}
 
@@ -448,7 +445,7 @@ sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes b
 
 ```
 
-That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors. We can also compute the proportion of votes made by the top 10% and 25% of participants. The top 10% of contributors are responsible for `r round(sum(top_10percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of votes, and the top 25% of users contribute the `r round(sum(top_25percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of all votes.
+That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors. We can also compute the proportion of votes made by the top 10% and 25% of participants. The top 10% contributors are responsible for 46.06% of votes, and the top 25% users contribute the 66.20% of all votes.
 
 ### 3.5.2 Quantifying participation inequality
 
@@ -468,7 +465,7 @@ Gini(voter$num_votes) # print Gini index
 
 ```
 
-A Gini index score of 0 represents perfect equality (everyone makes equal number of votes), while 1 shows perfect inequality (only one person making every single vote). Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States of America showed a Gini coefficient of 0.39. To visualize this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
+A Gini index score of 0 represents perfect equality (everyone makes equal number of votes), while 1 shows perfect inequality (only one person making every single vote). Our answer of `r round(Gini(voter$num_votes), 2)` shows some serious inequality. To put this into context, in 2017, according to the OECD, income inequality in the United States showed a Gini coefficient of 0.39. To visualize this we can use a Lorenz curve using the `plot()` and `Lc()` functions: 
 
 ```{r lorenz}
 
@@ -478,7 +475,7 @@ plot(Lc(voter$num_votes), # plot Lorenz curve
 
 ```
 
-The Lorenz curve (red line) shows how the top few percent of reporters contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. With this information we can now quantify how severe the participation inequality is in our data, and compare with other crowdsourced data for context and understanding.
+The Lorenz curve (red line) shows how the top few percent of users contribute the majority of the reports. If we had perfect equality, we would expect to see the red line align perfectly with the black line with the slope of 1. With this information we can now quantify how severe the participation inequality is in our data, and compare with other crowdsourced data for context and understanding.
 
 ### 3.5.3 Under-representation of certain areas
 
@@ -514,22 +511,22 @@ ggplot(data = atl_pp_wins) +
 
 ```
 
-We see that areas in the city center tend to have larger number of votes and are therefore well represented, whereas tracts in surrounding areas suffer from smaller sample sizes. Estimates of perceived safety in under-represented areas are likely to be affected by a small number of responses and may suffer from low precision. In order to increase the reliability of estimates produced from crowdsourced data for areas with small sample sizes, some researchers suffer using resampling and model-based techniques [see @builgil2020].
+We see that areas in the city center tend to have larger number of votes and are therefore well represented, whereas tracts in surrounding areas suffer from smaller sample sizes. Estimates of perceived safety in under-represented areas are likely to be affected by a small number of responses and may suffer from low precision. In order to increase the reliability of estimates produced from crowdsourced data for areas with small sample sizes, some researchers suggest using resampling and model-based techniques [see @builgil2020].
 
 ### 3.5.4 Participation decrease
 
 Finally, some researchers have identified that the number of users of crowdsourcing projects decreases over time: whereas the number of participants tends to be large during the first few days, users lose interest in the project if they do not obtain clear short-term benefits from using it [see @blom2010; @solymosi2020]. We can also expore whether our Place Pulse dataset is affected by participation decrease.
 
-We will use various functions from `dplyr` and `ggplot2` packages (seen above) to visualize the number of votes since the Place Pulse website launch until its closure. But we also need to use other key functions: *(i)* the `ymd()` function from `lubricate` package is used to transform the dates in which votes took place into `Date` objects [@spinu2020], and the *(ii)* the `complete()` function from `tidyr` package is used to turn implicit missing dates into explicit missing dates and create a timeline of dates with and without votes [@wickham2020c].
+We will use various functions from `dplyr` and `ggplot2` packages (seen above) to visualize the number of votes since the Place Pulse website launch until its closure. But we also need to use other key functions: *(i)* the `ymd()` function from `lubricate` package is used to transform the dates in which votes took place into `Date` objects [@spinu2020], and *(ii)* the `complete()` function from `tidyr` package is used to turn implicit missing dates into explicit missing dates and create a timeline of dates with and without votes [@wickham2020c].
 
 ```{r datestuff}
 
 by_day <- pp_data %>% 
-          mutate(day = ymd(day)) %>% # create new column by transforming into 'Date' objects
+          mutate(day = ymd(day)) %>% # create column by transforming into 'Date' object
           group_by(day) %>% # create groups by days
           summarise(num_votes = n()) %>% # count number of votes by day
-          complete(day = seq.Date(min(day), max(day), by = "day")) %>% # complete days with 0 votes
-          mutate(num_votes = replace_na(num_votes, 0)) # create new column: num votes by day
+          complete(day = seq.Date(min(day), max(day), by = "day")) %>% # complete all days
+          mutate(num_votes = replace_na(num_votes, 0)) # create new column: votes by day
 
 ggplot(by_day, aes(x = day, y = num_votes)) + 
        geom_line() + 
@@ -544,11 +541,11 @@ The number of votes within the Place Pulse platform clearly decreased over time,
 
 # Conclusions
 
-The open data movement has provoked a revolution in social research methods, and will continue changing the way in which many social issues are researched, understood and managed. Digital technologies enable large volumes of data to become available for social researchers and data scientists, and crowdsourcing is becoming a key source of data to analyze and map social phenomena such as crime [@bendler2014] and perceptions of space and safety [@solymosi2018; @solymosi2020]. In this chapter we have described and explored the main strengths and weaknesses of using crowdsourced data for criminological research. Specifically, we have obtained access to a large dataset of more than 1.5 million votes about urban perceptions recorded from the Place Pulse project [@salesses2013], selected a sample of more than 37,000 votes of perceived safety for Atlanta, and studied the spatial distribution of perceptions of space and safety at a census tract level in this city. We have also shown how these data can be utilized to identify places assessed by participants as very safe or very unsafe; places in which researchers can then conduct observation to study those environmental features that make citizens feel fear of crime [@fisher1992]. 
+The open data movement has provoked a revolution in social research methods, and will continue changing the way in which many social issues are researched, understood and managed. Digital technologies enable large volumes of data to become available for social researchers and data scientists, and crowdsourcing is becoming a key source of data to analyze and map social phenomena such as crime [@bendler2014] and perceptions of space and safety [@solymosi2015; @solymosi2018]. In this chapter we have described and explored the main strengths and weaknesses of using crowdsourced data for criminological research. Specifically, we have obtained access to a large dataset of more than 1.5 million votes about urban perceptions recorded from the Place Pulse project [@salesses2013], selected a sample of more than 37,000 votes of perceived safety for Atlanta, and studied the spatial distribution of perceptions of space and safety at a census tract level in this city. We have also shown how these data can be utilized to identify places assessed by participants as very safe or very unsafe; places in which researchers can then conduct observation to study those environmental features that make citizens feel fear of crime [@fisher1992]. 
 
 Although crowdsourcing offers advantages over traditional survey methods to study perceptions and emotions about crime, data recorded from crowdsourcing is also affected by certain issues that, if uncontrolled, are likely to affect the validity of data and the reliability and generalizability of research outputs. For instance, we have observed how Place Pulse votes are largely produced by a few number of super-contributors (i.e., participation inequality), there is under-representation of certain areas outside the city center, and the number of votes decreases over time (i.e., participation decrease). These issues have also been observed in data produced from many other crowdsourcing and app-based projects [e.g., @chataway2017; @solymosi2015; @solymosi2020; @traunmueller2015]. Other researchers have also highlighted that crowdsourced data tends to be affected by self-selection bias, which explains why males tend to participate more than females, and young persons more than adults [@solymosi2018]; but the Place Pulse platform did not record demographic variables from participants and we have not directly assessed this issue here.
 
-Due to the fact that crowdsourced datasets - and non-probability samples in general - may be affected by these potential sources of unrepresentativeness and bias, several researchers are exploring new techniques to enable obtaininig reliable research outputs. @elliot2017, for example, present different methods to compute individual pseudo-sampling weights and adjust non-probability samples to target populations; @arbia2018 have developed a method to delete spatial outliers and calculate weights to adjust non-probability samples to optimal spatial samples; and @builgil2020 investigate the use of resampling and model-based small area estimation techniques to allow producing reliable estimates at detailed spatial scales from crowdsourced data. Academics and practitioners will benefit from methods to mitigate the sources of bias in crowdsourced data, which allow obtaining more precise and reliable - but also cheaper - findings and devise new explanations of crime, antisocial behavior and emotions about crime. In the context of crime analysis, bias-corrected crowdsourced data may become a key tool to understand crime patterns, anticipate crime trends and even provide assistance to police investigations [@bendler2014; @nhan2017].
+Due to the fact that crowdsourced datasets - and non-probability samples in general - may be affected by these potential sources of unrepresentativeness and bias, several researchers are exploring new techniques to enable obtaininig reliable research outputs. @elliott2017, for example, present different methods to compute individual pseudo-sampling weights and adjust non-probability samples to target populations; @arbia2018 have developed a method to delete spatial outliers and calculate weights to adjust non-probability samples to optimal spatial samples; and @builgil2020 investigate the use of resampling and model-based small area estimation techniques to allow producing reliable estimates at detailed spatial scales from crowdsourced data. Academics and practitioners will benefit from methods to mitigate the sources of bias in crowdsourced data, which may allow obtaining more precise and reliable - but also cheaper - findings and devise new explanations of crime, antisocial behavior and emotions about crime. In the context of crime analysis, bias-corrected crowdsourced data may become a key tool to understand crime patterns, anticipate crime trends and even provide assistance to police investigations [@bendler2014; @nhan2017].
 
 # Authors bios
 

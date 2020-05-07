@@ -1,5 +1,0 @@
-"0","points_atl_s <- st_transform(points_atl_s, crs = st_crs(atl))
-"
-"2","Error in st_transform.sfc(st_geometry(x), crs, ...) : 
-  sfc object should have crs set
-"

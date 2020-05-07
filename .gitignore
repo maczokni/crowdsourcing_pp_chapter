@@ -47,3 +47,6 @@ vignettes/*.pdf
 
 # End of https://www.gitignore.io/api/r
 .Rproj.user
+
+.Rhistory
+.Rproj.user/shared/notebooks/paths

@@ -1,17 +1,15 @@
 ---
 title: "Using Crowdsourced Data to Study Crime and Place"
-
 abstract: "Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of people (the crowd) through some digital platform to collect data towards a collaborative project. Crowdsourcing can generate large volumes of data in relatively little time at a very small cost, and can be useful for research, strategic police management and many other purposes. To make effective use of crowdsourced data, it is important to understand its key strengths to emphasize, and limitations to mitigate. In this chapter we highlight the main strengths and weaknesses of crowdsourcing, and illustrate how to acquire, make sense of, and critically evaluate crowdsourced data to study crime and place. We present a step-by-step exemplar study using crowdsourced data from a platform called Place Pulse, where people rate their feelings of safety between different areas. Taking the case study of Atlanta, Georgia, we work through analyzing and interpreting these data while highlighting how to emphasize and evaluate the strengths and limitations of crowdsourcing. Exercises are presented using `R` software. 
-
   \\par
   \\textbf{Keywords:} Fear of crime, perceived safety, crime mapping, open data, GIS, Atlanta"
 author: |
   | David Buil-Gil and Reka Solymosi
   | Department of Criminology, University of Manchester, UK
-date: "11/05/2020"
+date: "12/05/2020"
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 bibliography: refs.bib
 csl: apa.csl
 ---
@@ -423,6 +421,8 @@ ggplot(data = atl_pp_wins) +
 
 ```
 
+Areas in the south part of the city appear to have lower levels of perceived safety, whereas most areas in North Atlanta have higher values of perceived safety.
+
 
 ## Exploring known issues of crowdsourced data within Place Pulse
 
@@ -481,7 +481,7 @@ sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes b
 That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors. We can also compute the proportion of votes made by the top 10% and 25% of participants in the same way. The top 10% contributors are responsible for 46.06% of votes, and the top 25% users contribute the 66.20% of all votes.
 
 
-#### Quantifying participation inequality
+### Quantifying participation inequality
 
 One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualizing it using a Lorenz curve. The Gini index (or Gini ratio) is a measure of statistical dispersion intended to measure inequality [@gastwirth1972]. Although it is generally used to examine income inequality, it has also been frequently used to assess participation inequality in crowdsourcing platforms [see @solymosi2017; @solymosi2018]. Similarly, the Lorenz curve is a visual representation of inequality. For this we will need the `ineq` library [@zeileis2015]. We can load this library and calculate the index using the `Gini()` function applied to our 'number of votes' column in our frequency table dataframe: 
 

@@ -12,7 +12,9 @@
 #
 ###############################################
 
-rm(list=ls())
+# rm(list=ls())
+# Let's not be doing this above, here's a note on why: https://www.tidyverse.org/blog/2017/12/workflow-vs-script/
+# Are you not using the project?
 
 ### STEP 1 # Download Place Pulse data from FigShare repository ###
 

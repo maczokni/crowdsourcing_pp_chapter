@@ -8,8 +8,8 @@ author: |
   | Department of Criminology, University of Manchester, UK
 date: "12/05/2020"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 bibliography: refs.bib
 csl: apa.csl
 ---

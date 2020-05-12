@@ -363,7 +363,7 @@ plot(st_geometry(atl),
 
 ```
 
-In order to plot the safety votes on this map, we first need to make our votes a spatial object, by specfying that the *'long_Atl'* and *'lat_Atl'* columns contain our longitude and latitude information. We use the `st_as_sf()` function for this: 
+In order to plot the safety votes on this map, we first need to make our votes a spatial object, by specifying that the *'long_Atl'* and *'lat_Atl'* columns contain our longitude and latitude information. We use the `st_as_sf()` function for this: 
 
 ```{r geocodepp}
 

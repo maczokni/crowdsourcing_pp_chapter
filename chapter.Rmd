@@ -69,7 +69,7 @@ Crowdsourced data about public perceptions of space and crime have some key stre
 
 ## Strengths
 
-The most frequent strength of crowdsourcing and app-based methods identified by researchers was that these techniques allow capturing the spatial-temporal specific nature of fear of crime. Unlike traditional survey instruments, crowdsourcing data collection can be designed to generate point-level location data, and accurate-to-the-second time-stamp data with each report [@solymosi2018]. This is very beneficial for anyone carrying our crime and place research.
+The most frequent strength of crowdsourcing and app-based methods identified by researchers was that these techniques allow capturing the spatial-temporal specific nature of fear of crime. Unlike traditional survey instruments, crowdsourcing data collection can be designed to generate point-level location data, and accurate-to-the-second time-stamp data with each report [@solymosi2018]. This is very beneficial for anyone carrying out crime and place research.
 
 Another strength relevant to crime research is the ability for people to record data about the architectural features and environmental characteristics of spaces where they report [@chataway2017; @traunmueller2015], which ultimately allows to "un-erroneously associate them [perceptions about crime] with elements of the environmental backcloth such as incivilities, crime, and disorder” [@solymosi2015, p. 198]. Users can provide photos of their environments [e.g., with FixMyStreet; @solymosi2017], can be asked to evaluate photos [e.g., with Place Pulse; @salesses2013], or such data can be linked from other sources by a common information, like GPS location, to conduct on-site observation of places [e.g., with InseguridApp; @solymosi2020].
 
@@ -82,7 +82,7 @@ Perhaps the main weakness of data recorded from crowdsourcing is related to part
 
 Even within the sample of self-selected participants there may be unequal participation. Many crowdsourcing platforms allow users to submit data multiple times. This may lead to participation inequality (or unequal participation), where "few users are responsible for most crowdsourced information, while the majority participate only a few times" [@builgil2020, p. 6]. To illustrate this, @dubey2016 show that 6,118 of the 81,730 persons who used the Place Pulse platform participated only once, while 30 users participated more than 1,000 times and the most prolific user voted 7,168 times. @solymosi2017 also show that one fourth of all FixMyStreet reports are produced by one percent of participants, and 73% of participants contribute only once.
 
-It is not only people who may not be equally represented in these sorts of data, there may also be a bias in the places and times that do or do not feature prominently. Since users of crowdsourcing projects can decide where and when to participate, certain types of areas and times can be underrepresented. For instance, it is possible that app-based platforms fail to capture data from high-crime-density areas, since participants may avoid those places where they feel more exposed to crime [@innes2015]. The routine activities of participants are also reflected on an under-representation of data points at night, when people are less likely to be out and about [@blom2010].
+It is not only people who may be unequally represented in these sorts of data, there may also be a bias in the places and times that do or do not feature prominently. Since users of crowdsourcing projects can decide where and when to participate, certain types of areas and times can be underrepresented. For instance, it is possible that app-based platforms fail to capture data from high-crime-density areas, since participants may avoid those places where they feel more exposed to crime [@innes2015]. The routine activities of participants are also reflected on an under-representation of data points at night, when people are less likely to be out and about [@blom2010].
 
 Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see lots of active participation than later on in the project.  
 
@@ -140,8 +140,8 @@ This dataset includes 17 variables, but we will only use the following variables
 - *'place_id_left': *A unique identification code for the city of the image in the left side of the pairwise comparison.
 - *'place_id_right': *A unique identification code for the city of the image in the right side of the pairwise comparison.
 - *'place_name_left': *The name of the city in the left side of the comparison.
-- *'place_name_right: '*The name of the city in the right side of the comparison. 
-- *'choice': * Which image was selected as 'safest' (left, right, or equal).
+- *'place_name_right': *The name of the city in the right side of the comparison. 
+- *'choice': * Which image was selected as 'safer' (left, right, or equal).
 - *'study_question': *The variable of interest (e.g., safety, wealth, beauty). 
 - *'day': *Day of the data point (vote).
 - *'time': *Time of the data point (vote).

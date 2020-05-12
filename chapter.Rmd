@@ -328,7 +328,7 @@ pp_atl_s %>%
            latitude = first(lat_Atl), longitude = first(long_Atl)) %>% # save lat, long
   filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes
   arrange(desc(winscore)) %>% # order by proportion of 'safer' responses
-  filter(row_number() == 1 | row_number() == n()) # print lowest and highest score
+  filter(row_number() == 1 | row_number() == n()) # print highest and lowest score
 
 ```
 

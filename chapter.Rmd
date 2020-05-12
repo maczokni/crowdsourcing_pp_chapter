@@ -159,11 +159,11 @@ We can start by answering some descriptive questions, for example: which cities 
 library(dplyr) # load dplyr package
 
 right_freq <- pp_data %>%
-  group_by(place_name_right) %>% # categories based on cities on the left
+  group_by(place_name_right) %>% # categories based on cities on the right
   summarize(right_count = n()) # count number of units in each category
 
 left_freq <- pp_data %>%
-  group_by(place_name_left) %>% # categories based on cities on the right
+  group_by(place_name_left) %>% # categories based on cities on the left
   summarize(left_count = n()) # count number of units in each category
 
 total_freq <- left_freq %>% 

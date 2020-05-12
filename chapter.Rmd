@@ -354,7 +354,7 @@ atl <- st_read("https://opendata.arcgis.com/datasets/04b79404794f43959cda4f8c3f1
 
 Note: if this link does not work, we saved a local copy of this file, in that case you can download from the following link: [https://raw.githubusercontent.com/maczokni/crowdsourcing_pp_chapter/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson](https://raw.githubusercontent.com/maczokni/crowdsourcing_pp_chapter/master/geojson/Census_2000_Tracts_Atlanta_Region.geojson).
 
-We can see what this file looks like by using the `plot()` and `st_geomerty` functions to plot the geometry of the 'atl' object we created: 
+We can see what this file looks like by using the `plot()` and `st_geomerty()` functions to plot the geometry of the 'atl' object we created: 
 
 ```{r plotatlgeom}
 

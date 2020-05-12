@@ -234,7 +234,7 @@ This has created a new dataframe, `pp_s` which contains `r nrow(pp_s)` votes abo
 
 ### Select votes that contain images of Atlanta
 
-Now we want to select those votes where at least one of the images is from Atlanta. Remember that there are two images in each comparison (i.e., `left` and `right`). In order to select rows where Atlanta appears in either one or the other, or both, we can use the or operator (`|`) to ensure we get all comparisons which feature Atlanta on at least one side.
+Now we want to select those votes where at least one of the images is from Atlanta. Remember that there are two images in each comparison (i.e., `left` and `right`). In order to select rows where Atlanta appears in either one or the other, or both, we can use the *'or'* operator (`|`) to ensure we get all comparisons which feature Atlanta on at least one side.
 
 ```{r getatlandapp}
 
@@ -259,7 +259,7 @@ First, we need every instance of a vote on each unique location in Atlanta. Ther
 2) Image on the left of the pairwise comparison is from Atlanta, but image on the right is somewhere else. 
 3) Both images are from Atlanta.
 
-For the first two cases, we can easily find the coordinates of the image in Atlanta, and whether it was perceived as 'safer' or not, using conditional statements in the `if_else()` function. We will create a dataset of only these votes and remove, for now, all rows in which both images are from Atlanta. We will merge all votes together once all data have been cleaned. Further, in order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image of Atlanta being assessed. We will name those columns `lat_Atl` and `long_Atl`. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' than the other photograph or not (column `win`). In order to select those votes in which one of the images is from Atlanta, we can use the function `filter()` from `dplyr`, which we have also used above, but now, instead of the or operator (`|`) we use an *and* operator (`&`). We also compute the win score, and save a unique ID for each image:
+For the first two cases, we can easily find the coordinates of the image in Atlanta, and whether it was perceived as 'safer' or not, using conditional statements in the `if_else()` function. We will create a dataset of only these votes and remove, for now, all rows in which both images are from Atlanta. We will merge all votes together once all data have been cleaned. Further, in order to assign photographs to their neighborhood, we need to create two new columns that specify the longitude and latitude of each image of Atlanta being assessed. We will name those columns `lat_Atl` and `long_Atl`. We will also create a new column that details whether each participant voted that the image of Atlanta was 'safer' than the other photograph or not (column `win`). In order to select those votes in which one of the images is from Atlanta, we can use the function `filter()` from `dplyr`, which we have also used above, but now, instead of the *'or'* operator (`|`) we use an *'and'* operator (`&`). We also compute the win score, and save a unique ID for each image:
 
 ```{r others}
 

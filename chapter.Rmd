@@ -141,7 +141,7 @@ This dataset includes 17 variables, but we will only use the following variables
 - *'place_id_right': *A unique identification code for the city of the image in the right side of the pairwise comparison.
 - *'place_name_left': *The name of the city in the left side of the comparison.
 - *'place_name_right': *The name of the city in the right side of the comparison. 
-- *'choice': * Which image was selected as 'safer' (left, right, or equal).
+- *'choice': *Which image was selected as 'safer' (left, right, or equal).
 - *'study_question': *The variable of interest (e.g., safety, wealth, beauty). 
 - *'day': *Day of the data point (vote).
 - *'time': *Time of the data point (vote).

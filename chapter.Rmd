@@ -152,7 +152,7 @@ This dataset includes 17 variables, but we will only use the following variables
 
 The Place Pulse dataset has `r nrow(pp_data)` observations. Each observation is one comparison between two images. Thus, our units of analysis here are comparisons between an image on the left and an image on the right.
 
-We can start by answering some descriptive questions, for example: which cities are most frequenty assessed within the Place Pulse platform? We know that for each row (each comparison) there are two images (`place_id_left` and `place_id_right`), and there are two columns that name the city for each image (`place_name_left`, `place_name_right`). To see how many times each city appears we can create two frequency tables (one for `place_name_left`, and one for `place_name_right`), and then join them and sum the two frequencies. We can use the `group_by()` and `summarize()` functions from `dplyr` package [@wickham2020] to achieve this:
+We can start by answering some descriptive questions, for example: which cities are most frequenty assessed within the Place Pulse platform? We know that for each row (each comparison) there are two images (`left` and `right`), and there are two columns that name the city for each image (`place_name_left`, `place_name_right`). To see how many times each city appears we can create two frequency tables (one for `place_name_left`, and one for `place_name_right`), and then join them and sum the two frequencies. We can use the `group_by()` and `summarize()` functions from `dplyr` package [@wickham2020] to achieve this:
 
 
 ```{r 2freqs}

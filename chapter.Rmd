@@ -317,7 +317,7 @@ We can now take this dataset and draw some conclusions.
 
 ## Environmental correlates of safety
 
-Researchers may be interested in analyzing the environmental characteristics of those places assessed by Place Pulse users as safe or not safe. From such data we can get the coordinates of places rated, and use tools such as Google Street view to conduct a virtual environmental audit of these places. For example, we can look at the safest and least safe rated places using our dataset in Atlanta. For this, we need a dataset where each unique image is our unit of analysis, and we can compute a win score by considering the proportion of votes which that image has won: 
+Researchers may be interested in analyzing the environmental characteristics of those places assessed by Place Pulse users as safe or not safe. From such data we can get the coordinates of places rated, and use tools such as Google Street View to conduct a virtual environmental audit of these places. For example, we can look at the safest and least safe rated places using our dataset in Atlanta. For this, we need a dataset where each unique image is our unit of analysis, and we can compute a win score by considering the proportion of votes which that image has won: 
 
 ```{r image_safest}
 

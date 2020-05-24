@@ -86,7 +86,7 @@ It is not only people who may be unequally represented in these sorts of data, t
 
 Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see lots of active participation than later on in the project.  
 
-Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020]. These last poins are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
+Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
 
 
 ## Summary

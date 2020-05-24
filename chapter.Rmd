@@ -339,7 +339,7 @@ This may be used by criminologists to observe the characteristics of those place
 
 We can use mapping techniques learned in other chapters (**LINK WITH MAPPING CHAPTERS**) to map crowdsourced data. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data:[https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Program Interface (or API) and the `st_read()` function form the `sf` package:
+First, acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Program Interface (or API) and the `st_read()` function from the `sf` package:
 
 ```{r loadshapefile}
 

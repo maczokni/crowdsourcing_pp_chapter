@@ -8,8 +8,8 @@ author: |
   | Department of Criminology, University of Manchester, UK
 date: "12/05/2020"
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 bibliography: refs.bib
 csl: apa.csl
 ---
@@ -123,7 +123,7 @@ The images were selected randomly from Google Street View across 56 cities from 
 
 ## Download and explore Place Pulse data
 
-We have saved all Place Pulse data (more than 1.5 million votes) in a data repository on [FigShare](https://figshare.com/articles/Place_Pulse/11859993). You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
+We have saved all Place Pulse data (more than 1.5 million votes) in a data repository on [FigShare: figshare.com/articles/Place_Pulse/11859993](https://figshare.com/articles/Place_Pulse/11859993). You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
 
 ```{r readpp}
 
@@ -137,8 +137,6 @@ This dataset includes 17 variables, but we will only use the following variables
 - *'right': *A unique identification code for the image in the right side of the pairwise comparison.
 - *'left': *A unique identification code for the image in the left side of the pairwise comparison.
 - *'voter_uniqueid': *A unique identification code given to each participant. 
-- *'place_id_left': *A unique identification code for the city of the image in the left side of the pairwise comparison.
-- *'place_id_right': *A unique identification code for the city of the image in the right side of the pairwise comparison.
 - *'place_name_left': *The name of the city in the left side of the comparison.
 - *'place_name_right': *The name of the city in the right side of the comparison. 
 - *'choice': *Which image was selected as 'safer' (left, right, or equal).
@@ -341,7 +339,7 @@ This may be used by criminologists to observe the characteristics of those place
 
 We can use mapping techniques learned in other chapters (**LINK WITH MAPPING CHAPTERS**) to map crowdsourced data. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data:[https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Programme Interface (or API) and the `st_read()` function form the `sf` package:
+First, acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data:[https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Program Interface (or API) and the `st_read()` function form the `sf` package:
 
 ```{r loadshapefile}
 
@@ -557,6 +555,12 @@ by_day <- pp_data %>%
           summarise(num_votes = n()) %>% # count number of votes by day
           complete(day = seq.Date(min(day), max(day), by = "day")) %>% # complete all days
           mutate(num_votes = replace_na(num_votes, 0)) # create new column: votes by day
+```
+
+
+Once we have this dataset in the format we need to be able to look at reports by day, we can vidualise the results using `ggplot`: 
+
+```{r plotdates}
 
 ggplot(by_day, aes(x = day, y = num_votes)) + 
        geom_line() + 

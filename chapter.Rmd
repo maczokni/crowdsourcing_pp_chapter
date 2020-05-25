@@ -38,7 +38,7 @@ options(tinytex.verbose = TRUE)
 
 # Introduction 
 
-Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (*the 'crowd'*) to achieve a common goal or cumulative result, usually via a platform powered by online technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a small cost, and such data is often utilized for a variety of functions ranging from academic research to policy making and emergency management [@brabham2008; @goodchild2007; @hecker2019]. 
+Crowdsourcing refers to the practise of enlisting the knowledge, experience or skills of a large number of citizens (*the 'crowd'*) to achieve a common goal or cumulative result, usually via a platform powered by online technologies, mobile phones, social media or a website [@howe2006]. Digital platforms allow recording large volumes of data in relatively little time at a small cost, and such data is often utilized for a variety of functions ranging from academic research to policy making and emergency management [@goodchild2007; @hecker2019]. 
 
 For example, during the 2007-2009 wildfires in the Santa Barbara area, California, residents shared their real-time knowledge about the location of fires and emergency shelters via various online forums and websites, which proved to be an invaluable source of information for disaster response [@goodchild2010]. Specific to research in crime and place, crowdsourcing projects have been used to understand people's experiences with crime and their perceptions about space and safety [e.g., @solymosi2018; @williams2017]. 
 
@@ -49,7 +49,7 @@ In this chapter we present some examples of how crowdsourced data can be used cr
 
 In criminological research, crowdsourcing has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime. Crowdsourced data provide new angles of insight into people's behaviors and perceptions, thus allowing researchers to devise new explanations of crime and perceived safety.
 
-Public perceptions and emotions about crime have traditionally been analyzed by using surveys and interview-type qualitative approaches [see @gabriel2003; @warr2000], but these methods are costly and may be limited in their ability to capture the time and context-specific emotional reactions of fear [@castrotoledo2017]. They may also fail to record any behavioral responses to such emotions, such as avoiding certain places or situations, or acquiring alarm systems or weapons. As an alternartive, some researchers have endorsed the use crowdsourcing to record data about the specific places and times in which episodes of fear of crime are more frequent [@solymosi2018; @solymosi2020].
+Public perceptions and emotions about crime have traditionally been analyzed by using surveys and interview-type qualitative approaches [see @gabriel2003], but these methods are costly and may be limited in their ability to capture the time and context-specific emotional reactions of fear [@castrotoledo2017]. They may also fail to record any behavioral responses to such emotions, such as avoiding certain places or situations, or acquiring alarm systems or weapons. As an alternartive, some researchers have endorsed the use crowdsourcing to record data about the specific places and times in which episodes of fear of crime are more frequent [@solymosi2018; @solymosi2020].
 
 For example, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allowed authors to map the users' fear of crime across different areas of London, UK. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. And @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogotá, Colombia, to report those areas in which they feel less safe.
 
@@ -86,7 +86,7 @@ It is not only people who may be unequally represented in these sorts of data, t
 
 Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see lots of active participation than later on in the project.  
 
-Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015; @solymosi2020]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
+Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
 
 
 ## Summary
@@ -165,7 +165,8 @@ left_freq <- pp_data %>%
   summarize(left_count = n()) # count number of units in each category
 
 total_freq <- left_freq %>% 
-  left_join(., right_freq, by = c("place_name_left" = "place_name_right")) %>% # merge
+  left_join(., right_freq, 
+            by = c("place_name_left" = "place_name_right")) %>% # merge
   mutate(total_count = left_count + right_count) # create summatory column
 
 ```
@@ -264,7 +265,7 @@ For the first two cases, we can easily find the coordinates of the image in Atla
 atl_v_others <- pp_atl_s %>%
     # select where only one image is from Atlanta
     filter((place_name_right == "Atlanta" & place_name_left != "Atlanta") | 
-           (place_name_right != "Atlanta" & place_name_left == "Atlanta")) %>% 
+          (place_name_right != "Atlanta" & place_name_left == "Atlanta")) %>% 
     # get coordinates from Atlanta side, label win, and ID of image
     mutate(lat_Atl   = if_else(place_name_right == "Atlanta", 
                                lat_right, lat_left),
@@ -333,9 +334,10 @@ unique_pp_wins <- pp_atl_s %>%
 
 ```
 
-This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times (see Figure 2). 
+This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times. 
 
-```{r image most least, digits = 5}
+```{r image most least}
+options(digits=4)
 
 unique_pp_wins %>% 
   filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes  
@@ -343,7 +345,7 @@ unique_pp_wins %>%
 
 ```
 
-In this case, the least safe place is characterized by signs of physical disorder (i.e., graffiti, abandoned cars, rubbish lying around) which may increase negative emotions about crime [see @toet2012]. Moreover, there are corners and hidden spaces between abandoned cars that can be perceived to offer concealment for possible criminals and obstruct the view onto certain spaces [see @fisher1992]; whereas the safest place is a wide street of a well-maintained residential area with green spaces, direct visual access to most places around it (large prospect), and natural surveillance from the house [@welsh2004]. We can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
+In this case, as shown in Figure 2, the least safe place is characterized by signs of physical disorder (i.e., graffiti, abandoned cars, rubbish lying around) which may increase negative emotions about crime [@toet2012]. Moreover, there are corners and hidden spaces between abandoned cars that can be perceived to offer concealment for possible criminals and obstruct the view onto certain spaces [see @fisher1992]; whereas the safest place is a wide street of a well-maintained residential area with green spaces, direct visual access to most places around it (large prospect), and natural surveillance from the house [@welsh2004]. We can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
 
 ![Figure 2: Least safe and safest places rated by at least 25 Place Pulse users](figures/unsafe_safe25.jpg)
 
@@ -352,9 +354,9 @@ In this case, the least safe place is characterized by signs of physical disorde
 
 We can use mapping techniques learned in other chapters (**LINK WITH MAPPING CHAPTERS**) to map crowdsourced data. We will be using the `sf` [@pebesma2020] and `ggplot2` [@wickham2020b] libraries in order to create a map of perceived safety of built environment across the areas of Atlanta.
 
-First, acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Program Interface (or API) and the `st_read()` function from the `sf` package:
+First, we acquire a polygon which represents the census tracts of Atlanta. The Georgia Association of Regional Commission, for instance, publishes spatial data for Atlanta Region at the different spatial scales. We can go on their website to find out more about this boundary data: [https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region](https://opendata.atlantaregional.com/datasets/census-2000-tracts-atlanta-region). We can download the shapefile directly using their Application Program Interface (or API) and the `st_read()` function from the `sf` package:
 
-```{r loadshapefile}
+```{r loadshapefile, results="hide"}
 
 library(sf)
 
@@ -472,6 +474,7 @@ top_1pc <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100))
 We see that this new dataframe contains `r nrow(top_1pc)` people, who are our top 1% contributors to the Place Pulse dataset. We will now examine how much of the total number of votes are generated by the top 1% of users:
 
 ```{r top1perccontrib}
+options(digits=2)
 
 # proportion of votes by top 1% participants
 sum(top_1pc$num_votes) / sum(voter$num_votes) * 100
@@ -557,7 +560,7 @@ We see that areas in the city center tend to have larger number of votes per squ
 
 ### Participation decrease
 
-Finally, some researchers have identified that the number of users of crowdsourcing projects decreases over time: whereas the number of participants tends to be large during the first few days, users lose interest in the project if they do not obtain clear short-term benefits from using it [see @blom2010; @solymosi2020]. We can also expore whether our Place Pulse dataset is affected by participation decrease.
+Finally, some researchers have identified that the number of users of crowdsourcing projects decreases over time: whereas the number of participants tends to be large during the first few days, users lose interest in the project if they do not obtain clear short-term benefits from using it [see @blom2010; @solymosi2020]. We can also explore whether our Place Pulse dataset is affected by participation decrease.
 
 We will use various functions from `dplyr` and `ggplot2` packages (seen above) to visualize the number of votes between the Place Pulse website launch and its closure. But we also need to use other key functions: 1) the `ymd()` function from `lubricate` package is used to transform the dates in which votes took place into `Date` objects [@spinu2020], and 2) the `complete()` function from `tidyr` package is used to turn implicit missing dates into explicit missing dates and create a timeline of dates with and without votes [@wickham2020c].
 
@@ -573,7 +576,7 @@ by_day <- pp_data %>%
 ```
 
 
-Once we have this dataset in the format we need to be able to look at reports by day, we can vidualise the results using `ggplot`: 
+Once we have this dataset in the format we need to be able to look at reports by day, we can visualize the results using `ggplot`: 
 
 ```{r plotdates}
 
@@ -593,7 +596,7 @@ The number of votes within the Place Pulse platform clearly decreased over time,
 
 The open data movement has provoked a revolution in social research methods, and will continue changing the way in which many social issues are researched, understood and managed. Digital technologies enable large volumes of data to become available for social researchers and data scientists, and crowdsourcing is becoming a key source of data to analyze and map social phenomena such as crime [@bendler2014] and perceptions of space and safety [@solymosi2015; @solymosi2018]. In this chapter we have described and explored the main strengths and weaknesses of using crowdsourced data for criminological research. Specifically, we have obtained access to a large dataset of more than 1.5 million votes about urban perceptions recorded from the Place Pulse project [@salesses2013], selected a sample of more than 37,000 votes of perceived safety for Atlanta, and studied the spatial distribution of perceptions of space and safety at a census tract level in this city. We have also shown how these data can be utilized to identify places assessed by participants as very safe or very unsafe; places in which researchers can then conduct observation to study those environmental features that make citizens feel fear of crime [@toet2012]. 
 
-Although crowdsourcing offers advantages over traditional survey methods to study perceptions and emotions about crime, data recorded from crowdsourcing is also affected by certain issues that, if uncontrolled, are likely to affect the validity of data and the reliability and generalizability of research outputs. For instance, we have observed how Place Pulse votes are largely produced by a few number of super-contributors (i.e., participation inequality), there is under-representation of certain areas outside the city center, and the number of votes decreases over time (i.e., participation decrease). These issues have also been observed in data produced from many other crowdsourcing and app-based projects [e.g., @chataway2017; @solymosi2015; @solymosi2020; @traunmueller2015]. Other researchers have also highlighted that crowdsourced data tends to be affected by self-selection bias, which explains why males tend to participate more than females, and young persons more than adults [@salesses2013; @solymosi2018]; but the Place Pulse platform did not record demographic variables from participants and we have not directly assessed this issue here.
+Although crowdsourcing offers advantages over traditional survey methods to study perceptions and emotions about crime, data recorded from crowdsourcing is also affected by certain issues that, if uncontrolled, are likely to affect the validity of data and the reliability and generalizability of research outputs. For instance, we have observed how Place Pulse votes are largely produced by a few number of super-contributors (i.e., participation inequality), there is under-representation of certain areas outside the city center, and the number of votes decreases over time (i.e., participation decrease). These issues have also been observed in data produced from many other crowdsourcing and app-based projects [e.g., @chataway2017; @solymosi2015; @traunmueller2015]. Other researchers have also highlighted that crowdsourced data tend to be affected by self-selection bias, which explains why males tend to participate more than females, and young persons more than adults [@salesses2013; @solymosi2018]; but the Place Pulse platform did not record demographic variables from participants and we have not directly assessed this issue here.
 
 Due to the fact that crowdsourced datasets - and non-probability samples in general - may be affected by these potential sources of unrepresentativeness and bias, several researchers are exploring new techniques to enable obtaininig reliable research outputs. @elliott2017, for example, present different methods to compute individual pseudo-sampling weights and adjust non-probability samples to target populations; @arbia2018 have developed a method to delete spatial outliers and calculate weights to adjust non-probability samples to optimal spatial samples; and @builgil2020 investigate the use of resampling and model-based small area estimation techniques to allow producing reliable estimates at detailed spatial scales from crowdsourced data. Academics and practitioners will benefit from methods to mitigate the sources of bias in crowdsourced data, which may allow obtaining more precise and reliable - but also cheaper - findings and devise new explanations of crime, antisocial behavior and emotions about crime. In the context of crime analysis, bias-corrected crowdsourced data may become a key tool to understand crime patterns, anticipate crime trends and even provide assistance to police investigations [@bendler2014; @nhan2017].
 

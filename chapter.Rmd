@@ -506,6 +506,10 @@ That is a lot: `r round(sum(top_1pc$num_votes) / sum(voter$num_votes) * 100, 2)`
 
 One way to quantify the extent to which participation inequality exists in our data is by using a Gini index, and visualizing it using a Lorenz curve. The Gini index (or Gini ratio) is a measure of statistical dispersion intended to measure inequality [@gastwirth1972]. Although it is generally used to examine income inequality, it has also been frequently used to assess participation inequality in crowdsourcing platforms [see @solymosi2017; @solymosi2018]. Similarly, the Lorenz curve is a visual representation of inequality. For this we will need the `ineq` library [@zeileis2015]. We can load this library and calculate the index using the `Gini()` function applied to our 'number of votes' column in our frequency table dataframe: 
 
+```{r digits 2, echo = FALSE}
+options(digits=2)
+```
+
 ```{r gini}
 
 library(ineq)

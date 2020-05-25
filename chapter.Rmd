@@ -123,7 +123,7 @@ The images were selected randomly from Google Street View across 56 cities from 
 
 ## Download and explore Place Pulse data
 
-We have saved all Place Pulse data (more than 1.5 million votes) in a data repository on [FigShare: figshare.com/articles/Place_Pulse/11859993](https://figshare.com/articles/Place_Pulse/11859993). You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
+We have saved all Place Pulse data (more than 1.5 million votes) in a data repository on Figshare: [https://figshare.com/articles/Place_Pulse/11859993](https://figshare.com/articles/Place_Pulse/11859993). You can download this directly into `R` by using the `read.csv()` function. It is a large file so it may take some minutes to read in.
 
 ```{r readpp}
 
@@ -265,11 +265,15 @@ atl_v_others <- pp_atl_s %>%
     # select where only one image is from Atlanta
     filter((place_name_right == "Atlanta" & place_name_left != "Atlanta") | 
            (place_name_right != "Atlanta" & place_name_left == "Atlanta")) %>% 
-    # get coordinates from Atlanta side, label win or no win, and ID of Atlanta image
-    mutate(lat_Atl   = if_else(place_name_right == "Atlanta", lat_right, lat_left),
-           long_Atl  = if_else(place_name_right == "Atlanta", long_right, long_left),
-           win       = if_else((place_name_left == "Atlanta" & choice == "left") |
-                              (place_name_right == "Atlanta" & choice == "right"), 1, 0),
+    # get coordinates from Atlanta side, label win, and ID of image
+    mutate(lat_Atl   = if_else(place_name_right == "Atlanta", 
+                               lat_right, lat_left),
+           long_Atl  = if_else(place_name_right == "Atlanta", 
+                               long_right, long_left),
+           win       = if_else((place_name_left == "Atlanta" & 
+                                choice == "left") |
+                              (place_name_right == "Atlanta" & 
+                                choice == "right"), 1, 0),
            unique_id = if_else(place_name_right == "Atlanta", right, left))
 
 ```
@@ -319,18 +323,27 @@ Researchers may be interested in analyzing the environmental characteristics of 
 
 ```{r image_safest}
 
-pp_atl_s %>% 
+unique_pp_wins <- pp_atl_s %>% 
   group_by(unique_id) %>% # groups by images IDs
-  summarize(winscore = mean(win, na.rm = TRUE), # calculate proportion of 'safer'
+  summarize(winscore = mean(win, na.rm = TRUE), # proportion win
            num_votes = n(),  # count number of votes
-           latitude = first(lat_Atl), longitude = first(long_Atl)) %>% # save lat, long
-  filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes
-  arrange(desc(winscore)) %>% # order by proportion of 'safer' responses
-  filter(row_number() == 1 | row_number() == n()) # print highest and lowest score
+           latitude = first(lat_Atl), # save lat
+           longitude = first(long_Atl)) %>% # save long
+  arrange(desc(winscore)) # order by proportion of 'safer' responses
 
 ```
 
-This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times (see Figure 2). In this case, the least safe place is characterized by signs of physical disorder (i.e., graffiti, abandoned cars, rubbish lying around) which may increase negative emotions about crime [see @toet2012]. Moreover, there are corners and hidden spaces between abandoned cars that can be perceived to offer concealment for possible criminals and obstruct the view onto certain spaces [see @fisher1992]; whereas the safest place is a wide street of a well-maintained residential area with green spaces, direct visual access to most places around it (large prospect), and natural surveillance from the house [@welsh2004]. We can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
+This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times (see Figure 2). 
+
+```{r image most least, options(digits=4)}
+
+unique_pp_wins %>% 
+  filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes  
+  filter(row_number() == 1 | row_number() == n()) # highest and lowest score
+
+```
+
+In this case, the least safe place is characterized by signs of physical disorder (i.e., graffiti, abandoned cars, rubbish lying around) which may increase negative emotions about crime [see @toet2012]. Moreover, there are corners and hidden spaces between abandoned cars that can be perceived to offer concealment for possible criminals and obstruct the view onto certain spaces [see @fisher1992]; whereas the safest place is a wide street of a well-maintained residential area with green spaces, direct visual access to most places around it (large prospect), and natural surveillance from the house [@welsh2004]. We can do much more, but here we will focus on the specific issues to explore due to the crowdsourced nature of these data.
 
 ![Figure 2: Least safe and safest places rated by at least 25 Place Pulse users](figures/unsafe_safe25.jpg)
 
@@ -365,7 +378,8 @@ In order to plot the safety votes on this map, we first need to make our votes a
 
 ```{r geocodepp}
 
-points_atl_s <- st_as_sf(pp_atl_s, coords = c("lat_Atl", "long_Atl")) #geocode votes
+#geocode votes
+points_atl_s <- st_as_sf(pp_atl_s, coords = c("lat_Atl", "long_Atl"))
 
 ```
 
@@ -389,11 +403,11 @@ Now, to map 'safer' votes per census tract, we will compute a proportion of wins
 
 ```{r calcwinscore}
 
-points_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% # intersection of points and areas
-                      group_by(TRACT) %>% # make groups based on tracts
-                      summarise(winscore = mean(win, na.rm = TRUE), # proportion 'safer'
-                                num_votes = n()) %>%  # count number of votes
-                      st_set_geometry(NULL) #remove geometry (so we can join to polygon layer)
+p_atl_s_nhood <- st_intersection(atl, points_atl_s) %>% # points in areas
+                 group_by(TRACT) %>% # groups based on tracts
+                 summarise(winscore = mean(win, na.rm = TRUE), #proportion win
+                           num_votes = n()) %>%  # count number of votes
+                 st_set_geometry(NULL) #remove geometry
 
 ```
 
@@ -402,7 +416,7 @@ We have a dataframe which has the proportion of wins (`winscore`) for each tract
 ```{r joinwin}
 
 # merge census tracts and Place Pulse votes based on common 'TRACT' column
-atl_pp_wins <- left_join(atl, points_atl_s_nhood, by = c("TRACT" = "TRACT")) %>%
+atl_pp_wins <- left_join(atl, p_atl_s_nhood, by = c("TRACT" = "TRACT")) %>%
   filter(!is.na(winscore)) # delete census tracts with 0 votes (NAs)
   
 ```
@@ -451,32 +465,32 @@ In fact, we can examine how many votes are produced by these 'supercontributors'
 ```{r top1perc}
 
 # subset top 1% of most prolific participants
-top_1percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
+top_1pc <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100)) 
 
 ```
 
-We see that this new dataframe contains `r nrow(top_1percent)` people, who are our top 1% contributors to the Place Pulse dataset. We will now examine how much of the total number of votes are generated by the top 1% of users:
+We see that this new dataframe contains `r nrow(top_1pc)` people, who are our top 1% contributors to the Place Pulse dataset. We will now examine how much of the total number of votes are generated by the top 1% of users:
 
 ```{r top1perccontrib}
 
 # proportion of votes by top 1% participants
-sum(top_1percent$num_votes) / sum(voter$num_votes) * 100
+sum(top_1pc$num_votes) / sum(voter$num_votes) * 100
 
 ```
 
 ```{r activity1, echo = FALSE, eval = FALSE}
 
-top_10percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 10/100)) #subset top 10% participants
+top_10pc <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 10/100)) #subset top 10% participants
 
-sum(top_10percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 10% participants
+sum(top_10pc$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 10% participants
 
-top_25percent <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 25/100)) #subset top 25% participants
+top_25pc <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 25/100)) #subset top 25% participants
 
-sum(top_25percent$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 25% participants
+sum(top_25pc$num_votes) / sum(voter$num_votes) * 100 #Proportion of votes by top 25% participants
 
 ```
 
-That is a lot: `r round(sum(top_1percent$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors. We can also compute the proportion of votes made by the top 10% and 25% of participants in the same way. The top 10% contributors are responsible for 46.06% of votes, and the top 25% users contribute the 66.20% of all votes.
+That is a lot: `r round(sum(top_1pc$num_votes) / sum(voter$num_votes) * 100, 2)`% of the votes are made by the top 1% of contributors. We can also compute the proportion of votes made by the top 10% and 25% of participants in the same way. The top 10% contributors are responsible for 46.06% of votes, and the top 25% users contribute the 66.20% of all votes.
 
 
 ### Quantifying participation inequality
@@ -496,7 +510,7 @@ To interpret this number, we can consider the following. A Gini index score of 0
 ```{r lorenz}
 
 plot(Lc(voter$num_votes), # plot Lorenz curve
-     xlab = "Cumulative share of participants from lowest to higher number of votes",
+     xlab = "Cumulative share of participants from lowest to higher votes",
      ylab = "Cumulative share of votes", col = "darkred", lwd = 2) 
 
 ```
@@ -550,11 +564,12 @@ We will use various functions from `dplyr` and `ggplot2` packages (seen above) t
 ```{r datestuff}
 
 by_day <- pp_data %>% 
-          mutate(day = ymd(day)) %>% # create column by transforming into 'Date' object
+          mutate(day = ymd(day)) %>% # transform column into 'Date' object
           group_by(day) %>% # create groups by days
           summarise(num_votes = n()) %>% # count number of votes by day
-          complete(day = seq.Date(min(day), max(day), by = "day")) %>% # complete all days
-          mutate(num_votes = replace_na(num_votes, 0)) # create new column: votes by day
+          complete(day = seq.Date(min(day), 
+                                  max(day), by = "day")) %>% # complete days
+          mutate(num_votes = replace_na(num_votes, 0)) # replace NA by 0s
 ```
 
 

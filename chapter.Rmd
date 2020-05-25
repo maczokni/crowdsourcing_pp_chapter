@@ -95,7 +95,7 @@ In order to illustrate the use of crowdsourcing in criminological research, we p
 
 - Downloading and exploring crowdsourced data.
 - Cleaning and wrangling crowdsourced data to analyze perceptions of safety.
-- Linking the crowdsourced data to other spatial information, to enable mapping and facilitate crime and place research.  
+- Linking the crowdsourced data to other spatial information, to enable mapping and facilitate crime and place research.
 - Examining some of the known issues of crowdsourced data, including:
     + quantifying the effect of participation by *'supercontributors'* in our dataset,
     + quantifying the overall participation inequality,

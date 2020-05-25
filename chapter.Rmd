@@ -8,8 +8,8 @@ author: |
   | Department of Criminology, University of Manchester, UK
 date: "25/05/2020"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 bibliography: refs.bib
 csl: apa.csl
 ---
@@ -335,7 +335,7 @@ unique_pp_wins <- pp_atl_s %>%
 
 This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times (see Figure 2). 
 
-```{r image most least, options(digits=4)}
+```{r image most least, digits = 5}
 
 unique_pp_wins %>% 
   filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes  

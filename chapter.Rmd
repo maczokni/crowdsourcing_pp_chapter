@@ -86,25 +86,7 @@ It is not only people who may be unequally represented in these sorts of data, t
 
 Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see more active participation than later on in the project.  
 
-Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
-
-
-## Summary
-
-Overall, crowdsourced data can be understood as data provided by participants from a large crowd of people through some digital platform to contribute knowledge, experience or skills towards one collaborative project [@howe2006]. Key strength of these data include: 
-
-- precise spatial and temporal information,
-- ability to collect contextual information about the environment, and
-- large sample sizes often at low cost.
-
-Key limitations to always address with such data include: 
-
-- issues with generalizability from non-representative samples,
-- unequal contribution from individuals within the sample,
-- possible unequal geographical or temporal coverage, and
-- initial enthusiasm of participation may die down.
-
-It is further important to think about ethical concerns around the right to privacy of those contributing to these types of crowdsourcing platforms. 
+Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds. 
 
 
 # Crowdsourcing perceptions of safety: A step-by-step example in `R`

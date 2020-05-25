@@ -616,7 +616,7 @@ Reka Solymosi is a Lecturer in Quantiative Methods at the Department of Criminol
 
 # Acknowledgments
 
-The authors would like to thank César A. Hidalgo for providing access to the data used in this book chapter.
+The authors would like to thank César A. Hidalgo for providing access to the data used in this chapter.
 
 
 # References

@@ -164,7 +164,7 @@ total_freq <- left_freq %>%
 
 We can see the top 3 most common cities using the `top_n()` function:
 
-```{r sigfic 7, echo = FALSE}
+```{r bold, echo = FALSE}
 options(pillar.bold = TRUE)
 ```
 

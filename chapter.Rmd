@@ -49,7 +49,7 @@ In this chapter we present some examples of how crowdsourced data can be used cr
 
 In criminological research, crowdsourcing has been primarily used to harness data about various forms of crime and antisocial behavior and to process information about citizens' perceptions and emotions about crime. Crowdsourced data provide new angles of insight into people's behaviors and perceptions, thus allowing researchers to devise new explanations of crime and perceived safety.
 
-Public perceptions and emotions about crime have traditionally been analyzed by using surveys and interview-type qualitative approaches [see @gabriel2003], but these methods are costly and may be limited in their ability to capture the time and context-specific emotional reactions of fear [@castrotoledo2017]. They may also fail to record any behavioral responses to such emotions, such as avoiding certain places or situations, or acquiring alarm systems or weapons. As an alternartive, some researchers have endorsed the use crowdsourcing to record data about the specific places and times in which episodes of fear of crime are more frequent [@solymosi2018; @solymosi2020].
+Public perceptions and emotions about crime have traditionally been analyzed by using surveys and interview-type qualitative approaches [@gabriel2003], but these methods are costly and may be limited in their ability to capture the time- and context-specific emotional reactions of fear [@castrotoledo2017]. They may also fail to record any behavioral responses to such emotions, such as avoiding certain places or situations, or acquiring alarm systems or weapons. As an alternartive, some researchers have endorsed the use crowdsourcing to record data about the specific places and times in which episodes of fear of crime are more frequent [@solymosi2018; @solymosi2020].
 
 For example, @hamilton2011 developed a mobile phone app to record public perceptions of crime on public transportation in Melbourne, Australia. Similarly, @solymosi2015 designed an app and asked participants to report their worry about crime, which allowed authors to map the users' fear of crime across different areas of London, UK. @birendoim2016 developed a mobile app to record data about the perceptions of security of attendees at a music festival in Jerusalem, Israel. And @gomez2016 designed a collaborative web-based tool that allowed the citizens of Bogotá, Colombia, to report those areas in which they feel less safe.
 
@@ -84,7 +84,7 @@ Even within the sample of self-selected participants there may be unequal partic
 
 It is not only people who may be unequally represented in these sorts of data, there may also be a bias in the places and times that do or do not feature prominently. Since users of crowdsourcing projects can decide where and when to participate, certain types of areas and times can be underrepresented. For instance, it is possible that app-based platforms fail to capture data from high-crime-density areas, since participants may avoid those places where they feel more exposed to crime [@innes2015]. The routine activities of participants are also reflected on an under-representation of data points at night, when people are less likely to be out and about [@blom2010].
 
-Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see lots of active participation than later on in the project.  
+Moreover, many of these projects rely on the enthusiasm of the crowd of participants, which may die down over time [@blom2010]. It is important to consider when such projects are launched, as the beginning is much more likely to see more active participation than later on in the project.  
 
 Finally, there are ethical considerations that may arise from the use of crowdsourcing, which are related to the user's privacy (e.g., risk of participants' identification) but also concerns that these techniques may sensitize participant and increase their fear of crime by asking them to constantly think about crime-related risks [@jackson2015]. These last points are not so much limitations as key concerns that all reasearchers working with crowdsourced data should keep at the forefront of their minds.
 
@@ -330,14 +330,17 @@ unique_pp_wins <- pp_atl_s %>%
            num_votes = n(),  # count number of votes
            latitude = first(lat_Atl), # save lat
            longitude = first(long_Atl)) %>% # save long
-  arrange(desc(winscore)) # order by proportion of 'safer' responses
+  arrange(desc(winscore)) # order by proportion 'safer' responses
 
 ```
 
-This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times. 
+This may be used by criminologists to observe the characteristics of those places assessed by Place Pulse participants as more or less safe. For example, we can use Google Street View [[https://www.google.com/maps](https://www.google.com/maps)] to observe places rated as the least safe or safest amongst those rated at least 25 times.
+
+```{r sigfic 7, echo = FALSE}
+options(pillar.sigfig = 7)
+```
 
 ```{r image most least}
-options(digits=4)
 
 unique_pp_wins %>% 
   filter(num_votes >= 25) %>% # filter out pictures with less than 25 votes  
@@ -473,8 +476,11 @@ top_1pc <- subset(voter, num_votes > quantile(num_votes, prob = 1 - 1/100))
 
 We see that this new dataframe contains `r nrow(top_1pc)` people, who are our top 1% contributors to the Place Pulse dataset. We will now examine how much of the total number of votes are generated by the top 1% of users:
 
+```{r digits 4, echo = FALSE}
+options(digits=4)
+```
+
 ```{r top1perccontrib}
-options(digits=2)
 
 # proportion of votes by top 1% participants
 sum(top_1pc$num_votes) / sum(voter$num_votes) * 100

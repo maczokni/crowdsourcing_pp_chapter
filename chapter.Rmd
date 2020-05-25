@@ -62,7 +62,7 @@ These are only a few examples, but there are many other crowdsourcing platforms 
 
 # Strengths and weaknesses of crowdsourced data
 
-Crowdsourced data about public perceptions of space and crime have some key strengths over data recorded from traditional survey methods. Due to the data being provided by people in real-time, using technology which can record auxiliary information such as GPS or time-stamp, besides the information people report we also get precise spatial data, information about immediate environmental variables, and other relevant information, without any additional cost to researchers or participants. However, the mode of production of crowdsourcing is also associated with certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability and generalizability of our results [@builgil2020; @elliott2017]. 
+Crowdsourced data about public perceptions of space and crime have some key strengths over data recorded from traditional survey methods. Due to the data being provided by people in real-time, using technology which can record auxiliary information such as GPS or time-stamp, besides the information people report we also get precise spatial data, information about immediate environmental variables, and other relevant information, without any additional cost to researchers or participants. However, the mode of production of crowdsourcing is also associated with certain limitations or weaknesses that, if uncontrolled, may affect the validity of such measures and the reliability and generalizability of our results [@builgil2020]. 
 
 @solymosi2020 conducted a systematic review of 27 studies utilizing or discussing the use of crowdsourcing to study perceptions and emotions about crime. Here we will summarize the key strengths and weaknesses identified in their review.
 
@@ -93,11 +93,10 @@ Finally, there are ethical considerations that may arise from the use of crowdso
 
 In order to illustrate the use of crowdsourcing in criminological research, we present an exemplar study using data recorded by the Place Pulse 2.0 platform mentioned earlier [see @salesses2013]. This section will introduce the Place Pulse project and provide annotated `R` scripts for downloading, cleaning and exploring this source of crowdsourced data. Then, we will analyze the spatial distribution of crowdsourced perceptions of space and safety in Atlanta, and illustrate with examples how to explore some of the known issues of crowdsourced data discussed above in a real-world dataset. Thus, in this exercise you will acquire a number of different skills, including:
 
-- Downloading and exploring crowdsourced data from Place Pulse.
-- Cleaning and wrangling Place Pulse data to analyze perceptions of safety.
-- Obtaining spatial data about those places assessed by Place Pulse participants as more or less safe.
-- Mapping perceptions of safety from crowdsourced Place Pulse data.
-- Examining some of the known issues of crowdsourcing using the Place Pulse data, including:
+- Downloading and exploring crowdsourced data.
+- Cleaning and wrangling crowdsourced data to analyze perceptions of safety.
+- Linking the crowdsourced data to other spatial information, to enable mapping and facilitate crime and place research.  
+- Examining some of the known issues of crowdsourcing identified earlier, including:
     + quantifying the effect of participation by *'supercontributors'* in our dataset,
     + quantifying the overall participation inequality,
     + analyzing the under-representation of areas, and

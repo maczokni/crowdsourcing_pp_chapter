@@ -91,7 +91,17 @@ Finally, there are ethical considerations that may arise from the use of crowdso
 
 # Crowdsourcing perceptions of safety: A step-by-step example in `R`
 
-In order to illustrate the use of crowdsourcing in criminological research, we present an exemplar study using data recorded by the Place Pulse 2.0 platform mentioned earlier [see @salesses2013]. This section will introduce the Place Pulse project and provide annotated `R` scripts for downloading, cleaning and exploring this source of crowdsourced data. Then, we will analyze the spatial distribution of crowdsourced perceptions of space and safety in Atlanta, and illustrate with examples how to explore some of the known issues of crowdsourced data discussed above in a real-world dataset.
+In order to illustrate the use of crowdsourcing in criminological research, we present an exemplar study using data recorded by the Place Pulse 2.0 platform mentioned earlier [see @salesses2013]. This section will introduce the Place Pulse project and provide annotated `R` scripts for downloading, cleaning and exploring this source of crowdsourced data. Then, we will analyze the spatial distribution of crowdsourced perceptions of space and safety in Atlanta, and illustrate with examples how to explore some of the known issues of crowdsourced data discussed above in a real-world dataset. Thus, in this exercise you will acquire a number of different skills, including:
+
+- Downloading and exploring crowdsourced data from Place Pulse.
+- Cleaning and wrangling Place Pulse data to analyze perceptions of safety.
+- Obtaining spatial data about those places assessed by Place Pulse participants as more or less safe.
+- Mapping perceptions of safety from crowdsourced Place Pulse data.
+- Examining some of the known issues of crowdsourcing using the Place Pulse data, including:
+    + quantifying the effect of participation by *'supercontributors'* in our dataset,
+    + quantifying the overall participation inequality,
+    + analyzing the under-representation of areas, and
+    + checking the decrease of participation over time.
 
 
 ## The Place Pulse project

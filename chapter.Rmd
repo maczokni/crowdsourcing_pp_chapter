@@ -8,8 +8,8 @@ author: |
   | Department of Criminology, University of Manchester, UK
 date: "25/05/2020"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 bibliography: refs.bib
 csl: apa.csl
 ---
@@ -29,7 +29,7 @@ library(purrr)
 options(tinytex.verbose = TRUE)
 ```
 
-**Full reference:** Buil-Gil, D., & Solymosi, R. (2020). Using crowdsourced data to study crime and place. In E. Groff & C. Haberman (Eds.), *The study of crime and place: A methods handbook*. Temple University Press.
+This is an unedited draft, not for citation, of a book chapter that has been accepted for publication in E. Groff and C. Haberman (Eds.), *The study of crime and place: A methods handbook* (Temple University Press, 2021). Temple University Press retains all rights and subrights of this document. This pre-print is not published under a CC license.
 
 **Contact details:** David Buil-Gil. G18 Humanities Bridgeford Street Building, Cathie Marsh Institute for Social Research, University of Manchester. E-mail address: *david.builgil@manchester.ac.uk*
 
